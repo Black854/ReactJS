@@ -7,29 +7,3 @@
     width: 1200px;
     margin: 0 auto;
 }
-
-.header {
-    grid-area: h;
-    background-color: darkgreen;
-}
-
-.header img {
-    width: 55px;
-    padding: 3px;
-}
-
-.nav {
-    grid-area: n;
-    background-color: aquamarine;
-}
-
-.content {
-    grid-area: c;
-    background-color: bisque;
-}
-
-.content img {
-    width: 100%;
-    height: 350px;
-}
-

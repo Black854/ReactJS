@@ -1,6 +1,8 @@
+import s from './Profile.module.css'
+
 const Profile = () => {
   return (
-    <div className='content'>
+    <div className={s.content}>
       <div>
         <img src='https://rare-gallery.com/uploads/posts/557604-clouds-country.jpg' alt=''></img>
       </div>
