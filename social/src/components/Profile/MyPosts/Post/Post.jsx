@@ -1,12 +1,12 @@
 import s from './Post.module.css'
 
-const Post = () => {
+const Post = (props) => {
     return (
         <div className={s.postBlock}>
             <img src="https://cdn-icons-png.flaticon.com/128/149/149071.png" alt=""/>
-            Post
+            {props.message}
             <div>
-                like
+                likes: {props.likesCount}
             </div>
         </div>);
 }
