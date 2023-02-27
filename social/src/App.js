@@ -6,6 +6,7 @@ import Dialogs from './components/Dialogs/Dialogs';
 import { Route } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Routes } from 'react-router-dom';
+import React from "react";
 
 function App() {
   return (
