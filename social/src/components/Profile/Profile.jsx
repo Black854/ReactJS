@@ -12,11 +12,11 @@ const ProfileInfo = () => {
     );
 }
 
-const Profile = () => {
+const Profile = (props) => {
     return (
         <div>
-            <ProfileInfo/>
-            <MyPosts/>
+            <ProfileInfo />
+            <MyPosts posts={props.posts} />
         </div>
     );
 }
