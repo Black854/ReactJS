@@ -1,0 +1,12 @@
+.title {
+    text-align: center;
+    font-size: 20px;
+    color: gold;
+    font-weight: normal;
+}
+
+.friendsBlock {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 20px;
+}

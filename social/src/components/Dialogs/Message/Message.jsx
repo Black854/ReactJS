@@ -1,12 +1,10 @@
 import s from './Message.module.css';
 import React from "react";
+import Item from "./Item/Item";
 
-const Message = (props) => {
-    return <div>{props.message}</div>
-}
 
 const Messages = (props) => {
-    let messagesElements = props.messages.map(message => <Message id={message.id} message={message.message} />);
+    let messagesElements = props.messages.map(message => <Item id={message.id} message={message.message} senderId={message.senderId} />);
     return (
         <div className={s.messages}>
             {messagesElements}

@@ -1,0 +1,17 @@
+.friendsItem {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    width: 32%;
+}
+
+.avatar {
+    width: 40px;
+    border-radius: 30px;
+    margin: 0 auto;
+}
+
+.userName {
+    display: block;
+    margin: 0 auto;
+    color: white;
+}

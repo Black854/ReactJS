@@ -1,0 +1,13 @@
+.myItem {
+    text-align: right;
+    margin-right: 100px;
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.otherItem {
+    text-align: left;
+    margin-left: 100px;
+    font-size: 22px;
+    margin-bottom: 5px;
+}
