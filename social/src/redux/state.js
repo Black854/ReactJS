@@ -1,3 +1,5 @@
+import rerenderEntireTree from "../render";
+
 let state = {
     profilePage: {
         posts: [
@@ -9,26 +11,46 @@ let state = {
 
     dialogsPage: {
         dialogs: [
-            { id: '1', name: 'Карина', url: 'https://img.freepik.com/premium-vector/female-user-profile-avatar-is-woman-character-screen-saver-with-emotions_505620-617.jpg?w=360' },
-            { id: '2', name: 'Сижик', url: 'https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Photos.png' },
-            { id: '3', name: 'Арсик', url: 'https://cdn3.iconfinder.com/data/icons/avatars-15/64/_Ninja-2-512.png' },
-            { id: '4', name: 'Систр', url : 'https://png.pngtree.com/png-clipart/20200819/ourmid/pngtree-female-avatar-profile-png-image_2326119.jpg' },
+            { id: 1, name: 'Карина', url: 'https://pps.whatsapp.net/v/t61.24694-24/97139888_286024802427555_4550301908471340101_n.jpg?ccb=11-4&oh=01_AdQm0j1TBSyWLxgKTL6Be8aRM9qcbANeYUnerjmTCjh3Yw&oe=640E9DA0' },
+            { id: 2, name: 'Сижик', url: 'https://pps.whatsapp.net/v/t61.24694-24/118755745_3246721382032178_6297327615944445613_n.jpg?ccb=11-4&oh=01_AdQcpnMIhlVGkc2wBR_toV8gMhRlRCsEqzF9AYZOLCoMuQ&oe=640E9E00' },
+            { id: 3, name: 'Арсик', url: 'https://pps.whatsapp.net/v/t61.24694-24/317746866_140043558909662_394026572113279997_n.jpg?ccb=11-4&oh=01_AdRdOh0yBYqEfDC1Z3MHxtrKU3JCneyXvi6ldBXhLDNr7g&oe=640E7CCD' },
+            { id: 4, name: 'Систр', url : 'https://pps.whatsapp.net/v/t61.24694-24/241180503_1082641675933907_2489449898611948401_n.jpg?ccb=11-4&oh=01_AdQ0dm72ZOje9qLlN-Y3Njrhj_rB-kuKUPnDvA1Bv8k0zg&oe=640E8BD3' },
         ],
         messages: [
-            { id: 1, message: 'Hi', senderId: '1' },
-            { id: 2, message: 'Helloo', senderId: '2' },
-            { id: 3, message: 'How are you?', senderId: '1' },
-            { id: 4, message: 'Helloo', senderId: '1' }
+            { id: 1, message: 'Hi', senderId: 1 },
+            { id: 2, message: 'Helloo', senderId: 2 },
+            { id: 3, message: 'How are you?', senderId: 1 },
+            { id: 4, message: 'Helloo', senderId: 1 }
         ]
     },
 
     sidebar: {
         friends: [
-            {id: 1, name: 'Карина', url: 'https://img.freepik.com/premium-vector/female-user-profile-avatar-is-woman-character-screen-saver-with-emotions_505620-617.jpg?w=360'},
-            {id: 2, name: 'Сижик', url: 'https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Photos.png'},
-            {id: 2, name: 'Арсик', url: 'https://sm.ign.com/t/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.300.jpg'}
+            {id: 1, name: 'Карина', url: 'https://pps.whatsapp.net/v/t61.24694-24/97139888_286024802427555_4550301908471340101_n.jpg?ccb=11-4&oh=01_AdQm0j1TBSyWLxgKTL6Be8aRM9qcbANeYUnerjmTCjh3Yw&oe=640E9DA0'},
+            {id: 2, name: 'Сижик', url: 'https://pps.whatsapp.net/v/t61.24694-24/118755745_3246721382032178_6297327615944445613_n.jpg?ccb=11-4&oh=01_AdQcpnMIhlVGkc2wBR_toV8gMhRlRCsEqzF9AYZOLCoMuQ&oe=640E9E00'},
+            {id: 2, name: 'Арсик', url: 'https://pps.whatsapp.net/v/t61.24694-24/317746866_140043558909662_394026572113279997_n.jpg?ccb=11-4&oh=01_AdRdOh0yBYqEfDC1Z3MHxtrKU3JCneyXvi6ldBXhLDNr7g&oe=640E7CCD'}
         ]
     }
+}
+
+export let addPost = (newPostText) => {
+    let newPost = {
+        id: 10,
+        postText: newPostText,
+        likesCount: 0
+    }
+    state.profilePage.posts.push(newPost);
+    rerenderEntireTree(state);
+}
+
+export let sendMessage = (newMessageText) => {
+    let newMessage = {
+        id: 5,
+        message: newMessageText,
+        senderId: 1
+    }
+    state.dialogsPage.messages.push(newMessage);
+    rerenderEntireTree(state);
 }
 
 export default state;
