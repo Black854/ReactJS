@@ -1,4 +1,11 @@
-import rerenderEntireTree from "../render";
+import karina from "../img/karina.jpg";
+import ars from "../img/ars.jpg";
+import sizh from "../img/sizh.jpg";
+import sistr from "../img/sistr.jpg";
+
+let rerenderEntireTree = () => {
+    console.log('state changed');
+}
 
 let state = {
     profilePage: {
@@ -12,10 +19,10 @@ let state = {
 
     dialogsPage: {
         dialogs: [
-            { id: '1', name: 'Карина', url: 'https://pps.whatsapp.net/v/t61.24694-24/97139888_286024802427555_4550301908471340101_n.jpg?ccb=11-4&oh=01_AdQm0j1TBSyWLxgKTL6Be8aRM9qcbANeYUnerjmTCjh3Yw&oe=640E9DA0' },
-            { id: '2', name: 'Сижик', url: 'https://pps.whatsapp.net/v/t61.24694-24/118755745_3246721382032178_6297327615944445613_n.jpg?ccb=11-4&oh=01_AdQcpnMIhlVGkc2wBR_toV8gMhRlRCsEqzF9AYZOLCoMuQ&oe=640E9E00' },
-            { id: '3', name: 'Арсик', url: 'https://pps.whatsapp.net/v/t61.24694-24/317746866_140043558909662_394026572113279997_n.jpg?ccb=11-4&oh=01_AdRdOh0yBYqEfDC1Z3MHxtrKU3JCneyXvi6ldBXhLDNr7g&oe=640E7CCD' },
-            { id: '4', name: 'Систр', url : 'https://pps.whatsapp.net/v/t61.24694-24/241180503_1082641675933907_2489449898611948401_n.jpg?ccb=11-4&oh=01_AdQ0dm72ZOje9qLlN-Y3Njrhj_rB-kuKUPnDvA1Bv8k0zg&oe=640E8BD3' },
+            { id: '1', name: 'Карина', url: karina },
+            { id: '2', name: 'Сижик', url: sizh },
+            { id: '3', name: 'Арсик', url: ars },
+            { id: '4', name: 'Систр', url : sistr },
         ],
         messages: [
             { id: 1, message: 'Hi', senderId: 1 },
@@ -28,9 +35,9 @@ let state = {
 
     sidebar: {
         friends: [
-            {id: 1, name: 'Карина', url: 'https://pps.whatsapp.net/v/t61.24694-24/97139888_286024802427555_4550301908471340101_n.jpg?ccb=11-4&oh=01_AdQm0j1TBSyWLxgKTL6Be8aRM9qcbANeYUnerjmTCjh3Yw&oe=640E9DA0'},
-            {id: 2, name: 'Сижик', url: 'https://pps.whatsapp.net/v/t61.24694-24/118755745_3246721382032178_6297327615944445613_n.jpg?ccb=11-4&oh=01_AdQcpnMIhlVGkc2wBR_toV8gMhRlRCsEqzF9AYZOLCoMuQ&oe=640E9E00'},
-            {id: 3, name: 'Арсик', url: 'https://pps.whatsapp.net/v/t61.24694-24/317746866_140043558909662_394026572113279997_n.jpg?ccb=11-4&oh=01_AdRdOh0yBYqEfDC1Z3MHxtrKU3JCneyXvi6ldBXhLDNr7g&oe=640E7CCD'}
+            {id: 1, name: 'Карина', url: karina},
+            {id: 2, name: 'Сижик', url: sizh},
+            {id: 3, name: 'Арсик', url: ars}
         ]
     }
 }
@@ -65,6 +72,10 @@ export let updateNewPostText = (text) => {
 export let updateNewMessageText = (text) => {
     state.dialogsPage.newMessageText = text;
     rerenderEntireTree(state);
+}
+
+export const subscribe = (observer) => {
+    rerenderEntireTree = observer;
 }
 
 export default state;

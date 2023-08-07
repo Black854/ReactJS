@@ -5,7 +5,7 @@ import React from "react";
 const ProfileInfo = () => {
     return (
         <div>
-            <img className={s.mainImage} src='https://rare-gallery.com/uploads/posts/557604-clouds-country.jpg'
+            <img className={s.mainImage} src='https://c.wallhere.com/photos/12/e1/sky_clouds_sunset_air-26035.jpg!d'
                  alt='' />
             <div>avatar + description</div>
         </div>
