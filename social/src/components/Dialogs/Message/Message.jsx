@@ -1,7 +1,7 @@
 import s from './Message.module.css';
 import React from "react";
 import Item from "./Item/Item";
-
+import { sendMessageActionCreator, updateNewMessageTextActionCreator } from '../../../redux/store';
 
 const Messages = (props) => {
     let messagesElements = props.messages.map(message => <Item key={message.id} message={message.message} senderId={message.senderId} />);
@@ -9,12 +9,12 @@ const Messages = (props) => {
     let newMessageElement = React.createRef();
 
     let sendMessage = () => {
-        props.dispatch({type: 'SEND-MESSAGE'});
+        props.dispatch(sendMessageActionCreator());
     }
 
     let updateText = () => {
         let text = newMessageElement.current.value;
-        props.dispatch({type: 'UPDATE-NEW-MESSAGE-TEXT', text: text});
+        props.dispatch(updateNewMessageTextActionCreator(text));
     }
 
     return (

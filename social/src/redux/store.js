@@ -3,6 +3,11 @@ import ars from "../img/ars.jpg";
 import sizh from "../img/sizh.jpg";
 import sistr from "../img/sistr.jpg";
 
+const ADD_POST = 'ADD-POST';
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const SEND_MESSAGE = 'SEND-MESSAGE';
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
+
 let rerenderEntireTree = () => {
     console.log('state changed');
 }
@@ -51,7 +56,7 @@ let store = {
     },
 
     dispatch (action) {
-        if (action.type === 'ADD-POST') {
+        if (action.type === ADD_POST) {
             let newPost = {
                 id: 10,
                 postText: this._state.profilePage.newPostText,
@@ -60,10 +65,10 @@ let store = {
             this._state.profilePage.posts.push(newPost);
             this._state.profilePage.newPostText = '';
             rerenderEntireTree(this._state);
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
             this._state.profilePage.newPostText = action.text;
             rerenderEntireTree(this.getState());
-        } else if (action.type === 'SEND-MESSAGE') {
+        } else if (action.type === SEND_MESSAGE) {
             let newMessage = {
                 id: 5,
                 message: this._state.dialogsPage.newMessageText,
@@ -72,7 +77,7 @@ let store = {
             this._state.dialogsPage.messages.push(newMessage);
             this._state.dialogsPage.newMessageText = '';
             rerenderEntireTree(this.getState());
-        } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
+        } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
             this._state.dialogsPage.newMessageText = action.text;
             rerenderEntireTree(this.getState());
         }
@@ -96,6 +101,10 @@ let store = {
 
 }
 
+export const addPostActionCreator = () => ({ type: ADD_POST })
+export const updateNewPostTextActionCreator = (text) => ({ type: UPDATE_NEW_POST_TEXT, text: text })
+export const sendMessageActionCreator = () => ({ type: SEND_MESSAGE })
+export const updateNewMessageTextActionCreator = (text) => ({ type: UPDATE_NEW_MESSAGE_TEXT, text: text })
 
 export default store;
 window.store = store;
