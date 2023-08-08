@@ -1,7 +1,7 @@
 import s from './Message.module.css';
 import React from "react";
 import Item from "./Item/Item";
-import { sendMessageActionCreator, updateNewMessageTextActionCreator } from '../../../redux/store';
+import { sendMessageActionCreator, updateNewMessageTextActionCreator } from '../../../redux/dialogs-reducer';
 
 const Messages = (props) => {
     let messagesElements = props.messages.map(message => <Item key={message.id} message={message.message} senderId={message.senderId} />);
