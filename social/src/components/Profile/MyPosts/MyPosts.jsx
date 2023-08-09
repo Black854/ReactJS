@@ -5,16 +5,15 @@ import React from "react";
 
 const MyPosts = (props) => {
     let postsElements = props.posts.map(post => <Post key={post.id} message={post.postText} likesCount={post.likesCount} />);
-
     let newPostElement = React.createRef();
 
     let createNewPost = () => {
-        props.dispatch(addPostActionCreator());
+        props.createNewPost();
     }
 
     let updateArea = () => {
         let text = newPostElement.current.value;
-        props.dispatch(updateNewPostTextActionCreator(text));
+        props.updateArea(text);
     } 
 
     return (
