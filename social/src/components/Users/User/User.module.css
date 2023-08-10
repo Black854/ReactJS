@@ -26,3 +26,26 @@ p {
 .description {
     margin-left: 20px;;
 }
+
+.followFrame {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    height: 30px;
+    border-radius: 0px 0px 0px 8px;
+    border: 1px solid black;
+    border-bottom: none;
+    border-left: none;
+    color: white;
+    cursor: pointer;
+}
+
+.follow {
+    background-color: green;
+}
+
+.unfollow {
+    background-color: red;
+}
