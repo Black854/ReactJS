@@ -1,4 +1,3 @@
-import { addPostActionCreator, updateNewPostTextActionCreator } from '../../../redux/profile-reducer';
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
 import React from "react";

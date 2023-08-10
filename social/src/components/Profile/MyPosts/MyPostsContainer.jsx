@@ -3,20 +3,6 @@ import MyPosts from './MyPosts';
 import React from "react";
 import { connect } from 'react-redux';
 
-// const MyPostsContainer = (props) => {
-//     let state = props.store.getState().profilePage;
-//     let createNewPost = () => {
-//         props.store.dispatch(addPostActionCreator());
-//     }
-
-//     let updateArea = (text) => {
-//         props.store.dispatch(updateNewPostTextActionCreator(text));
-//     } 
-
-//     return (
-//         <MyPosts createNewPost={createNewPost} updateArea={updateArea} posts={state.posts} newPostText={state.newPostText} />);
-// }
-
 let mapStateToProps = (state) => {
     return {
         posts: state.profilePage.posts,
