@@ -12,7 +12,7 @@ const User = (props) => {
         props.unfollow(props.id);
     }
 
-    props.followed === true ? button = <button onClick={unfollow} className={s.unfollow}>Unfollow</button> : button = <button onClick={follow} className={s.follow}>Follow</button>;
+    props.followed ? button = <button onClick={unfollow} className={s.unfollow}>Unfollow</button> : button = <button onClick={follow} className={s.follow}>Follow</button>;
     return (
         <div className={s.frame}>
             <div className={s.followFrame}>
