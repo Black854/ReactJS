@@ -22,8 +22,8 @@ const User = (props) => {
             <div className={s.description}>
                 <p>Имя: {props.fullName}</p>
                 <p>Статус: {props.status}</p>
-                <p>Страна: {props.country}</p>
-                <p>Город: {props.city}</p>
+                {/* <p>Страна: {props.country}</p>
+                <p>Город: {props.city}</p> */}
             </div>
         </div>
     );
