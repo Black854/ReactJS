@@ -32,7 +32,8 @@ p {
     flex-direction: column;
 }
 
-button {
+.follow {
+    background-color: green;
     height: 30px;
     border-radius: 0px 0px 0px 8px;
     border: 1px solid black;
@@ -42,10 +43,13 @@ button {
     cursor: pointer;
 }
 
-.follow {
-    background-color: green;
-}
-
 .unfollow {
     background-color: red;
+    height: 30px;
+    border-radius: 0px 0px 0px 8px;
+    border: 1px solid black;
+    border-bottom: none;
+    border-left: none;
+    color: white;
+    cursor: pointer;
 }

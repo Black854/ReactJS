@@ -7,7 +7,8 @@ let initialState = {
     friends: [
         {id: 1, name: 'Карина', url: karina},
         {id: 2, name: 'Сижик', url: sizh},
-        {id: 3, name: 'Арсик', url: ars}
+        {id: 3, name: 'Арсик', url: ars},
+        {id: 4, name: 'Систр', url: sistr}
     ]
 }
 
