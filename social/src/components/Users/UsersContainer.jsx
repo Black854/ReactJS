@@ -6,7 +6,9 @@ import { followAC, unfollowAC, setUsersAC, setCurrentPageAC } from "../../redux/
 let mapStateToProps = (state) => {
     return {
         usersList: state.usersPage.usersList,
-        pageNumber: state.usersPage.pageNumber
+        pageNumber: state.usersPage.pageNumber,
+        pageSize: state.usersPage.pageSize,
+        totalCount: state.usersPage.totalCount
     }
 }
 
