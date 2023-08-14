@@ -4,8 +4,7 @@ import s from "./Users.module.css";
 import axios from "axios";
 
 class Users extends React.Component {
-    constructor (props) {
-        super(props);
+    componentDidMount () {
         if (this.props.usersList.length === 0) {
             axios.get('https://social-network.samuraijs.com/api/1.0/users?count=5').then(response => {
                 this.props.setUsers([...response.data.items]);
