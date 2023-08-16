@@ -1,3 +1,4 @@
+import Preloader from "../Preloader/Preloader";
 import User from "./User/User";
 import s from "./Users.module.css";
 
@@ -19,8 +20,11 @@ let Users = (props) => {
                    return <span onClick={() => {props.updateCurrentPage(p) }} className={props.pageNumber === p ? s.activeNumber : ''}>{p}</span>
                 }) }
             </div>
-            { userList }
+            {props.isLoading ? <Preloader /> :  userList }            
+            
+            
         </div>
+        
     );
 }
 

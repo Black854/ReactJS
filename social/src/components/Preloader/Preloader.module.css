@@ -1,0 +1,10 @@
+.preloaderBlock {
+    width: 100%;
+}
+
+.preloader {
+    width: 140px;
+    height: 140px;
+    display: block;
+    margin: 20px auto;
+}
