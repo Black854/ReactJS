@@ -1,5 +1,7 @@
 import React from "react";
 import s from './User.module.css';
+import userPhoto from '../../../img/user.jpg';
+import {NavLink} from 'react-router-dom';
 
 const User = (props) => {
     let button;
@@ -16,7 +18,9 @@ const User = (props) => {
     return (
         <div className={s.frame}>
             <div className={s.followFrame}>
-                <img className={s.avatar} src={props.avatar} />
+                <NavLink to={'/profile/' + props.id}>
+                    <img className={s.avatar} src={props.avatar ? props.avatar : userPhoto} />
+                </NavLink>
                 { button }
             </div>
             <div className={s.description}>
