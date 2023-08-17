@@ -16,7 +16,7 @@ const ProfileInfo = (props) => {
             <div className={s.profileBlock}>
                 <img className={s.avatar} src={props.profile.photos.large} alt="" />
                 <div>
-                    <h2>{props.profile.fullName}</h2>
+                    <h2 className={s.userName}>{props.profile.fullName}</h2>
                     <p>Обо мне: {props.profile.aboutMe }</p>
                     {props.profile.lookingForAJob && <p>В поиске работы: {props.profile.lookingForAJobDescription }</p>}
                     <h3>Контакты</h3>

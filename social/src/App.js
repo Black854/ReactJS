@@ -15,7 +15,7 @@ function App(props) {
           <Navbar friends={props.state.sidebar.friends} />
           <div className='app-wrapper-content'>
             <Routes>
-              <Route path='profile/*' element={<ProfileContainer store={props.store} />} />
+              <Route path='profile/:userId?' element={<ProfileContainer store={props.store} />} />
               <Route path='dialogs/*' element={<Dialogs store={props.store} />} />
               <Route path='users/*' element={<UsersContainer store={props.store} />} />
             </Routes>

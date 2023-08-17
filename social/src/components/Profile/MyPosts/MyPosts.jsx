@@ -18,7 +18,7 @@ const MyPosts = (props) => {
     return (
         <div className={s.myPostsBlock}>
             <div>
-                <textarea ref={newPostElement} className={s.textarea} onChange={updateArea} value={props.newPostText} />
+                <textarea ref={newPostElement} className={s.textarea} onChange={updateArea} value={props.newPostText} placeholder='Введите текст...' />
             </div>
             <button onClick={ createNewPost } className={s.addPostButton}>
                 Add Post
