@@ -2,6 +2,7 @@ import s from './Profile.module.css';
 import React from "react";
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import Preloader from '../Preloader/Preloader';
+import userPhoto from '../../img/user.jpg'
 
 const ProfileInfo = (props) => {
     if (!props.profile) {
@@ -14,7 +15,7 @@ const ProfileInfo = (props) => {
         <div>
             <img className={s.mainImage} src='https://c.wallhere.com/photos/12/e1/sky_clouds_sunset_air-26035.jpg!d' alt='' />
             <div className={s.profileBlock}>
-                <img className={s.avatar} src={props.profile.photos.large} alt="" />
+                <img className={s.avatar} src={props.profile.photos.large ? props.profile.photos.large : userPhoto} alt="" />
                 <div>
                     <h2 className={s.userName}>{props.profile.fullName}</h2>
                     <p>Обо мне: {props.profile.aboutMe }</p>

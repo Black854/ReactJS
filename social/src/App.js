@@ -1,17 +1,17 @@
 import './App.css';
-import Header from "./components/Header/Header";
-import Navbar from "./components/Navbar/Navbar";
 import Dialogs from './components/Dialogs/Dialogs';
 import { Route, Routes} from 'react-router-dom';
 import React from "react";
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
+import HeaderContainer from './components/Header/HeaderContainer';
+import Navbar from './components/Navbar/Navbar';
 
 
 function App(props) {
   return (
         <div className='app-wrapper'>
-          <Header />
+          <HeaderContainer />
           <Navbar friends={props.state.sidebar.friends} />
           <div className='app-wrapper-content'>
             <Routes>
