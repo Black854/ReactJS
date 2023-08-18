@@ -8,21 +8,11 @@ const User = (props) => {
     let button;
 
     let follow = () => {
-        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${props.id}`, {}, {withCredentials: true, headers: {"API-KEY": "4f3d39e5-214f-420c-9ab3-f8c322bdb13c"}})
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    props.follow(props.id);
-                }
-            });
+        props.follow(props.id);
     }
 
     let unfollow = () => {
-        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${props.id}`,{withCredentials: true, headers: {"API-KEY": "4f3d39e5-214f-420c-9ab3-f8c322bdb13c"}})
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                props.unfollow(props.id);
-            }
-        });
+        props.unfollow(props.id);
     }
 
     props.followed ? button = <button onClick={unfollow} className={s.unfollow}>Unfollow</button> : button = <button onClick={follow} className={s.follow}>Follow</button>;

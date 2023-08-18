@@ -1,14 +1,18 @@
 import React from "react";
 import axios from "axios";
 import Users from "./Users";
+import { followUser, getUsers, unfollowUser } from "../../api/api";
+
+const API_KEY = "4f3d39e5-214f-420c-9ab3-f8c322bdb13c";
 
 class UsersAPIComponent extends React.Component {
     componentDidMount () {
         if (this.props.usersList.length === 0) {
             this.props.setLoading();
-            axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${ this.props.pageNumber}`, {withCredentials: true}).then(response => {
-                this.props.setUsers([...response.data.items]);
-                this.props.setTotalCount(response.data.totalCount);
+
+            getUsers(this.props.pageSize, this.props.pageNumber).then(response => {
+                this.props.setUsers([...response.items]);
+                this.props.setTotalCount(response.totalCount);
                 this.props.setLoading();
             });
         }
@@ -17,10 +21,26 @@ class UsersAPIComponent extends React.Component {
     updateCurrentPage = (p) => {
         this.props.setCurrentPage(p);
         this.props.setLoading();
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${p}`, {withCredentials: true}).then(response => {
-            this.props.setUsers([...response.data.items]);
+        getUsers(this.props.pageSize, p).then(response => {
+            this.props.setUsers([...response.items]);
             this.props.setLoading();
         });
+    }
+
+    follow = (id) => {
+        followUser(id).then(response => {
+                if (response.resultCode === 0) {
+                    this.props.follow(id);
+                }
+            });
+    }
+
+    unfollow = (id) => {
+        unfollowUser(id).then(response => {
+                if (response.resultCode === 0) {
+                    this.props.unfollow(id);
+                }
+            });
     }
 
     render () {
@@ -30,8 +50,8 @@ class UsersAPIComponent extends React.Component {
             pageSize={this.props.pageSize}
             isLoading={this.props.isLoading}
             totalCount={this.props.totalCount}
-            follow={this.props.follow}
-            unfollow={this.props.unfollow}
+            follow={this.follow}
+            unfollow={this.unfollow}
         />
     }
 }
