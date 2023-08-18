@@ -6,7 +6,7 @@ class UsersAPIComponent extends React.Component {
     componentDidMount () {
         if (this.props.usersList.length === 0) {
             this.props.setLoading();
-            axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${ this.props.pageNumber}`).then(response => {
+            axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${ this.props.pageNumber}`, {withCredentials: true}).then(response => {
                 this.props.setUsers([...response.data.items]);
                 this.props.setTotalCount(response.data.totalCount);
                 this.props.setLoading();
@@ -17,7 +17,7 @@ class UsersAPIComponent extends React.Component {
     updateCurrentPage = (p) => {
         this.props.setCurrentPage(p);
         this.props.setLoading();
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${p}`).then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${p}`, {withCredentials: true}).then(response => {
             this.props.setUsers([...response.data.items]);
             this.props.setLoading();
         });
