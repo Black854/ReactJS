@@ -28,17 +28,21 @@ class UsersAPIComponent extends React.Component {
     }
 
     follow = (id) => {
+        this.props.setFollowProgress(true, id);
         followUser(id).then(response => {
                 if (response.resultCode === 0) {
                     this.props.follow(id);
+                    this.props.setFollowProgress(false, id);
                 }
             });
     }
 
     unfollow = (id) => {
+        this.props.setFollowProgress(true, id);
         unfollowUser(id).then(response => {
                 if (response.resultCode === 0) {
                     this.props.unfollow(id);
+                    this.props.setFollowProgress(false, id);
                 }
             });
     }
@@ -52,6 +56,7 @@ class UsersAPIComponent extends React.Component {
             totalCount={this.props.totalCount}
             follow={this.follow}
             unfollow={this.unfollow}
+            followInProgress={this.props.followInProgress}
         />
     }
 }

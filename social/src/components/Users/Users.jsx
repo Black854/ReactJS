@@ -3,7 +3,7 @@ import User from "./User/User";
 import s from "./Users.module.css";
 
 let Users = (props) => {
-    let userList = props.usersList.map(u => <User follow={props.follow} unfollow={props.unfollow} key={u.id} id={u.id} followed={u.followed} fullName={u.name} status={u.status} avatar={u.photos.small} /> );
+    let userList = props.usersList.map(u => <User followInProgress={props.followInProgress} follow={props.follow} unfollow={props.unfollow} key={u.id} id={u.id} followed={u.followed} fullName={u.name} status={u.status} avatar={u.photos.small} /> );
     let pages = [];
     let totalPagesCount = Math.ceil(props.totalCount / props.pageSize);
     for (let i=1; i<= totalPagesCount; i++) {
