@@ -12,7 +12,7 @@ export const getUsers = (pageSize=1, pageNumber) => {
     })
 }
 
-export const getProfile = (id) => {
+export const getProfile = (id=2) => {
     return instance.get(`profile/${id}`).then(response => {
         return response.data;
     })

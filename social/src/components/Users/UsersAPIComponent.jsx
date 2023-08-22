@@ -15,26 +15,6 @@ class UsersAPIComponent extends React.Component {
         this.props.getUsersTC(this.props.pageSize, p);
     }
 
-    // follow = (id) => {
-    //     this.props.setFollowProgress(true, id);
-    //     followUser(id).then(response => {
-    //         if (response.resultCode === 0) {
-    //             this.props.followSuccess(id);
-    //             this.props.setFollowProgress(false, id);
-    //         }
-    //     });
-    // }
-
-    // unfollow = (id) => {
-    //     this.props.setFollowProgress(true, id);
-    //     unfollowUser(id).then(response => {
-    //         if (response.resultCode === 0) {
-    //             this.props.unfollow(id);
-    //             this.props.setFollowProgress(false, id);
-    //         }
-    //     });
-    // }
-
     render () {
         return <Users updateCurrentPage={this.updateCurrentPage}
             usersList={this.props.usersList}

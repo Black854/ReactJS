@@ -1,3 +1,5 @@
+import { getAuthData, getProfile } from "../api/api";
+
 const SET_USER_AUTH_DATA = 'SET_USER_AUTH_DATA';
 const SET_USER_PHOTO = 'SET_USER_PHOTO';
 
@@ -27,7 +29,21 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-export const setUserAuthData = (id, email, login) => ({ type: SET_USER_AUTH_DATA, data: {id, email, login} })
-export const setUserPhoto = (photo) => ({ type: SET_USER_PHOTO, photo })
+export const getAuthDataTC = () => {
+    return (dispatch) => {
+        getAuthData().then(response => {
+            if (response.resultCode === 0) {
+                let {id, email, login} = response.data;
+                dispatch(setUserAuthData(id, email, login));
+                getProfile(response.data.id).then(response2 => {
+                    dispatch(setUserPhoto(response2.photos.small));
+                })
+            }
+        });
+    }
+}
+
+const setUserAuthData = (id, email, login) => ({ type: SET_USER_AUTH_DATA, data: {id, email, login} })
+const setUserPhoto = (photo) => ({ type: SET_USER_PHOTO, photo })
 
 export default authReducer;
