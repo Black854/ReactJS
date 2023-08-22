@@ -2,7 +2,6 @@ import React from "react";
 import s from './User.module.css';
 import userPhoto from '../../../img/user.jpg';
 import {NavLink} from 'react-router-dom';
-import axios from "axios";
 
 const User = (props) => {
     let button;

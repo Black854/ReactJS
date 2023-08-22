@@ -1,3 +1,5 @@
+import { followUser, unfollowUser, getUsers } from "../api/api";
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET-USERS';
@@ -70,8 +72,44 @@ const usersReducer = (state = initialState, action) => {
     }
 }
 
-export const follow = (id) => ({ type: FOLLOW, id })
-export const unfollow = (id) => ({ type: UNFOLLOW, id})
+export const getUsersTC = (pageSize, pageNumber) => {
+    return (dispatch) => {
+        dispatch(setLoading());
+        dispatch(setCurrentPage(pageNumber));
+        getUsers(pageSize, pageNumber).then(response => {
+            dispatch(setUsers([...response.items]));
+            dispatch(setTotalCount(response.totalCount));
+            dispatch(setLoading());
+        });
+    }
+}
+
+export const follow = (userId) => {
+    return (dispatch) => {
+        dispatch(setFollowProgress(true, userId));
+        followUser(userId).then(response => {
+            if (response.resultCode === 0) {
+                dispatch(followSuccess(userId));
+                dispatch(setFollowProgress(false, userId));
+            }
+        });
+    }
+}
+
+export const unfollow = (userId) => {
+    return (dispatch) => {
+        dispatch(setFollowProgress(true, userId));
+        unfollowUser(userId).then(response => {
+            if (response.resultCode === 0) {
+                dispatch(unfollowSuccess(userId));
+                dispatch(setFollowProgress(false, userId));
+            }
+        });
+    }
+}
+
+export const followSuccess = (id) => ({ type: FOLLOW, id })
+export const unfollowSuccess = (id) => ({ type: UNFOLLOW, id})
 export const setUsers = (users) => ({ type: SET_USERS, users})
 export const setCurrentPage = (page) => ({ type: SET_CURRENT_PAGE, page})
 export const setTotalCount = (count) => ({ type: SET_TOTAL_COUNT, count})
