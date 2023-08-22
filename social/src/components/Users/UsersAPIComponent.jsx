@@ -1,6 +1,5 @@
 import React from "react";
 import Users from "./Users";
-import { followUser, unfollowUser } from "../../api/api";
 
 const API_KEY = "4f3d39e5-214f-420c-9ab3-f8c322bdb13c";
 

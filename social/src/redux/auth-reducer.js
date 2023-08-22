@@ -1,4 +1,4 @@
-import { getAuthData, getProfile } from "../api/api";
+import { authAPI, usersAPI } from "../api/api";
 
 const SET_USER_AUTH_DATA = 'SET_USER_AUTH_DATA';
 const SET_USER_PHOTO = 'SET_USER_PHOTO';
@@ -31,11 +31,11 @@ const authReducer = (state = initialState, action) => {
 
 export const getAuthDataTC = () => {
     return (dispatch) => {
-        getAuthData().then(response => {
+        authAPI.me().then(response => {
             if (response.resultCode === 0) {
                 let {id, email, login} = response.data;
                 dispatch(setUserAuthData(id, email, login));
-                getProfile(response.data.id).then(response2 => {
+                usersAPI.getProfile(response.data.id).then(response2 => {
                     dispatch(setUserPhoto(response2.photos.small));
                 })
             }
