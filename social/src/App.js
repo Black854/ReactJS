@@ -17,7 +17,7 @@ function App(props) {
           <div className='app-wrapper-content'>
             <Routes>
               <Route path='profile/:userId?' element={<ProfileContainer store={props.store} />} />
-              <Route path='dialogs/*' element={<Dialogs store={props.store} />} />
+              <Route path='dialogs/*' element={<Dialogs store={props.store} isAuth={props.store.getState().auth.isAuth} />} />
               <Route path='users/*' element={<UsersContainer store={props.store} />} />
               <Route path='login' element={<Login store={props.store} />} />
             </Routes>
