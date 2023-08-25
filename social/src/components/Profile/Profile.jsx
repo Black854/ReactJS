@@ -6,8 +6,8 @@ import userPhoto from '../../img/user.jpg'
 
 class ProfileInfo extends React.Component {
     state = {
-        status: 'mystatus',
-        changeMode: false
+        changeMode: false,
+        status: 's'
     }
 
     activateChangeMode = () => {
@@ -20,6 +20,7 @@ class ProfileInfo extends React.Component {
         this.setState({
             changeMode: false
         });
+        this.props.updateStatusTC(this.statusText.current.value);
     }
 
     render () {
@@ -29,6 +30,7 @@ class ProfileInfo extends React.Component {
             )
         }
 
+        let statusText = React.createRef();
         return (
             <div>
                 <img className={s.mainImage} src='https://c.wallhere.com/photos/12/e1/sky_clouds_sunset_air-26035.jpg!d' alt='' />
@@ -36,8 +38,8 @@ class ProfileInfo extends React.Component {
                     <img className={s.avatar} src={this.props.profile.photos.large ? this.props.profile.photos.large : userPhoto} alt="" />
                     <div>
                         <h2 className={s.userName}>{this.props.profile.fullName}</h2>
-                        {!this.state.changeMode && <p onDoubleClick={this.activateChangeMode}>{this.state.status}</p> } 
-                        {this.state.changeMode && <input autoFocus onBlur={this.deactivateChangeMode} type="text" value={this.state.status} />} 
+                        {!this.state.changeMode && <p onDoubleClick={this.activateChangeMode}>{this.props.status}</p> } 
+                        {this.state.changeMode && <input ref={statusText} autoFocus onBlur={this.deactivateChangeMode} type="text" value={this.props.status} />} 
                         
                         <p>Обо мне: {this.props.profile.aboutMe }</p>
                         {this.props.profile.lookingForAJob && <p>В поиске работы: {this.props.profile.lookingForAJobDescription }</p>}
@@ -61,7 +63,7 @@ class ProfileInfo extends React.Component {
 const Profile = (props) => {
     return (
         <div>
-            <ProfileInfo profile={props.profile} />
+            <ProfileInfo profile={props.profile} status={props.status} />
             <MyPostsContainer store={props.store} posts={props.posts} />
         </div>
     );

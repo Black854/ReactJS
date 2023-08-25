@@ -17,7 +17,7 @@ let Users = (props) => {
         <div className={s.mainDiv}>
             <div className={s.pagesNavigation}>
                 { slicedPages.map( p => {
-                   return <span onClick={() => {props.updateCurrentPage(p) }} className={props.pageNumber === p ? s.activeNumber : ''}>{p}</span>
+                   return <span key={p} onClick={() => {props.updateCurrentPage(p) }} className={props.pageNumber === p ? s.activeNumber : ''}>{p}</span>
                 }) }
             </div>
             {props.isLoading ? <Preloader /> :  userList }            
