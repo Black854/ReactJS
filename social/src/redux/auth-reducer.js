@@ -21,14 +21,7 @@ const authReducer = (state = initialState, action) => {
                 isAuth: true
             };
         case DELETE_USER_AUTH_DATA:
-            return {
-                ...state,
-                id: null,
-                email: null,
-                login: null,
-                isAuth: false,
-                userPhotoSmall: null
-            };
+            return initialState;
         case SET_USER_PHOTO:
             return {
                 ...state,
