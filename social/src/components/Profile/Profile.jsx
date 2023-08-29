@@ -7,7 +7,7 @@ import userPhoto from '../../img/user.jpg'
 class ProfileInfo extends React.Component {
     state = {
         changeMode: false,
-        status: 's'
+        status: this.props.status
     }
 
     activateChangeMode = () => {
@@ -20,7 +20,13 @@ class ProfileInfo extends React.Component {
         this.setState({
             changeMode: false
         });
-        this.props.updateStatusTC(this.statusText.current.value);
+        this.props.updateStatusTC(this.state.status);
+    }
+
+    onChangeStatusText = (e) => {
+        this.setState({
+            status: e.currentTarget.value
+        });
     }
 
     render () {
@@ -30,7 +36,6 @@ class ProfileInfo extends React.Component {
             )
         }
 
-        let statusText = React.createRef();
         return (
             <div>
                 <img className={s.mainImage} src='https://c.wallhere.com/photos/12/e1/sky_clouds_sunset_air-26035.jpg!d' alt='' />
@@ -39,7 +44,7 @@ class ProfileInfo extends React.Component {
                     <div>
                         <h2 className={s.userName}>{this.props.profile.fullName}</h2>
                         {!this.state.changeMode && <p onDoubleClick={this.activateChangeMode}>{this.props.status}</p> } 
-                        {this.state.changeMode && <input ref={statusText} autoFocus onBlur={this.deactivateChangeMode} type="text" value={this.props.status} />} 
+                        {this.state.changeMode && <input autoFocus onBlur={this.deactivateChangeMode} type="text" value={this.state.status} onChange={this.onChangeStatusText} />} 
                         
                         <p>Обо мне: {this.props.profile.aboutMe }</p>
                         {this.props.profile.lookingForAJob && <p>В поиске работы: {this.props.profile.lookingForAJobDescription }</p>}
@@ -63,7 +68,7 @@ class ProfileInfo extends React.Component {
 const Profile = (props) => {
     return (
         <div>
-            <ProfileInfo profile={props.profile} status={props.status} />
+            <ProfileInfo profile={props.profile} status={props.status} updateStatusTC={props.updateStatusTC} />
             <MyPostsContainer store={props.store} posts={props.posts} />
         </div>
     );
