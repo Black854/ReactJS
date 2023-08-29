@@ -24,3 +24,8 @@
   margin-right: 5px;
   margin-top: 4px;
 }
+
+.logout {
+  cursor: pointer;
+  text-decoration: underline;
+}

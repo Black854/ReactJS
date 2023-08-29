@@ -4,7 +4,6 @@ import sizh from "../img/sizh.jpg";
 import sistr from "../img/sistr.jpg";
 
 const SEND_MESSAGE = 'SEND-MESSAGE';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
 
 let initialState = {
     dialogs: [
@@ -29,21 +28,14 @@ const dialogsReducer = (state = initialState, action) => {
                 ...state,
                 messages: [
                     ...state.messages,
-                    { id: 5, message: state.newMessageText, senderId: 1 }
-                ],
-                newMessageText: ''
-            };
-        case UPDATE_NEW_MESSAGE_TEXT:
-            return {
-                ...state,
-                newMessageText: action.text
+                    { id: 5, message: action.text, senderId: 1 }
+                ]
             };
         default:
             return state;
     }
 }
 
-export const sendMessage = () => ({ type: SEND_MESSAGE })
-export const updateText = (text) => ({ type: UPDATE_NEW_MESSAGE_TEXT, text: text })
+export const sendMessage = (text) => ({ type: SEND_MESSAGE, text })
 
 export default dialogsReducer;
