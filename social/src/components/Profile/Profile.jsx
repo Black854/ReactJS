@@ -51,7 +51,7 @@ class ProfileInfo extends React.Component {
                     <img className={s.avatar} src={this.props.profile.photos.large ? this.props.profile.photos.large : userPhoto} alt="" />
                     <div>
                         <h2 className={s.userName}>{this.props.profile.fullName}</h2>
-                        {!this.state.changeMode && <p onDoubleClick={this.activateChangeMode}>{this.state.status || '------'}</p> } 
+                        {!this.state.changeMode && <p onDoubleClick={this.activateChangeMode}>{this.props.status || '------'}</p> } 
                         {this.state.changeMode && <input autoFocus onBlur={this.deactivateChangeMode} type="text" value={this.state.status} onChange={this.onChangeStatusText} />} 
                         
                         <p>Обо мне: {this.props.profile.aboutMe }</p>
