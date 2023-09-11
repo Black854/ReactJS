@@ -1,4 +1,4 @@
-import Preloader from "../Preloader/Preloader";
+import Preloader from "../common/Preloader/Preloader";
 import User from "./User/User";
 import s from "./Users.module.css";
 

@@ -2,11 +2,13 @@ import s from './Message.module.css';
 import React from "react";
 import Item from "./Item/Item";
 import {Field, reduxForm} from 'redux-form';
+import { Textarea } from '../../common/FormsControls/FormControls';
+import { maxLength, required } from '../../../utils/validators/validators';
 
 const NewMessageForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            <Field className={s.newMessageText} name='text' component='textarea' />
+            <Field className={s.newMessageText} name='text' component={Textarea} validate={[required, maxLength(50)]}/>
             <button className={s.sendButton}>Send</button>
         </form>
     )

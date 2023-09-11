@@ -7,22 +7,22 @@ const Navbar = (props) => {
     return (
         <div className={s.nav}>
             <div>
-                <NavLink className={({isActive}) => isActive ? s.active : s.item} to='/profile'>Profile</NavLink>
+                <NavLink className={({isActive}) => isActive ? s.active : s.item} to='/profile'>Мой профиль</NavLink>
             </div>
             <div>
-                <NavLink className={({isActive}) => isActive ? s.active : s.item} to='/dialogs'>Messages</NavLink>
+                <NavLink className={({isActive}) => isActive ? s.active : s.item} to='/dialogs'>Сообщения</NavLink>
             </div>
             <div>
-                <NavLink className={({isActive}) => isActive ? s.active : s.item} to='/news'>News</NavLink>
+                <NavLink className={({isActive}) => isActive ? s.active : s.item} to='/news'>Новости</NavLink>
             </div>
             <div>
-                <NavLink className={({isActive}) => isActive ? s.active : s.item} to='/music'>Music</NavLink>
+                <NavLink className={({isActive}) => isActive ? s.active : s.item} to='/music'>Музыка</NavLink>
             </div>
             <div>
-                <NavLink className={({isActive}) => isActive ? s.active : s.item} to='/settings'>Settings</NavLink>
+                <NavLink className={({isActive}) => isActive ? s.active : s.item} to='/settings'>Настройки</NavLink>
             </div>
             <div>
-                <NavLink className={({isActive}) => isActive ? s.active : s.item} to='/users'>Users</NavLink>
+                <NavLink className={({isActive}) => isActive ? s.active : s.item} to='/users'>Пользователи</NavLink>
             </div>
             <Friends friends={props.friends} />
         </div>

@@ -1,0 +1,23 @@
+.loginForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputText {
+    width: 30%;
+    margin: 3px auto;
+    font-size: 14pt;
+    margin-left: 35%;
+}
+
+.submit {
+    width: 30%;
+    margin-left: 35%;
+    margin-top: 10px;
+}
+
+.rememberMe {
+    width: 30%;
+    margin-left: 35%;
+    margin-top: 5px;
+}
