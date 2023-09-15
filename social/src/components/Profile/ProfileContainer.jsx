@@ -8,6 +8,20 @@ import {compose} from 'redux';
 class ProfileContainer extends React.Component {
     componentDidMount () {
         let userId = this.props.match.params.userId;
+        if (!userId || this.props.id) {
+            userId = this.props.id;
+        }
+        this.props.getProfileTC(userId);
+        this.props.getStatusTC(userId);
+    }
+
+    componentDidUpdate () {
+        let userId;
+        if (this.props.match.params.userId) {
+            userId = this.props.match.params.userId;
+        } else if (this.props.id) {
+            userId = this.props.id;
+        }
         this.props.getProfileTC(userId);
         this.props.getStatusTC(userId);
     }
