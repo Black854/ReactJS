@@ -1,4 +1,5 @@
 import { authAPI, usersAPI } from "../api/api";
+import {stopSubmit} from "redux-form";
 
 const DELETE_USER_AUTH_DATA = 'DELETE_USER_AUTH_DATA';
 const SET_USER_AUTH_DATA = 'SET_USER_AUTH_DATA';
@@ -32,48 +33,43 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-export const getAuthDataTC = () => {
-    return (dispatch) => {
-        authAPI.me().then(response => {
-            if (response.resultCode === 0) {
-                let {id, email, login} = response.data;
-                dispatch(setUserAuthData(id, email, login));
-                usersAPI.getProfile(response.data.id).then(response2 => {
-                    dispatch(setUserPhoto(response2.photos.small));
-                })
-            }
-        });
-    }
+export const getAuthDataTC = () => (dispatch) => {
+    authAPI.me().then(response => {
+        if (response.resultCode === 0) {
+            let {id, email, login} = response.data;
+            dispatch(setUserAuthData(id, email, login));
+            usersAPI.getProfile(response.data.id).then(response2 => {
+                dispatch(setUserPhoto(response2.photos.small));
+            })
+        }
+    });
 }
 
-export const login = (formData) => {
-    return (dispatch) => {
-        authAPI.login(formData).then(response => {
-            console.log(response);
-            if (response.resultCode === 0) {
-                authAPI.me().then(response => {
-                    if (response.resultCode === 0) {
-                        let {id, email, login} = response.data;
-                        dispatch(setUserAuthData(id, email, login));
-                        usersAPI.getProfile(response.data.id).then(response2 => {
-                            dispatch(setUserPhoto(response2.photos.small));
-                        })
-                    }
-                });
-            }
-        });
-    }
+export const login = (formData) => (dispatch) => {
+    authAPI.login(formData).then(response => {
+        if (response.resultCode === 0) {            
+            authAPI.me().then(response => {
+                if (response.resultCode === 0) {
+                    let {id, email, login} = response.data;
+                    dispatch(setUserAuthData(id, email, login));
+                    usersAPI.getProfile(response.data.id).then(response2 => {
+                        dispatch(setUserPhoto(response2.photos.small));
+                    })
+                }
+            });
+        } else {
+            let message = response.messages.length > 0 ? response.messages[0] : "some error";
+            dispatch(stopSubmit("login", {_error: message}));
+        }
+    });
 }
 
-export const logout = () => {
-    return (dispatch) => {
-        authAPI.logout().then(response => {
-            console.log(response);
-            if (response.resultCode === 0) {
-                dispatch(deleteUserAuthData());
-            }
-        });
-    }
+export const logout = () => (dispatch) => {
+    authAPI.logout().then(response => {
+        if (response.resultCode === 0) {
+            dispatch(deleteUserAuthData());
+        }
+    });
 }
 
 const setUserAuthData = (id, email, login) => ({ type: SET_USER_AUTH_DATA, data: {id, email, login} })

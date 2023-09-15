@@ -15,10 +15,15 @@ const LoginForm = (props) => {
                 <Field className={s.inputText} name="email" type="text" placeholder="login" component={Input} validate={[required]} />
             </div>
             <div>
-                <Field className={s.inputText} name="password" type="text" placeholder="password" component={Input} validate={[required]} />
+                <Field className={s.inputText} name="password" type="password" placeholder="password" component={Input} validate={[required]} />
             </div>
             <div className={s.rememberMe} >
                 <Field name="rememberMe" type="checkbox" component="input" /> Remember me
+            </div>
+            <div>
+                <p className={s.error} >
+                    {props.error}
+                </p>
             </div>
             <button className={s.submit}>Login</button>
         </form>

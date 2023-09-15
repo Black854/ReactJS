@@ -28,12 +28,12 @@ export const usersAPI = {
 }
 
 export const profileAPI = {
-    getProfile (id=25138) {
+    getProfile (id) {
         return instance.get(`profile/${id}`).then(response => {
             return response.data;
         })
     },
-    getStatus (userId=25138) {
+    getStatus (userId) {
         return instance.get(`profile/status/${userId}`).then(response => {
             return response.data;
         })
