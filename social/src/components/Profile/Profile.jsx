@@ -3,6 +3,7 @@ import React from "react";
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import Preloader from '../common/Preloader/Preloader';
 import userPhoto from '../../img/user.jpg'
+import { useEffect } from 'react';
 
 class ProfileInfo extends React.Component {
     state = {
@@ -74,6 +75,12 @@ class ProfileInfo extends React.Component {
 }
 
 const Profile = (props) => {
+    useEffect(() => {
+        if (!props.isAuth && !props.match.params.userId) {
+          props.match.navigate("/login");
+        }
+      }, [props.isAuth, props.match.params.userId]);
+
     return (
         <div>
             <ProfileInfo profile={props.profile} status={props.status} updateStatusTC={props.updateStatusTC} />

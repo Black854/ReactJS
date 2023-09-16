@@ -34,7 +34,7 @@ const authReducer = (state = initialState, action) => {
 }
 
 export const getAuthDataTC = () => (dispatch) => {
-    authAPI.me().then(response => {
+    return authAPI.me().then(response => {
         if (response.resultCode === 0) {
             let {id, email, login} = response.data;
             dispatch(setUserAuthData(id, email, login));
