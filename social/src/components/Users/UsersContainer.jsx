@@ -2,17 +2,18 @@ import { connect } from "react-redux";
 import UsersAPIComponent from "./UsersAPIComponent";
 import { follow, unfollow, setCurrentPage, setFollowProgress, getUsersTC } from "../../redux/users-reducer";
 import { compose } from "redux";
+import { followInProgress, getUsers, isAuth, isLoading, pageNumber, pageSize, totalCount } from "../../redux/users-selectors";
 
 
 let mapStateToProps = (state) => {
     return {
-        usersList: state.usersPage.usersList,
-        pageNumber: state.usersPage.pageNumber,
-        pageSize: state.usersPage.pageSize,
-        totalCount: state.usersPage.totalCount,
-        isLoading: state.usersPage.isLoading,
-        followInProgress: state.usersPage.followInProgress,
-        isAuth: state.auth.isAuth
+        usersList: getUsers(state),
+        pageNumber: pageNumber(state),
+        pageSize: pageSize(state),
+        totalCount: totalCount(state),
+        isLoading: isLoading(state),
+        followInProgress: followInProgress(state),
+        isAuth: isAuth(state)
     }
 }
 
