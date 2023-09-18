@@ -76,6 +76,10 @@ const ProfileInfo = (props) => {
     let [changeMode, setChangeMode] = useState(false);
     let [status, setStatus] = useState(props.status);
 
+    useEffect (() => {
+        setStatus(props.status);
+        }, [props.status]);
+
     const activateChangeMode = () => {
         setChangeMode(true);
     }
