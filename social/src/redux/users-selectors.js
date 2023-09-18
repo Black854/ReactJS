@@ -4,30 +4,30 @@ const usersList = (state) => {
     return state.usersPage.usersList;
 }
 
-export const getUsers = createSelector(usersList, (usersList) => {
-    return usersList;
+export const getUsersList = createSelector(usersList, (users) => {
+    return users;
 })
 
-export const pageNumber = (state) => {
+export const getPageNumber = (state) => {
     return state.usersPage.pageNumber;
 }
 
-export const pageSize = (state) => {
+export const getPageSize = (state) => {
     return state.usersPage.pageSize;
 }
 
-export const totalCount = (state) => {
+export const getTotalCount = (state) => {
     return state.usersPage.totalCount;
 }
 
-export const isLoading = (state) => {
+export const getIsLoading = (state) => {
     return state.usersPage.isLoading;
 }
 
-export const followInProgress = (state) => {
+export const getFollowInProgress = (state) => {
     return state.usersPage.followInProgress;
 }
 
-export const isAuth = (state) => {
+export const getIsAuth = (state) => {
     return state.auth.isAuth;
 }

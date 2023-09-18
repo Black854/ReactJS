@@ -55,14 +55,12 @@ export const getStatusTC = (userId) => {
     }
 }
 
-export const updateStatusTC = (status) => {
-    return (dispatch) => {
-        profileAPI.updateStatus(status).then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(setStatusAC(status));
-            }
-        });
-    }
+export const updateStatusTC = (status) => (dispatch) => {
+    profileAPI.updateStatus(status).then(response => {
+        if (response.resultCode === 0) {
+            dispatch(setStatusAC(status));
+        }
+    });
 }
 
 export const createNewPost = (text) => ({ type: ADD_POST, text })
