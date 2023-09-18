@@ -26,7 +26,7 @@ class App extends React.Component {
               <div className='app-wrapper-content'>
                 <Routes>
                   <Route path='profile/:userId?' element={<ProfileContainer store={this.props.store} />} />
-                  <Route path='dialogs/*' element={<Dialogs store={this.props.store} isAuth={this.props.store.getState().auth.isAuth} />} />
+                  <Route path='dialogs/*' element={<Dialogs store={this.props.store} />} />
                   <Route path='users/*' element={<UsersContainer store={this.props.store} />} />
                   <Route path='login' element={<Login store={this.props.store} />} />
                 </Routes>

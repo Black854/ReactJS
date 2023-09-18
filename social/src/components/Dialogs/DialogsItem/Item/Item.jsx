@@ -2,12 +2,12 @@ import s from './Item.module.css';
 import {NavLink} from "react-router-dom";
 import React from "react";
 
-const Item = (props) => {
+const Item = ({id, name, url}) => {
     return (
         <div className={s.item}>
-            <NavLink className={({isActive}) => isActive ? s.active : s.link} to={props.id}>
-                <img className={s.userImage} src={props.url} alt=""/>
-                <span className={s.name}>{props.name}</span>
+            <NavLink className={({isActive}) => isActive ? s.active : s.link} to={id}>
+                <img className={s.userImage} src={url} alt=""/>
+                <span className={s.name}>{name}</span>
             </NavLink>
         </div>
     );

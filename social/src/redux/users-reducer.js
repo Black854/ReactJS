@@ -72,39 +72,30 @@ const usersReducer = (state = initialState, action) => {
     }
 }
 
-export const getUsersTC = (pageSize, pageNumber) => {
-    return (dispatch) => {
-        dispatch(setLoading());
-        dispatch(setCurrentPage(pageNumber));
-        usersAPI.getUsers(pageSize, pageNumber).then(response => {
-            dispatch(setUsers([...response.items]));
-            dispatch(setTotalCount(response.totalCount));
-            dispatch(setLoading());
-        });
+export const getUsersTC = (pageSize, pageNumber) =>  async (dispatch) => {
+    dispatch(setLoading());
+    dispatch(setCurrentPage(pageNumber));
+    let response = await usersAPI.getUsers(pageSize, pageNumber);
+    dispatch(setUsers([...response.items]));
+    dispatch(setTotalCount(response.totalCount));
+    dispatch(setLoading());
+}
+
+export const follow = (userId) => async (dispatch) => {
+    dispatch(setFollowProgress(true, userId));
+    let response = await usersAPI.followUser(userId);
+    if (response.resultCode === 0) {
+        dispatch(followSuccess(userId));
+        dispatch(setFollowProgress(false, userId));
     }
 }
 
-export const follow = (userId) => {
-    return (dispatch) => {
-        dispatch(setFollowProgress(true, userId));
-        usersAPI.followUser(userId).then(response => {
-            if (response.resultCode === 0) {
-                dispatch(followSuccess(userId));
-                dispatch(setFollowProgress(false, userId));
-            }
-        });
-    }
-}
-
-export const unfollow = (userId) => {
-    return (dispatch) => {
-        dispatch(setFollowProgress(true, userId));
-        usersAPI.unfollowUser(userId).then(response => {
-            if (response.resultCode === 0) {
-                dispatch(unfollowSuccess(userId));
-                dispatch(setFollowProgress(false, userId));
-            }
-        });
+export const unfollow = (userId) => async (dispatch) => {
+    dispatch(setFollowProgress(true, userId));
+    let response = await usersAPI.unfollowUser(userId);
+    if (response.resultCode === 0) {
+        dispatch(unfollowSuccess(userId));
+        dispatch(setFollowProgress(false, userId));
     }
 }
 
