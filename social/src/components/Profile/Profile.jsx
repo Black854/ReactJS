@@ -102,7 +102,7 @@ const ProfileInfo = (props) => {
                 <img className={s.avatar} src={props.profile.photos.large ? props.profile.photos.large : userPhoto} alt="" />
                 <div>
                     <h2 className={s.userName}>{props.profile.fullName}</h2>
-                    {!changeMode && <p onDoubleClick={activateChangeMode}>{status || '------'}</p> } 
+                    {!changeMode && <p onDoubleClick={activateChangeMode}>{props.status || '------'}</p> } 
                     {changeMode && <input autoFocus onBlur={deactivateChangeMode} type="text" value={status} onChange={onChangeStatusText} />}
                     <p>Обо мне: {props.profile.aboutMe }</p>
                     {props.profile.lookingForAJob && <p>В поиске работы: {props.profile.lookingForAJobDescription }</p>}
