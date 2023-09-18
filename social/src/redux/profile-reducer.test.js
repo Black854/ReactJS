@@ -13,5 +13,5 @@ it('new post should be added', () => {
 
     let newState = profileReducer(state, action);
 
-    expect(newState.posts.length).toBe(4);
+    expect(newState.posts.length).toBe(41);
 })
