@@ -1,8 +1,6 @@
 import React from "react";
 import Users from "./Users";
 
-const API_KEY = "4f3d39e5-214f-420c-9ab3-f8c322bdb13c";
-
 class UsersAPIComponent extends React.Component {
     componentDidMount () {
         if (this.props.usersList.length === 0) {
