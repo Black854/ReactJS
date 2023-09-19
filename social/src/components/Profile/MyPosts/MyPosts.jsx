@@ -5,9 +5,9 @@ import Post from "./Post/Post";
 import React from "react";
 import {Field, reduxForm} from 'redux-form';
 
-const NewPostForm = (props) => {
+const NewPostForm = ({handleSubmit}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <Field name='text' className={s.textarea} placeholder='Введите текст...' component={Textarea} validate={[required, maxLength(10)]} />
             <button className={s.addPostButton}>Add Post</button>
         </form>
@@ -16,16 +16,16 @@ const NewPostForm = (props) => {
 
 const NewPostReduxForm = reduxForm({form: 'newPostForm'})(NewPostForm);
 
-const MyPosts = (props) => {
-    let postsElements = props.posts.map(post => <Post key={post.id} message={post.postText} likesCount={post.likesCount} />);
+const MyPosts = ({createNewPost, posts}) => {
+    let postsElements = posts.map(post => <Post key={post.id} message={post.postText} likesCount={post.likesCount} />);
 
-    let createNewPost = (values) => {
-        props.createNewPost(values.text);
+    let createNewPostFunc = (values) => {
+        createNewPost(values.text);
     } 
 
     return (
         <div className={s.myPostsBlock}>
-            <NewPostReduxForm onSubmit={createNewPost} />
+            <NewPostReduxForm onSubmit={createNewPostFunc} />
             { postsElements }
         </div>);
 }

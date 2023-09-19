@@ -6,20 +6,15 @@ import {Navigate} from 'react-router-dom';
 import { required } from "../../utils/validators/validators";
 import { Input } from "../common/FormsControls/FormControls";
 import s from "./Login.module.css";
+import { CreateField } from "../common/FormsControls/form-helpers";
 
 
 const LoginForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit} className={s.loginForm}>
-            <div>
-                <Field className={s.inputText} name="email" type="text" placeholder="login" component={Input} validate={[required]} />
-            </div>
-            <div>
-                <Field className={s.inputText} name="password" type="password" placeholder="password" component={Input} validate={[required]} />
-            </div>
-            <div className={s.rememberMe} >
-                <Field name="rememberMe" type="checkbox" component="input" /> Remember me
-            </div>
+            {CreateField(s.inputText, "email", "email", "Email", Input, [required])}
+            {CreateField(s.inputText, "password", "password", "Password", Input, [required])}
+            {CreateField(null, "rememberMe", "checkbox", null, "input", [], s.rememberMe, "Remember me")}
             <div>
                 <p className={s.error} >
                     {props.error}
@@ -33,15 +28,12 @@ const LoginForm = (props) => {
 const LoginReduxForm = reduxForm({form: 'login'})(LoginForm);
 
 const Login = (props) => {
-
     const onSubmit = (formData) => {
         props.login(formData);
     }
-
     if (props.isAuth === true) {
         return <Navigate to='/profile' />
     }
-
     return (
         <div>
             <h1>Login</h1>

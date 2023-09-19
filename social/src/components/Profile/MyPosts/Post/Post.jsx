@@ -1,13 +1,13 @@
 import s from './Post.module.css'
 import React from "react";
 
-const Post = (props) => {
+const Post = ({message, likesCount}) => {
     return (
         <div className={s.postBlock}>
             <img src="https://cdn-icons-png.flaticon.com/128/149/149071.png" alt=""/>
-            {props.message}
+            {message}
             <div>
-                like {props.likesCount}
+                like {likesCount}
             </div>
         </div>);
 }

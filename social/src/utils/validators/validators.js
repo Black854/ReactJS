@@ -5,7 +5,7 @@ export const required = value => {
 }
 
 export const maxLength = (count) => value => {
-    if (value.length > count ) return `Максимальная длина поля - ${count} символов!`;
+    if (value && value.length > count ) return `Максимальная длина поля - ${count} символов!`;
 
     return undefined;
 }

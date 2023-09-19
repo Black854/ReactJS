@@ -1,30 +1,15 @@
+import Paginator from "../common/Paginator/Paginator";
 import Preloader from "../common/Preloader/Preloader";
 import User from "./User/User";
 import s from "./Users.module.css";
 
-let Users = (props) => {
-    let userList = props.usersList.map(u => <User followInProgress={props.followInProgress} follow={props.follow} unfollow={props.unfollow} key={u.id} id={u.id} followed={u.followed} fullName={u.name} status={u.status} avatar={u.photos.small} /> );
-    let pages = [];
-    let totalPagesCount = Math.ceil(props.totalCount / props.pageSize);
-    for (let i=1; i<= totalPagesCount; i++) {
-        pages.push(i);
-    }
-    let curP = props.pageNumber;
-    let curPF = ((curP-5) < 0 ) ? 0 : curP - 5;
-    let curPL = curP +5;
-    let slicedPages = pages.slice (curPF, curPL);
+let Users = ({usersList, followInProgress, follow, unfollow, totalCount, pageSize, pageNumber, updateCurrentPage, isLoading}) => {
+    let userList = usersList.map(u => <User followInProgress={followInProgress} follow={follow} unfollow={unfollow} key={u.id} id={u.id} followed={u.followed} fullName={u.name} status={u.status} avatar={u.photos.small} /> );    
     return (
         <div className={s.mainDiv}>
-            <div className={s.pagesNavigation}>
-                { slicedPages.map( p => {
-                   return <span key={p} onClick={() => {props.updateCurrentPage(p) }} className={props.pageNumber === p ? s.activeNumber : ''}>{p}</span>
-                }) }
-            </div>
-            {props.isLoading ? <Preloader /> :  userList }            
-            
-            
+            <Paginator totalCount={totalCount} pageSize={pageSize} pageNumber={pageNumber} updateCurrentPage={updateCurrentPage}  />
+            {isLoading ? <Preloader /> :  userList }
         </div>
-        
     );
 }
 
