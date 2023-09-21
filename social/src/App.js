@@ -1,15 +1,17 @@
 import './App.css';
-import Dialogs from './components/Dialogs/Dialogs';
-import { Route, Routes} from 'react-router-dom';
-import React from "react";
-import UsersContainer from './components/Users/UsersContainer';
-import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
+import { Route, Routes} from 'react-router-dom';
+import React, { lazy } from "react";
 import Navbar from './components/Navbar/Navbar';
 import Login from './components/Login/Login';
 import Preloader from './components/common/Preloader/Preloader';
 import { connect } from 'react-redux';
 import { initializeAppTC } from './redux/app-reducer';
+import { compose } from 'redux';
+import { withSuspense } from './hoc/withSuspense';
+let UsersContainer = lazy(() => import ('./components/Users/UsersContainer'));
+let ProfileContainer = lazy(() => import ('./components/Profile/ProfileContainer'));
+let Dialogs = lazy(() => import ('./components/Dialogs/Dialogs'));
 
 class App extends React.Component {
   componentDidMount () {
@@ -41,4 +43,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {initializeAppTC}) (App);
+export default compose(connect(mapStateToProps, {initializeAppTC}), withSuspense)(App);
