@@ -31,14 +31,23 @@ const ProfileInfo = (props) => {
         )
     }
 
+    const onSelectPhoto = (e) => {
+        debugger
+        props.uploadPhotoTC(e.currentTarget.files[0]);
+    }
+
     return (
         <div>
             <img className={s.mainImage} src='https://c.wallhere.com/photos/12/e1/sky_clouds_sunset_air-26035.jpg!d' alt='' />
             <div className={s.profileBlock}>
-                <img className={s.avatar} src={props.profile.photos.large ? props.profile.photos.large : userPhoto} alt="" />
+                <div className={s.mainPhotoContainer}>
+                    <img className={s.avatar} src={props.profile.photos.large ? props.profile.photos.large : userPhoto} alt="" />
+                    {props.isMyProfilePage && <><input id="uploadPhoto" type="file" className={s.buttonUploadPhoto} onChange={onSelectPhoto} />
+                    <label htmlFor="uploadPhoto" className={s.buttonLabel}></label></>}
+                </div>
                 <div>
-                    <h2 className={s.userName}>{props.profile.fullName}</h2>
-                    {!changeMode && <p onDoubleClick={activateChangeMode}>{props.status || '------'}</p> } 
+                    <h2 className={s.userName}>{props.profile.fullName}</h2>                    
+                    {!changeMode && ( props.isMyProfilePage ? <p onDoubleClick={activateChangeMode}>{props.status || '------'}</p> : <p>{props.status || '------'}</p> )} 
                     {changeMode && <input autoFocus onBlur={deactivateChangeMode} type="text" value={status} onChange={onChangeStatusText} />}
                     <p>Обо мне: {props.profile.aboutMe }</p>
                     {props.profile.lookingForAJob && <p>В поиске работы: {props.profile.lookingForAJobDescription }</p>}
@@ -66,7 +75,7 @@ const Profile = (props) => {
 
     return (
         <div>
-            <ProfileInfo profile={props.profile} status={props.status} updateStatusTC={props.updateStatusTC} />
+            <ProfileInfo profile={props.profile} status={props.status} updateStatusTC={props.updateStatusTC} uploadPhotoTC={props.uploadPhotoTC} isMyProfilePage={props.isMyProfilePage} />
             <MyPostsContainer store={props.store} posts={props.posts} />
         </div>
     );

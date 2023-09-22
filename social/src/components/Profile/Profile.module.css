@@ -27,3 +27,37 @@
   margin-top: 0px;
 }
 
+.buttonUploadPhoto {
+  display: none;
+}
+
+.buttonLabel {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  position: relative;
+  bottom: 245px;
+  left: 215px;
+  background-image: url('./../../img/camera.png');
+  background-size: 25px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: all 0.5s;
+  opacity: 0.4;
+}
+
+.mainPhotoContainer {
+  width: 250px;
+  height: 250px;
+  margin-right: 60px;
+}
+
+.buttonLabel:hover {
+  transition: all 0.5s;
+  opacity: 1;
+}
+
+.avatar:hover ~ .buttonLabel {
+  transition: all 0.5s;
+  opacity: 1;
+}

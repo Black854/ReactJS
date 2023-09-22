@@ -1,12 +1,12 @@
 import React from "react";
 import Profile from './Profile'
 import { connect } from "react-redux";
-import { getProfileTC, getStatusTC, updateStatusTC } from "../../redux/profile-reducer";
+import { getProfileTC, getStatusTC, updateStatusTC, uploadPhotoTC } from "../../redux/profile-reducer";
 import { withRouter } from "../../hoc/withRouter";
 import {compose} from 'redux';
 
 class ProfileContainer extends React.Component {
-    componentDidMount () {
+    refreshProfile() {
         let userId = this.props.match.params.userId;
         if (!userId) {
             userId = this.props.id;
@@ -15,10 +15,20 @@ class ProfileContainer extends React.Component {
         this.props.getStatusTC(userId);
     }
 
+    componentDidMount () {
+        this.refreshProfile();
+    }
+
+    componentDidUpdate (prevProps, prevState, snapshot) {
+        if (this.props.match.params.userId != prevProps.match.params.userId ) {
+            this.refreshProfile();
+        }
+    }
+
     render () {
         return (
             <div>
-                <Profile {...this.props} />
+                <Profile {...this.props} isMyProfilePage={!this.props.match.params.userId} />
             </div>
         );
     }
@@ -40,7 +50,7 @@ let mapStateToProps = (state) => {
 }
 
 export default compose(
-    connect(mapStateToProps, {getProfileTC, getStatusTC, updateStatusTC}),
+    connect(mapStateToProps, {getProfileTC, getStatusTC, updateStatusTC, uploadPhotoTC}),
     withRouter,
     connect(mapStateToPropRedirect)
 )(ProfileContainer);
