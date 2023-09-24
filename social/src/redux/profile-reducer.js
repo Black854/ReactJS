@@ -66,10 +66,18 @@ export const updateStatusTC = (status) => async (dispatch) => {
 }
 
 export const uploadPhotoTC = (photo) => async (dispatch) => {
-    debugger
     let response = await profileAPI.uploadPhoto(photo);
     if (response.resultCode === 0) {
         dispatch(updatePhoto(response.data.photos));
+    }
+}
+
+export const setProfile = (data, userId) => async (dispatch) => {
+    let response = await profileAPI.setProfile(data);
+    if (response.resultCode === 0) {
+        usersAPI.getProfile(userId).then(response => {
+        dispatch(setUserProfile(response));
+    });
     }
 }
 
@@ -77,5 +85,6 @@ export const createNewPost = (text) => ({ type: ADD_POST, text })
 const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 const setStatusAC = (status) => ({ type: SET_STATUS, status })
 const updatePhoto = (photos) => ({ type: UPDATE_PHOTO, photos })
+
 
 export default profileReducer;

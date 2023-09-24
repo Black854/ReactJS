@@ -1,11 +1,11 @@
 import React from "react";
 import Profile from './Profile'
 import { connect } from "react-redux";
-import { getProfileTC, getStatusTC, updateStatusTC, uploadPhotoTC } from "../../redux/profile-reducer";
+import { getProfileTC, getStatusTC, updateStatusTC, uploadPhotoTC, setProfile } from "../../redux/profile-reducer";
 import { withRouter } from "../../hoc/withRouter";
 import {compose} from 'redux';
 
-class ProfileContainer extends React.Component {
+class ProfileContainer extends React.PureComponent {
     refreshProfile() {
         let userId = this.props.match.params.userId;
         if (!userId) {
@@ -50,7 +50,7 @@ let mapStateToProps = (state) => {
 }
 
 export default compose(
-    connect(mapStateToProps, {getProfileTC, getStatusTC, updateStatusTC, uploadPhotoTC}),
+    connect(mapStateToProps, {getProfileTC, getStatusTC, updateStatusTC, uploadPhotoTC, setProfile}),
     withRouter,
     connect(mapStateToPropRedirect)
 )(ProfileContainer);

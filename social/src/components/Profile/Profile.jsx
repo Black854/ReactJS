@@ -3,9 +3,15 @@ import React, { useState, useEffect } from "react";
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import Preloader from '../common/Preloader/Preloader';
 import userPhoto from '../../img/user.jpg';
+import { CreateField } from '../common/FormsControls/form-helpers';
+import { required } from '../../utils/validators/validators';
+import { Input } from '../common/FormsControls/FormControls';
+import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 
 const ProfileInfo = (props) => {
     let [changeMode, setChangeMode] = useState(false);
+    let [contactsChangeMode, setContactsChangeMode] = useState(false);
     let [status, setStatus] = useState(props.status);
 
     useEffect (() => {
@@ -32,8 +38,12 @@ const ProfileInfo = (props) => {
     }
 
     const onSelectPhoto = (e) => {
-        debugger
         props.uploadPhotoTC(e.currentTarget.files[0]);
+    }
+
+    const onSubmit = (formData) => {
+        props.setProfile(formData, props.profile.userId);
+        setContactsChangeMode(false);
     }
 
     return (
@@ -47,24 +57,54 @@ const ProfileInfo = (props) => {
                 </div>
                 <div>
                     <h2 className={s.userName}>{props.profile.fullName}</h2>                    
-                    {!changeMode && ( props.isMyProfilePage ? <p onDoubleClick={activateChangeMode}>{props.status || '------'}</p> : <p>{props.status || '------'}</p> )} 
+                    {!changeMode && ( props.isMyProfilePage ? <p onDoubleClick={activateChangeMode}> Статус: {props.status || '------'}</p> : <p>{props.status || '------'}</p> )} 
                     {changeMode && <input autoFocus onBlur={deactivateChangeMode} type="text" value={status} onChange={onChangeStatusText} />}
-                    <p>Обо мне: {props.profile.aboutMe }</p>
-                    {props.profile.lookingForAJob && <p>В поиске работы: {props.profile.lookingForAJobDescription }</p>}
-                    <h3>Контакты</h3>
-                    {props.profile.contacts.facebook && <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.facebook }>Facebook</a>}
-                    {props.profile.contacts.website && <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.website }>WebSite</a>}
-                    {props.profile.contacts.vk && <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.vk }>VK</a>}
-                    {props.profile.contacts.twitter && <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.twitter }>Twitter</a>}
-                    {props.profile.contacts.instagram && <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.instagram }>Instagram</a>}
-                    {props.profile.contacts.youtube && <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.youtube }>YouTube</a>}
-                    {props.profile.contacts.github && <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.github }>GitHub</a>}
-                    {props.profile.contacts.mainLink && <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.mainLink }>MainLink</a>}
+                    {!contactsChangeMode && <>
+                        <button onClick={() => setContactsChangeMode(true)}>Edit</button>
+                        <b>FullName</b>: {props.profile.fullName}
+                        {props.profile.lookingForAJob && <b>В поиске работы: {props.profile.lookingForAJobDescription }</b>}
+                        <b>Обо мне</b>: {props.profile.aboutMe }
+                        <h3>Контакты</h3>
+                        {props.profile.contacts.facebook ? <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.facebook }>Facebook</a> : <a className={s.contactsLink}>Facebook</a>}
+                        {props.profile.contacts.website ? <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.website }>WebSite</a> : <a className={s.contactsLink}>WebSite</a>}
+                        {props.profile.contacts.vk ? <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.vk }>VK</a> : <a className={s.contactsLink}>VK</a>}
+                        {props.profile.contacts.twitter ? <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.twitter }>Twitter</a> : <a className={s.contactsLink}>Twitter</a>}
+                        {props.profile.contacts.instagram ? <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.instagram }>Instagram</a> : <a className={s.contactsLink}>Instagram</a>}
+                        {props.profile.contacts.youtube ? <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.youtube }>YouTube</a> : <a className={s.contactsLink}>YouTube</a>}
+                        {props.profile.contacts.github ? <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.github }>GitHub</a> : <a className={s.contactsLink}>GitHub</a>}
+                        {props.profile.contacts.mainLink ? <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.mainLink }>MainLink</a> : <a className={s.contactsLink}>MainLink</a>}
+                        </>
+                    }
                 </div>
+                
+                {contactsChangeMode && <ProfileEditReduxForm onSubmit={onSubmit} />}
             </div>
         </div>
     );
 }
+
+const ProfileEditForm = (props) => {
+    debugger
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <button>Save</button>
+            {CreateField(null, "aboutMe", "text", "About Me", Input, [required])}
+            {CreateField(null, "fullName", "text", "Full name", Input, [required])}
+            {CreateField(null, "lookingForAJob", "checkbox", "lookingForAJob", "input", [], '', 'В поиске работы')}
+            {CreateField(null, "lookingForAJobDescription", "text", "My professional skills", Input, [required])}
+            {CreateField(null, "contacts.facebook", "text", "Facebook", Input, [])}
+            {CreateField(null, "contacts.webSite", "text", "WebSite", Input, [])}
+            {CreateField(null, "contacts.vk", "text", "VK", Input, [])}
+            {CreateField(null, "contacts.twitter", "text", "Twitter", Input, [])}
+            {CreateField(null, "contacts.instagram", "text", "Instagram", Input, [])}
+            {CreateField(null, "contacts.youTube", "text", "YouTube", Input, [])}
+            {CreateField(null, "contacts.gitHub", "text", "GitHub", Input, [])}
+            {CreateField(null, "contacts.mainLink", "text", "MainLink", Input, [])}
+        </form>
+    );
+}
+
+const ProfileEditReduxForm = reduxForm({form: 'profileEdit'})(ProfileEditForm);
 
 const Profile = (props) => {
     useEffect(() => {
@@ -75,7 +115,7 @@ const Profile = (props) => {
 
     return (
         <div>
-            <ProfileInfo profile={props.profile} status={props.status} updateStatusTC={props.updateStatusTC} uploadPhotoTC={props.uploadPhotoTC} isMyProfilePage={props.isMyProfilePage} />
+            <ProfileInfo profile={props.profile} status={props.status} updateStatusTC={props.updateStatusTC} uploadPhotoTC={props.uploadPhotoTC} setProfile={props.setProfile} isMyProfilePage={props.isMyProfilePage} />
             <MyPostsContainer store={props.store} posts={props.posts} />
         </div>
     );
