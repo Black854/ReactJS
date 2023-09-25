@@ -50,8 +50,8 @@ export const profileAPI = {
             return response.data;
         })
     },
-    setProfile (profile) {
-        return instance.put(`profile`, profile).then(response => {
+    setProfile (data) {
+        return instance.put(`profile`, data).then(response => {
             return response.data;
         })
     }
