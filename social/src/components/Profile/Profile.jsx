@@ -77,7 +77,11 @@ const ProfileInfo = (props) => {
                     }
                 </div>
                 
+<<<<<<< Updated upstream
                 {contactsChangeMode && <ProfileEditReduxForm onSubmit={onSubmit} />}
+=======
+                {contactsChangeMode && <ProfileEditReduxForm onSubmit={onSubmit} initialValues={props.profile}  />}
+>>>>>>> Stashed changes
             </div>
         </div>
     );
@@ -86,6 +90,7 @@ const ProfileInfo = (props) => {
 const ProfileEditForm = (props) => {
     debugger
     return (
+<<<<<<< Updated upstream
         <form onSubmit={props.handleSubmit}>
             <button>Save</button>
             {CreateField(null, "aboutMe", "text", "About Me", Input, [required])}
@@ -100,11 +105,39 @@ const ProfileEditForm = (props) => {
             {CreateField(null, "contacts.youTube", "text", "YouTube", Input, [])}
             {CreateField(null, "contacts.gitHub", "text", "GitHub", Input, [])}
             {CreateField(null, "contacts.mainLink", "text", "MainLink", Input, [])}
+=======
+        <form onSubmit={handleSubmit}>
+            <button>save</button>
+            <b>About me</b>: {CreateField(null, "aboutMe", null, "", Input, [required])}
+            <b>FullName</b>:{CreateField(null, "fullName", null, "Full name", Input, [required])}
+            {CreateField(null, "lookingForAJob", {type: 'checkbox'}, "lookingForAJob", "input", [], '', 'В поиске работы')}
+            <b>My professional skills</b>:{CreateField(null, "lookingForAJobDescription", null, "My professional skills", 'textarea', [required])}
+            {CreateField(null, "contacts.facebook", null, "Facebook", Input, [])}
+            {CreateField(null, "contacts.website", null, "WebSite", Input, [])}
+            {CreateField(null, "contacts.vk", null, "VK", Input, [])}
+            {CreateField(null, "contacts.twitter", null, "Twitter", Input, [])}
+            {CreateField(null, "contacts.instagram", null, "Instagram", Input, [])}
+            {CreateField(null, "contacts.youtube", null, "YouTube", Input, [])}
+            {CreateField(null, "contacts.github", null, "GitHub", Input, [])}
+            {CreateField(null, "contacts.mainLink", null, "MainLink", Input, [])}
+>>>>>>> Stashed changes
         </form>
     );
 }
 
+<<<<<<< Updated upstream
 const ProfileEditReduxForm = reduxForm({form: 'profileEdit'})(ProfileEditForm);
+=======
+ProfileEditForm = memo(ProfileEditForm);
+
+
+
+let ProfileEditReduxForm = reduxForm({form: 'ProfileEditForm'})(ProfileEditForm);
+
+
+
+
+>>>>>>> Stashed changes
 
 const Profile = (props) => {
     useEffect(() => {
