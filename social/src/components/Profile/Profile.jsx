@@ -1,13 +1,12 @@
 import s from './Profile.module.css';
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 import Preloader from '../common/Preloader/Preloader';
 import userPhoto from '../../img/user.jpg';
 import { CreateField } from '../common/FormsControls/form-helpers';
 import { required } from '../../utils/validators/validators';
 import { Input } from '../common/FormsControls/FormControls';
-import { Field, reduxForm } from 'redux-form';
-import { connect } from 'react-redux';
+import { reduxForm } from 'redux-form';
 
 const ProfileInfo = (props) => {
     let [changeMode, setChangeMode] = useState(false);
@@ -64,7 +63,7 @@ const ProfileInfo = (props) => {
                         <b>FullName</b>: {props.profile.fullName}
                         {props.profile.lookingForAJob && <b>В поиске работы: {props.profile.lookingForAJobDescription }</b>}
                         <b>Обо мне</b>: {props.profile.aboutMe }
-                        <h3>Контакты</h3>
+                        {/* <h3>Контакты</h3>
                         {props.profile.contacts.facebook ? <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.facebook }>Facebook</a> : <a className={s.contactsLink}>Facebook</a>}
                         {props.profile.contacts.website ? <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.website }>WebSite</a> : <a className={s.contactsLink}>WebSite</a>}
                         {props.profile.contacts.vk ? <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.vk }>VK</a> : <a className={s.contactsLink}>VK</a>}
@@ -72,24 +71,32 @@ const ProfileInfo = (props) => {
                         {props.profile.contacts.instagram ? <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.instagram }>Instagram</a> : <a className={s.contactsLink}>Instagram</a>}
                         {props.profile.contacts.youtube ? <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.youtube }>YouTube</a> : <a className={s.contactsLink}>YouTube</a>}
                         {props.profile.contacts.github ? <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.github }>GitHub</a> : <a className={s.contactsLink}>GitHub</a>}
-                        {props.profile.contacts.mainLink ? <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.mainLink }>MainLink</a> : <a className={s.contactsLink}>MainLink</a>}
+                        {props.profile.contacts.mainLink ? <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.mainLink }>MainLink</a> : <a className={s.contactsLink}>MainLink</a>} */}
                         </>
                     }
                 </div>
                 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
                 {contactsChangeMode && <ProfileEditReduxForm onSubmit={onSubmit} />}
 =======
                 {contactsChangeMode && <ProfileEditReduxForm onSubmit={onSubmit} initialValues={props.profile}  />}
 >>>>>>> Stashed changes
+=======
+                {contactsChangeMode && <ProfileEditReduxForm onSubmit={onSubmit}  />}
+>>>>>>> f0cf256fabb6fdec16f9f6b0fc2f242b15934f8c
             </div>
         </div>
     );
 }
 
-const ProfileEditForm = (props) => {
-    debugger
+
+
+let ProfileEditForm = ({handleSubmit, initialValues}) => {
+    console.log(initialValues);
+
     return (
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         <form onSubmit={props.handleSubmit}>
             <button>Save</button>
@@ -108,11 +115,16 @@ const ProfileEditForm = (props) => {
 =======
         <form onSubmit={handleSubmit}>
             <button>save</button>
+=======
+        <form onSubmit={handleSubmit}>
+            
+>>>>>>> f0cf256fabb6fdec16f9f6b0fc2f242b15934f8c
             <b>About me</b>: {CreateField(null, "aboutMe", null, "", Input, [required])}
             <b>FullName</b>:{CreateField(null, "fullName", null, "Full name", Input, [required])}
             {CreateField(null, "lookingForAJob", {type: 'checkbox'}, "lookingForAJob", "input", [], '', 'В поиске работы')}
             <b>My professional skills</b>:{CreateField(null, "lookingForAJobDescription", null, "My professional skills", 'textarea', [required])}
             {CreateField(null, "contacts.facebook", null, "Facebook", Input, [])}
+<<<<<<< HEAD
             {CreateField(null, "contacts.website", null, "WebSite", Input, [])}
             {CreateField(null, "contacts.vk", null, "VK", Input, [])}
             {CreateField(null, "contacts.twitter", null, "Twitter", Input, [])}
@@ -121,23 +133,42 @@ const ProfileEditForm = (props) => {
             {CreateField(null, "contacts.github", null, "GitHub", Input, [])}
             {CreateField(null, "contacts.mainLink", null, "MainLink", Input, [])}
 >>>>>>> Stashed changes
+=======
+            {CreateField(null, "contacts.webSite", null, "WebSite", Input, [])}
+            {CreateField(null, "contacts.vk", null, "VK", Input, [])}
+            {CreateField(null, "contacts.twitter", null, "Twitter", Input, [])}
+            {CreateField(null, "contacts.instagram", null, "Instagram", Input, [])}
+            {CreateField(null, "contacts.youTube", null, "YouTube", Input, [])}
+            {CreateField(null, "contacts.gitHub", null, "GitHub", Input, [])}
+            {CreateField(null, "contacts.mainLink", null, "MainLink", Input, [])}
+>>>>>>> f0cf256fabb6fdec16f9f6b0fc2f242b15934f8c
         </form>
     );
 }
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 const ProfileEditReduxForm = reduxForm({form: 'profileEdit'})(ProfileEditForm);
 =======
+=======
+>>>>>>> f0cf256fabb6fdec16f9f6b0fc2f242b15934f8c
 ProfileEditForm = memo(ProfileEditForm);
 
 
 
+<<<<<<< HEAD
 let ProfileEditReduxForm = reduxForm({form: 'ProfileEditForm'})(ProfileEditForm);
+=======
+let ProfileEditReduxForm = reduxForm({form: 'ProfileEditForm', initialValues: {aboutMe: 'Какая то инфа для теста', fullName: 'Black', lookingForAJob: true, lookingForAJobDescription: 'ебусь с redux-form'}})(ProfileEditForm);
+>>>>>>> f0cf256fabb6fdec16f9f6b0fc2f242b15934f8c
 
 
 
 
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> f0cf256fabb6fdec16f9f6b0fc2f242b15934f8c
 
 const Profile = (props) => {
     useEffect(() => {
@@ -154,4 +185,4 @@ const Profile = (props) => {
     );
 }
 
-export default Profile;
+export default memo(Profile);

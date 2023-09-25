@@ -76,8 +76,8 @@ export const setProfile = (data, userId) => async (dispatch) => {
     let response = await profileAPI.setProfile(data);
     if (response.resultCode === 0) {
         usersAPI.getProfile(userId).then(response => {
-        dispatch(setUserProfile(response));
-    });
+            dispatch(setUserProfile(response));
+        });
     }
 }
 
