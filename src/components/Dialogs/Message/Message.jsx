@@ -6,10 +6,10 @@ import { Textarea } from '../../common/FormsControls/FormControls';
 import { maxLength } from '../../../utils/validators/validators';
 import { CreateField } from '../../common/FormsControls/form-helpers';
 
-const NewMessageForm = ({handleSubmit}) => {
+const NewMessageForm = ({handleSubmit, reset}) => {
     return (
-        <form onSubmit={handleSubmit}>
-            {CreateField(s.newMessageText, "text", null, null, Textarea, [ maxLength(50) ])}
+        <form onSubmit={handleSubmit} reset={true}>
+            {CreateField("text", Textarea, [ maxLength ], { className: s.newMessageText })}
             <button className={s.sendButton}>Send</button>
         </form>
     )
@@ -21,6 +21,7 @@ const Messages = ({sendMessage, messages}) => {
     let messagesElements = messages.map(message => <Item key={message.id} message={message.message} senderId={message.senderId} />);
 
     let sendMessageText = (values) => {
+        debugger
         sendMessage(values.text);
     }
 

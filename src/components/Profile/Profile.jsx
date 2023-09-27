@@ -15,7 +15,7 @@ const ProfileInfo = (props) => {
 
     useEffect (() => {
         setStatus(props.status);
-        }, [props.status]);
+        }, []);
 
     const activateChangeMode = () => {
         setChangeMode(true);
@@ -87,15 +87,13 @@ const ProfileInfo = (props) => {
 
 
 let ProfileEditForm = ({handleSubmit, initialValues}) => {
-    console.log(initialValues);
-
     return (
         <form onSubmit={handleSubmit} className={s.profileForm} >
             <button>Save</button>
             <label>Полное имя</label>: {CreateField(null, "fullName", null, "Full name", Input, [required])}
-            <p><label htmlFor='lookingForAJob'>Обо мне</label>: {CreateField(null, "aboutMe", null, "About Me", Input, [required])}</p>
-            <p>{CreateField(null, "lookingForAJob", {type: 'checkbox'}, "lookingForAJob", "input", [], '', 'В поиске работы')}</p>
-            <p><b>Мои навыки</b>: {CreateField(null, "lookingForAJobDescription", null, "My professional skills", Textarea, [required])}</p>  
+            <label htmlFor='lookingForAJob'>Обо мне</label>: {CreateField(null, "aboutMe", null, "About Me", Input, [required])}
+            {CreateField(null, "lookingForAJob", {type: 'checkbox'}, "lookingForAJob", "input", [], '', 'В поиске работы')}
+            <b>Мои навыки</b>: {CreateField(null, "lookingForAJobDescription", null, "My professional skills", Textarea, [required])}
             <h3>Контакты</h3>            
             {CreateField(null, "contacts.facebook", null, "Facebook", Input, [])}
             {CreateField(null, "contacts.website", null, "WebSite", Input, [])}
