@@ -90,19 +90,23 @@ let ProfileEditForm = ({handleSubmit, initialValues}) => {
     return (
         <form onSubmit={handleSubmit} className={s.profileForm} >
             <button>Save</button>
-            <label>Полное имя</label>: {CreateField(null, "fullName", null, "Full name", Input, [required])}
-            <label htmlFor='lookingForAJob'>Обо мне</label>: {CreateField(null, "aboutMe", null, "About Me", Input, [required])}
-            {CreateField(null, "lookingForAJob", {type: 'checkbox'}, "lookingForAJob", "input", [], '', 'В поиске работы')}
-            <b>Мои навыки</b>: {CreateField(null, "lookingForAJobDescription", null, "My professional skills", Textarea, [required])}
-            <h3>Контакты</h3>            
-            {CreateField(null, "contacts.facebook", null, "Facebook", Input, [])}
-            {CreateField(null, "contacts.website", null, "WebSite", Input, [])}
-            {CreateField(null, "contacts.vk", null, "VK", Input, [])}
-            {CreateField(null, "contacts.twitter", null, "Twitter", Input, [])}
-            {CreateField(null, "contacts.instagram", null, "Instagram", Input, [])}
-            {CreateField(null, "contacts.youtube", null, "YouTube", Input, [])}
-            {CreateField(null, "contacts.github", null, "GitHub", Input, [])}
-            {CreateField(null, "contacts.mainLink", null, "MainLink", Input, [])}
+            
+
+            <label>Полное имя</label>: {CreateField("fullName", Input, [required], {placeholder: "Full name"} )}
+            <label>Обо мне</label>: {CreateField("aboutMe", Input, [required], {placeholder: "About me"} )}
+            {CreateField("lookingForAJob", "input", [], {type: 'checkbox', placeholder: "Full name"}, null, "В поиске работы" )}
+            <b>Мои навыки</b>: {CreateField("lookingForAJobDescription", Textarea,  [required], {placeholder: "My professional skills"})}
+            <h3>Контакты</h3>
+
+            
+            {CreateField("contacts.facebook", Input, [], {placeholder: "Facebook"})}
+            {CreateField("contacts.website", Input, [], {placeholder: "WebSite"})}
+            {CreateField("contacts.vk", Input, [], {placeholder: "VK"})}
+            {CreateField("contacts.twitter", Input, [], {placeholder: "Twitter"})}
+            {CreateField("contacts.instagram", Input, [], {placeholder: "Instagram"})}
+            {CreateField("contacts.youtube", Input, [], {placeholder: "YouTube"})}
+            {CreateField("contacts.github", Input, [], {placeholder: "GitHub"})}
+            {CreateField("contacts.mainLink", Input, [], {placeholder: "MainLink"})}
         </form>
     );
 }

@@ -1,7 +1,6 @@
 import { maxLength, required } from '../../../utils/validators/validators';
 import { Textarea } from '../../common/FormsControls/FormControls';
 import { CreateField } from '../../common/FormsControls/form-helpers';
-import { CreateField } from '../../common/FormsControls/form-helpers';
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
 import React from "react";
@@ -10,7 +9,6 @@ import {reduxForm, reset} from 'redux-form';
 const NewPostForm = ({handleSubmit}) => {
     return (
         <form onSubmit={handleSubmit}>
-            {CreateField('text', Textarea, [required, maxLength], {className: s.textarea, placeholder: 'Введите текст...'} )}
             {CreateField('text', Textarea, [required, maxLength], {className: s.textarea, placeholder: 'Введите текст...'} )}
             <button className={s.addPostButton}>Add Post</button>
         </form>
