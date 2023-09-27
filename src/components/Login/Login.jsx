@@ -3,8 +3,8 @@ import {Field, reduxForm} from 'redux-form';
 import { login } from "../../redux/auth-reducer";
 import { connect } from 'react-redux';
 import {Navigate} from 'react-router-dom';
-import { required } from "../../utils/validators/validators";
-import { Input } from "../common/FormsControls/FormControls";
+import { maxLength, required } from "../../utils/validators/validators";
+import { Input, Textarea } from "../common/FormsControls/FormControls";
 import s from "./Login.module.css";
 import { CreateField } from "../common/FormsControls/form-helpers";
 
@@ -12,9 +12,9 @@ import { CreateField } from "../common/FormsControls/form-helpers";
 const LoginForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit} className={s.loginForm}>
-            {CreateField(s.inputText, "email", "email", "Email", Input, [required])}
-            {CreateField(s.inputText, "password", "password", "Password", Input, [required])}
-            {CreateField(null, "rememberMe", "checkbox", null, "input", [], s.rememberMe, "Remember me")}
+            { CreateField("email", Input, [required], {className: s.inputText, type: "email", placeholder: "Email"} ) }
+            { CreateField("password", Input, [required], {className: s.inputText, type: "password", placeholder: "Password"} ) }
+            { CreateField("rememberMe","input", [], {type: "checkbox"}, s.rememberMe, "Remember me") }
             <div>
                 <p className={s.error} >
                     {props.error}

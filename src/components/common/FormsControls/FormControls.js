@@ -15,11 +15,11 @@ export const Textarea = ({input, meta: {touched, error}, ...props}) => {
 export const Input = ({input, meta: {touched, error}, ...props}) => {
     const hasError = touched && error;
     return (
-        <div className={s.formControlInput + " " + (hasError ? s.error : "")}>
+        <div className={s.formControl + " " + (hasError ? s.error : "")}>
             <div>
                 <input {...input} {...props} />
-                {hasError && <span>{error}</span>}
             </div>
+            {hasError && <span>{error}</span>}
         </div>
     )
 }
