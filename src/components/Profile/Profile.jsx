@@ -15,7 +15,7 @@ const ProfileInfo = (props) => {
 
     useEffect (() => {
         setStatus(props.status);
-        }, []);
+        }, [props.status]);
 
     const activateChangeMode = () => {
         setChangeMode(true);
@@ -86,7 +86,7 @@ const ProfileInfo = (props) => {
 
 
 
-let ProfileEditForm = ({handleSubmit, initialValues}) => {
+let ProfileEditForm = ({handleSubmit}) => {
     return (
         <form onSubmit={handleSubmit} className={s.profileForm} >
             <button>Save</button>
