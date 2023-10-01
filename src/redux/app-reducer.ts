@@ -1,13 +1,22 @@
 import { getAuthDataTC } from "./auth-reducer";
 
-const INITIALIZE_APP = 'INITIALIZE_APP';
+const INITIALIZE_APP: string = 'INITIALIZE_APP';
 
-let initialState = {
+type initialStateType = {
+    initialized: boolean
+    authorizedUserId: number | null
+}
+
+type actionType = {
+    type: string
+}
+
+let initialState: initialStateType = {    
     initialized: false,
     authorizedUserId: null
 }
 
-const appReducer = (state = initialState, action) => {
+const appReducer = (state: object = initialState, action: actionType) => {
     switch (action.type) {
         case INITIALIZE_APP:
             return {
@@ -26,6 +35,6 @@ export const initializeAppTC = () => (dispatch) => {
     })
 }
 
-const initializeApp = () => ({ type: INITIALIZE_APP })
+const initializeApp: () => actionType = () => ({ type: INITIALIZE_APP })
 
 export default appReducer;

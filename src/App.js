@@ -6,7 +6,7 @@ import Navbar from './components/Navbar/Navbar';
 import Login from './components/Login/Login';
 import Preloader from './components/common/Preloader/Preloader';
 import { connect } from 'react-redux';
-import { initializeAppTC } from './redux/app-reducer';
+import { initializeAppTC } from './redux/app-reducer.ts';
 import { compose } from 'redux';
 import { withSuspense } from './hoc/withSuspense';
 let UsersContainer = lazy(() => import ('./components/Users/UsersContainer'));
