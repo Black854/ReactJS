@@ -7,8 +7,8 @@ type initialStateType = {
     authorizedUserId: number | null
 }
 
-type actionType = {
-    type: string
+type initializeAppActionType = {
+    type: typeof INITIALIZE_APP
 }
 
 let initialState: initialStateType = {    
@@ -16,7 +16,7 @@ let initialState: initialStateType = {
     authorizedUserId: null
 }
 
-const appReducer = (state: object = initialState, action: actionType) => {
+const appReducer = (state: initialStateType = initialState, action: initializeAppActionType): initialStateType => {
     switch (action.type) {
         case INITIALIZE_APP:
             return {
@@ -35,6 +35,6 @@ export const initializeAppTC = () => (dispatch) => {
     })
 }
 
-const initializeApp: () => actionType = () => ({ type: INITIALIZE_APP })
+const initializeApp = (): initializeAppActionType => ({ type: INITIALIZE_APP })
 
-export default appReducer;
+export default appReducer;  
