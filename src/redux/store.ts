@@ -6,7 +6,7 @@ import usersReducer from "./users-reducer";
 import authReducer from "./auth-reducer";
 import thunkMiddleWare from 'redux-thunk';
 import {reducer as formReducer} from 'redux-form';
-import appReducer from "./app-reducer.ts";
+import appReducer from "./app-reducer";
 
 let reducers = combineReducers({
     profilePage: profileReducer,
@@ -17,6 +17,14 @@ let reducers = combineReducers({
     app: appReducer,
     form: formReducer
 });
+
+
+declare global {
+    interface Window {
+      __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+      store:any;
+    }
+}
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

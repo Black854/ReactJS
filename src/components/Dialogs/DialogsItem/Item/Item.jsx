@@ -3,6 +3,7 @@ import {NavLink} from "react-router-dom";
 import React from "react";
 
 const Item = ({id, name, url}) => {
+    id = String(id);
     return (
         <div className={s.item}>
             <NavLink className={({isActive}) => isActive ? s.active : s.link} to={id}>

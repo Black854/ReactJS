@@ -1,6 +1,6 @@
 import React from "react";
 import {Field, reduxForm} from 'redux-form';
-import { login } from "../../redux/auth-reducer";
+import { login } from "../../redux/auth-reducer.ts";
 import { connect } from 'react-redux';
 import {Navigate} from 'react-router-dom';
 import { maxLength, required } from "../../utils/validators/validators";

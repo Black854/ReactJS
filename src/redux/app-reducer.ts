@@ -16,7 +16,7 @@ let initialState: initialStateType = {
     authorizedUserId: null
 }
 
-const appReducer = (state: initialStateType = initialState, action: initializeAppActionType): initialStateType => {
+const appReducer = (state = initialState, action: any): initialStateType => {
     switch (action.type) {
         case INITIALIZE_APP:
             return {
@@ -28,7 +28,7 @@ const appReducer = (state: initialStateType = initialState, action: initializeAp
     }
 }
 
-export const initializeAppTC = () => (dispatch) => {
+export const initializeAppTC = () => (dispatch: any) => {
     let promise = dispatch(getAuthDataTC());
     Promise.all([promise]).then(() => {
         dispatch(initializeApp());

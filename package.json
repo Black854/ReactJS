@@ -51,6 +51,10 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^6.0.0"
+    "@types/file-loader": "^5.0.2",
+    "@types/redux-form": "^8.3.6",
+    "file-loader": "^6.2.0",
+    "gh-pages": "^6.0.0",
+    "react-app-rewired": "^2.2.1"
   }
 }

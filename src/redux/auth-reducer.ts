@@ -1,11 +1,19 @@
 import { authAPI, usersAPI } from "../api/api";
 import {stopSubmit} from "redux-form";
 
-const DELETE_USER_AUTH_DATA = 'DELETE_USER_AUTH_DATA';
-const SET_USER_AUTH_DATA = 'SET_USER_AUTH_DATA';
-const SET_USER_PHOTO = 'SET_USER_PHOTO';
+const DELETE_USER_AUTH_DATA: string = 'DELETE_USER_AUTH_DATA';
+const SET_USER_AUTH_DATA: string = 'SET_USER_AUTH_DATA';
+const SET_USER_PHOTO: string = 'SET_USER_PHOTO';
 
-let initialState = {
+type InitialStateType = {
+    id: number | null
+    email: string | null
+    login: string | null
+    isAuth: boolean
+    userPhotoSmall: string | null
+}
+
+let initialState: InitialStateType = {
     id: null,
     email: null,
     login: null,
@@ -13,7 +21,7 @@ let initialState = {
     userPhotoSmall: null
 }
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case SET_USER_AUTH_DATA:
             return {
@@ -33,7 +41,7 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-export const getAuthDataTC = () => async (dispatch) => {
+export const getAuthDataTC = () => async (dispatch: any) => {
     const response = await authAPI.me();
     if (response.resultCode === 0) {
         let {id, email, login} = response.data;
@@ -44,7 +52,7 @@ export const getAuthDataTC = () => async (dispatch) => {
     return response;
 }
 
-export const login = (formData) => async (dispatch) => {
+export const login = (formData: DataType) => async (dispatch: any) => {
     const response = await authAPI.login(formData);
     if (response.resultCode === 0) {            
         const response2 = await authAPI.me();
@@ -60,7 +68,7 @@ export const login = (formData) => async (dispatch) => {
     }
 }
 
-export const logout = () => async (dispatch) => {
+export const logout = () => async (dispatch: any) => {
     const response = await authAPI.logout();
     if (response.resultCode === 0) {
         dispatch(deleteUserAuthData());
@@ -68,8 +76,28 @@ export const logout = () => async (dispatch) => {
     
 }
 
-const setUserAuthData = (id, email, login) => ({ type: SET_USER_AUTH_DATA, data: {id, email, login} })
-const deleteUserAuthData = () => ({ type: DELETE_USER_AUTH_DATA })
-const setUserPhoto = (photo) => ({ type: SET_USER_PHOTO, photo })
+type DataType = {
+    id: number
+    email: string
+    login: string
+}
+
+type setUserAuthDataType = {
+    type: typeof SET_USER_AUTH_DATA,
+    data: DataType
+}
+
+type deleteUserAuthDataType = {
+    type: typeof DELETE_USER_AUTH_DATA
+}
+
+type setUserPhotoType = {
+    type: typeof SET_USER_PHOTO
+    photo: string
+}
+
+const setUserAuthData = (id: number, email: string, login: string): setUserAuthDataType => ({ type: SET_USER_AUTH_DATA, data: {id, email, login} })
+const deleteUserAuthData = (): deleteUserAuthDataType => ({ type: DELETE_USER_AUTH_DATA })
+const setUserPhoto = (photo: string): setUserPhotoType => ({ type: SET_USER_PHOTO, photo })
 
 export default authReducer;

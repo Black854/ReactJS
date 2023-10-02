@@ -1,7 +1,7 @@
 import React from "react";
 import Profile from './Profile'
 import { connect } from "react-redux";
-import { getProfileTC, getStatusTC, updateStatusTC, uploadPhotoTC, setProfile } from "../../redux/profile-reducer";
+import { getProfileTC, getStatusTC, updateStatusTC, uploadPhotoTC, setProfile } from "../../redux/profile-reducer.ts";
 import { withRouter } from "../../hoc/withRouter";
 import {compose} from 'redux';
 
