@@ -1,4 +1,5 @@
 import { usersAPI } from "../api/api";
+import { UserType } from "../types/types";
 
 const FOLLOW: string = 'FOLLOW';
 const UNFOLLOW: string = 'UNFOLLOW';
@@ -9,16 +10,12 @@ const IS_LOADING: string = 'IS_LOADING';
 const TOGGLE_FOLLOW_PROGRESS: string = 'FOLLOW_IN_PROGRESS';
 
 let initialState = {
-    usersList: [] as any,
-    pageNumber: 1 as number,
-    totalCount: 24 as number,
-    pageSize: 5 as number,
+    usersList: [] as Array<UserType>,
+    pageNumber: 1,
+    totalCount: 24,
+    pageSize: 5,
     isLoading: false as boolean,
-    followInProgress: []
-}
-
-type usersListU = {
-    id: number
+    followInProgress: [] as Array<number> //массив пользовательских ID
 }
 
 type InitialStateType = typeof initialState
@@ -105,12 +102,47 @@ export const unfollow = (userId: number) => async (dispatch: any) => {
     }
 }
 
-export const followSuccess = (id: number) => ({ type: FOLLOW, id })
-export const unfollowSuccess = (id: number) => ({ type: UNFOLLOW, id})
-export const setUsers = (users: any) => ({ type: SET_USERS, users})
-export const setCurrentPage = (page: number) => ({ type: SET_CURRENT_PAGE, page})
-export const setTotalCount = (count: number) => ({ type: SET_TOTAL_COUNT, count})
-export const setLoading = () => ({ type: IS_LOADING})
-export const setFollowProgress = (isFetching: boolean, userId: number) => ({ type: TOGGLE_FOLLOW_PROGRESS, isFetching, userId})
+type followSuccessType = {
+    type: typeof FOLLOW
+    id: number
+}
+
+type unfollowSuccessType = {
+    type: typeof UNFOLLOW
+    id: number
+}
+
+type setUsersType = {
+    type: typeof SET_USERS
+    users: Array<UserType>
+}
+
+type setCurrentPageType = {
+    type: typeof SET_CURRENT_PAGE
+    page: number
+}
+
+type setTotalCountType = {
+    type: typeof SET_TOTAL_COUNT
+    count: number
+}
+
+type setLoadingType = {
+    type: typeof IS_LOADING
+}
+
+type setFollowProgressType = {
+    type: typeof TOGGLE_FOLLOW_PROGRESS
+    isFetching: boolean
+    userId: number
+}
+
+export const followSuccess = (id: number): followSuccessType => ({ type: FOLLOW, id })
+export const unfollowSuccess = (id: number): unfollowSuccessType => ({ type: UNFOLLOW, id})
+export const setUsers = (users: Array<UserType>):setUsersType => ({ type: SET_USERS, users})
+export const setCurrentPage = (page: number):setCurrentPageType => ({ type: SET_CURRENT_PAGE, page})
+export const setTotalCount = (count: number):setTotalCountType => ({ type: SET_TOTAL_COUNT, count})
+export const setLoading = ():setLoadingType => ({ type: IS_LOADING})
+export const setFollowProgress = (isFetching: boolean, userId: number):setFollowProgressType => ({ type: TOGGLE_FOLLOW_PROGRESS, isFetching, userId})
 
 export default usersReducer;
