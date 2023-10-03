@@ -1,7 +1,7 @@
-// import karina from '../img/karina.jpg';
-// import ars from '../img/ars.jpg';
-// import sizh from '../img/sizh.jpg';
-// import sistr from '../img/sistr.jpg';
+import karina from '../img/karina.jpg';
+import ars from '../img/ars.jpg';
+import sizh from '../img/sizh.jpg';
+import sistr from '../img/sistr.jpg';
 
 const SEND_MESSAGE = 'SEND-MESSAGE'
 
@@ -19,10 +19,10 @@ type MessageType = {
 
 let initialState = {
     dialogs: [
-        { id: 1, name: 'Карина', url: 'karina' },
-        { id: 2, name: 'Сижик', url: 'sizh' },
-        { id: 3, name: 'Арсик', url: 'ars' },
-        { id: 4, name: 'Систр', url: 'sistr' },
+        { id: 1, name: 'Карина', url: karina },
+        { id: 2, name: 'Сижик', url: sizh },
+        { id: 3, name: 'Арсик', url: ars },
+        { id: 4, name: 'Систр', url: sistr },
     ] as Array<DialogType>,
     messages: [
         { id: 1, message: 'Hi', senderId: 1 },

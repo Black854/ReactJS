@@ -1,14 +1,23 @@
-import s from './Profile.module.css';
-import React, { useState, useEffect, memo } from "react";
-import MyPostsContainer from './MyPosts/MyPostsContainer';
 import Preloader from '../common/Preloader/Preloader';
 import userPhoto from '../../img/user.jpg';
 import { CreateField } from '../common/FormsControls/form-helpers';
 import { required } from '../../utils/validators/validators';
 import { Input, Textarea } from '../common/FormsControls/FormControls';
 import { reduxForm } from 'redux-form';
+import s from './Profile.module.css';
+import React, { useState, useEffect, ChangeEvent } from "react";
+import { ProfileType } from '../../types/types';
 
-const ProfileInfo = (props) => {
+type PropsType = {
+    status: string
+    updateStatusTC: (status: string) => void
+    profile: ProfileType
+    uploadPhotoTC: (photo: string) => void
+    setProfile: (data: any, userId: number) => void
+    isMyProfilePage: boolean
+}
+
+ const ProfileInfo: React.FC<PropsType> = (props) => {
     let [changeMode, setChangeMode] = useState(false);
     let [contactsChangeMode, setContactsChangeMode] = useState(false);
     let [status, setStatus] = useState(props.status);
@@ -26,7 +35,7 @@ const ProfileInfo = (props) => {
         props.updateStatusTC(status);
     }
 
-    const onChangeStatusText = (e) => {
+    const onChangeStatusText = (e: ChangeEvent<HTMLInputElement>) => {
         setStatus(e.currentTarget.value);
     }
 
@@ -36,11 +45,11 @@ const ProfileInfo = (props) => {
         )
     }
 
-    const onSelectPhoto = (e) => {
+    const onSelectPhoto = (e: any) => {
         props.uploadPhotoTC(e.currentTarget.files[0]);
     }
 
-    const onSubmit = (formData) => {
+    const onSubmit = (formData: any) => {
         props.setProfile(formData, props.profile.userId);
         setContactsChangeMode(false);
     }
@@ -84,49 +93,27 @@ const ProfileInfo = (props) => {
     );
 }
 
-
-
-let ProfileEditForm = ({handleSubmit}) => {
+let ProfileEditForm = ({handleSubmit}: any) => {
     return (
         <form onSubmit={handleSubmit} className={s.profileForm} >
             <button>Save</button>
-            
-
-            <label>Полное имя</label>: {CreateField("fullName", Input, [required], {placeholder: "Full name"} )}
-            <label>Обо мне</label>: {CreateField("aboutMe", Input, [required], {placeholder: "About me"} )}
-            {CreateField("lookingForAJob", "input", [], {type: 'checkbox', placeholder: "Full name"}, null, "В поиске работы" )}
-            <b>Мои навыки</b>: {CreateField("lookingForAJobDescription", Textarea,  [required], {placeholder: "My professional skills"})}
-            <h3>Контакты</h3>
-
-            
-            {CreateField("contacts.facebook", Input, [], {placeholder: "Facebook"})}
-            {CreateField("contacts.website", Input, [], {placeholder: "WebSite"})}
-            {CreateField("contacts.vk", Input, [], {placeholder: "VK"})}
-            {CreateField("contacts.twitter", Input, [], {placeholder: "Twitter"})}
-            {CreateField("contacts.instagram", Input, [], {placeholder: "Instagram"})}
-            {CreateField("contacts.youtube", Input, [], {placeholder: "YouTube"})}
-            {CreateField("contacts.github", Input, [], {placeholder: "GitHub"})}
-            {CreateField("contacts.mainLink", Input, [], {placeholder: "MainLink"})}
+            <label>Полное имя</label>: {CreateField("fullName", Input, [required] as any, {placeholder: "Full name"} as any)}
+            <label>Обо мне</label>: {CreateField("aboutMe", Input, [required] as any, {placeholder: "About me"} as any )}
+            {CreateField("lookingForAJob", "input", [] as any, {type: 'checkbox', placeholder: "Full name"} as any, null, "В поиске работы" as any )}
+            <b>Мои навыки</b>: {CreateField("lookingForAJobDescription", Textarea,  [required] as any, {placeholder: "My professional skills"} as any)}
+            <h3>Контакты</h3>            
+            {CreateField("contacts.facebook", Input, [] as any, {placeholder: "Facebook"} as any)}
+            {CreateField("contacts.website", Input, [] as any, {placeholder: "WebSite"} as any)}
+            {CreateField("contacts.vk", Input, [] as any, {placeholder: "VK"} as any)}
+            {CreateField("contacts.twitter", Input, [] as any, {placeholder: "Twitter"} as any)}
+            {CreateField("contacts.instagram", Input, [] as any, {placeholder: "Instagram"} as any)}
+            {CreateField("contacts.youtube", Input, [] as any, {placeholder: "YouTube"} as any as any)}
+            {CreateField("contacts.github", Input, [] as any, {placeholder: "GitHub"} as any)}
+            {CreateField("contacts.mainLink", Input, [] as any, {placeholder: "MainLink"} as any)}
         </form>
     );
 }
 
 let ProfileEditReduxForm = reduxForm({form: 'ProfileEditForm'})(ProfileEditForm);
 
-
-const Profile = (props) => {
-    useEffect(() => {
-        if (!props.isAuth && !props.match.params.userId) {
-          props.match.navigate("/login");
-        }
-      }, [props.isAuth, props.match.params.userId]);
-
-    return (
-        <div>
-            <ProfileInfo profile={props.profile} status={props.status} updateStatusTC={props.updateStatusTC} uploadPhotoTC={props.uploadPhotoTC} setProfile={props.setProfile} isMyProfilePage={props.isMyProfilePage} />
-            <MyPostsContainer store={props.store} posts={props.posts} />
-        </div>
-    );
-}
-
-export default memo(Profile);
+export default ProfileInfo;

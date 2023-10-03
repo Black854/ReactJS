@@ -1,9 +1,8 @@
 import { connect } from "react-redux";
-import { follow, unfollow, setCurrentPage, setFollowProgress, getUsersTC } from "../../redux/users-reducer";
+import { follow, unfollow, getUsersTC } from "../../redux/users-reducer";
 import { compose } from "redux";
 import { getFollowInProgress, getUsersList, getIsAuth, getIsLoading, getPageNumber, getPageSize, getTotalCount } from "../../redux/users-selectors";
 import { AppStateType } from "../../redux/store";
-
 import React from "react";
 import Users from "./Users";
 import { UserType } from "../../types/types";
@@ -14,13 +13,14 @@ type MapStatePropsType = {
     pageNumber: number
     isLoading: boolean
     totalCount: number
+    followInProgress: Array<number>
+    isAuth: boolean
 }
 
 type MapDispatchPropsType = {
     getUsersTC: (pageSize: number, pageNumber: number) => void
-    follow: () => void
-    unfollow: () => void
-    followInProgress: () => void
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
 }
 
 type OwnPropsType = {
@@ -67,5 +67,5 @@ let mapStateToProps = (state: AppStateType):MapStatePropsType => {
 }
 
 export default compose(
-    connect(mapStateToProps, {follow, unfollow, setCurrentPage, setFollowProgress, getUsersTC})
+    connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, {follow, unfollow, getUsersTC})
 )(UsersAPIComponent);

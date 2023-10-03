@@ -7,7 +7,7 @@ export type PostType = {
 export type ContactsType = {
     github: string
     vk: string
-    fasebook: string
+    facebook: string
     instagram: string
     twitter: string
     website: string
@@ -27,6 +27,7 @@ export type ProfileType = {
     fullName: string
     contacts: ContactsType
     photos: PhotosType
+    aboutMe: string
 }
 
 export type UserType = {

@@ -7,9 +7,9 @@ import { UserType } from "../../types/types";
 
 type PropsType = {
     usersList: Array<UserType>
-    followInProgress: () => void
-    follow: () => void
-    unfollow: () => void
+    followInProgress: Array<number>
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
     totalCount: number
     pageSize: number
     pageNumber: number

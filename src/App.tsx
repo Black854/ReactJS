@@ -10,12 +10,26 @@ import { initializeAppTC } from './redux/app-reducer';
 import { compose } from 'redux';
 import { withSuspense } from './hoc/withSuspense';
 import { useEffect } from 'react';
-let UsersContainer = lazy(() => import ('./components/Users/UsersContainer'));
-let ProfileContainer = lazy(() => import ('./components/Profile/ProfileContainer'));
+import { AppStateType } from './redux/store';
+let UsersContainer = lazy(() => import ('./components/Users/UsersContainer') as any);
+let ProfileContainer = lazy(() => import ('./components/Profile/ProfileContainer') as any);
 let Dialogs = lazy(() => import ('./components/Dialogs/Dialogs'));
 
-export const App = (props) => {
+type MapStatePropsType = {
+  initialized: boolean
+}
 
+type MapDispatchPropsType = {
+  initializeAppTC: () => void
+}
+
+type OwnPropsType = {
+  store: any
+}
+
+type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
+
+export const App: React.FC<PropsType> = (props) => {
   useEffect(() => {
     props.initializeAppTC()
   }, []);
@@ -25,7 +39,7 @@ export const App = (props) => {
   }
   return  <div className='app-wrapper'>
             <HeaderContainer />
-            <Navbar friends={props.state.sidebar.friends} />
+            <Navbar friends={props.store.getState().sidebar.friends} />
             <div className='app-wrapper-content'>
               <Routes>
                 <Route path='profile/:userId?' element={<ProfileContainer store={props.store} />} />
@@ -37,10 +51,10 @@ export const App = (props) => {
           </div>
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType) => {
   return {
     initialized: state.app.initialized
   }
 }
 
-export default compose(connect(mapStateToProps, {initializeAppTC}), withSuspense)(App);
+export default compose(connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, {initializeAppTC}), withSuspense)(App);
