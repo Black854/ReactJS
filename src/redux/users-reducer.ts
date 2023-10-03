@@ -12,7 +12,7 @@ const TOGGLE_FOLLOW_PROGRESS: string = 'FOLLOW_IN_PROGRESS';
 let initialState = {
     usersList: [] as Array<UserType>,
     pageNumber: 1,
-    totalCount: 24,
+    totalCount: 1,
     pageSize: 5,
     isLoading: false as boolean,
     followInProgress: [] as Array<number> //массив пользовательских ID
