@@ -12,20 +12,19 @@ type MapStatePropsType = {
     posts: Array<PostType>
     id: number | null
     status: string
-    isAuth: boolean
-    match: any
 }
 
 type MapDispatchPropsType = {
     getProfileTC: (userId: number) => void
     getStatusTC: (userId: number) => void
-    updateStatusTC: (ststus: string) => void
+    updateStatusTC: (status: string) => void
     uploadPhotoTC: (photo: string) => void
     setProfile: (data: any, userId: number) => void
 }
 
 type OwnPropsType = {
-
+    isAuth: boolean
+    match: any
 }
 
 type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
@@ -44,7 +43,7 @@ class ProfileContainer extends React.PureComponent <PropsType> {
         this.refreshProfile();
     }
 
-    componentDidUpdate (prevProps: MapStatePropsType) {
+    componentDidUpdate (prevProps: PropsType) {
         if (this.props.match.params.userId != prevProps.match.params.userId ) {
             this.refreshProfile();
         }

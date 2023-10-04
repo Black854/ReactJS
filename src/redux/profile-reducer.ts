@@ -1,6 +1,9 @@
 import { reset } from "redux-form";
 import { profileAPI, usersAPI } from "../api/api";
 import { PhotosType, PostType, ProfileType } from "../types/types";
+import { Dispatch } from "redux";
+import { ThunkAction } from "redux-thunk";
+import { AppStateType } from "./store";
 
 const ADD_POST: string = 'ADD-POST';
 const SET_USER_PROFILE: string = 'SET_USER_PROFILE';
@@ -19,7 +22,7 @@ let initialState = {
 
 type InitialStateType = typeof initialState;
 
-const profileReducer = (state = initialState, action: any): InitialStateType => {
+const profileReducer = (state = initialState, action: AllActionTypes): InitialStateType => {
     switch(action.type) {
         case ADD_POST:
             return {
@@ -49,34 +52,34 @@ const profileReducer = (state = initialState, action: any): InitialStateType => 
     }
 }
 
-export const getProfileTC = (userId: number) => {
-    return (dispatch: any) => {
-        usersAPI.getProfile(userId).then(response => {
-            dispatch(setUserProfile(response));
-        });
-    }
+type ThunkType = ThunkAction<void, AppStateType, unknown, ActionType>
+
+export const getProfileTC = (userId: number): ThunkType => (dispatch) => {
+    usersAPI.getProfile(userId).then(response => {
+        dispatch(setUserProfile(response));
+    });
 }
 
-export const getStatusTC = (userId: number) => async (dispatch: any) => {
+export const getStatusTC = (userId: number): ThunkType => async (dispatch) => {
     let response = await profileAPI.getStatus(userId);
     dispatch(setStatusAC(response));
 }
 
-export const updateStatusTC = (status: string) => async (dispatch: any) => {
+export const updateStatusTC = (status: string): ThunkType => async (dispatch) => {
     let response = await profileAPI.updateStatus(status);
     if (response.resultCode === 0) {
         dispatch(setStatusAC(status));
     }
 }
 
-export const uploadPhotoTC = (photo: string) => async (dispatch: any) => {
+export const uploadPhotoTC = (photo: string): ThunkType => async (dispatch) => {
     let response = await profileAPI.uploadPhoto(photo);
     if (response.resultCode === 0) {
         dispatch(updatePhoto(response.data.photos));
     }
 }
 
-export const setProfile = (data: any, userId: number) => async (dispatch: any) => {
+export const setProfile = (data: ProfileType, userId: number): ThunkType => async (dispatch) => {
     let response = await profileAPI.setProfile(data);
     if (response.resultCode === 0) {
         usersAPI.getProfile(userId).then(response => {
@@ -85,35 +88,38 @@ export const setProfile = (data: any, userId: number) => async (dispatch: any) =
     }
 }
 
-
 export const resetForm = (formName: string) => (dispatch: any) => {
+    debugger
     dispatch(reset(formName));
 }
 
-type createNewPostType = {
+type CreateNewPostType = {
     type: typeof ADD_POST
     text: string
 }
 
-type setUserProfileType = {
+type SetUserProfileType = {
     type: typeof SET_USER_PROFILE
     profile: ProfileType
 }
 
-type setStatusACType = {
+type SetStatusACType = {
     type: typeof SET_STATUS
     status: string
 }
 
-type updatePhotoType = {
+type UpdatePhotoType = {
     type: typeof UPDATE_PHOTO
     photos: PhotosType
 }
+
+type AllActionTypes = CreateNewPostType & SetUserProfileType & SetStatusACType & UpdatePhotoType
+type ActionType = CreateNewPostType | SetUserProfileType | SetStatusACType | UpdatePhotoType
  
-export const createNewPost = (text: string):createNewPostType => ({ type: ADD_POST, text })
-const setUserProfile = (profile: ProfileType):setUserProfileType => ({ type: SET_USER_PROFILE, profile })
-const setStatusAC = (status: string):setStatusACType => ({ type: SET_STATUS, status })
-const updatePhoto = (photos: PhotosType):updatePhotoType => ({ type: UPDATE_PHOTO, photos })
+export const createNewPost = (text: string): CreateNewPostType => ({ type: ADD_POST, text })
+const setUserProfile = (profile: ProfileType): SetUserProfileType => ({ type: SET_USER_PROFILE, profile })
+const setStatusAC = (status: string): SetStatusACType => ({ type: SET_STATUS, status })
+const updatePhoto = (photos: PhotosType): UpdatePhotoType => ({ type: UPDATE_PHOTO, photos })
 
 
 export default profileReducer;

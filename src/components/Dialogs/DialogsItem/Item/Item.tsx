@@ -2,7 +2,13 @@ import s from './Item.module.css';
 import {NavLink} from "react-router-dom";
 import React from "react";
 
-const Item = ({id, name, url}) => {
+type PropsType = {
+    id: string
+    name: string
+    url: string
+}
+
+const Item: React.FC<PropsType> = ({id, name, url}) => {
     id = String(id);
     return (
         <div className={s.item}>

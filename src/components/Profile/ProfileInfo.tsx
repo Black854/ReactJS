@@ -49,7 +49,7 @@ type PropsType = {
         props.uploadPhotoTC(e.currentTarget.files[0]);
     }
 
-    const onSubmit = (formData: any) => {
+    const onSubmit = (formData: object) => {
         props.setProfile(formData, props.profile.userId);
         setContactsChangeMode(false);
     }

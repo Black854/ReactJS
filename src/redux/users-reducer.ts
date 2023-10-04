@@ -1,5 +1,7 @@
+import { ThunkAction } from "redux-thunk";
 import { usersAPI } from "../api/api";
 import { UserType } from "../types/types";
+import { AppStateType } from "./store";
 
 const FOLLOW: string = 'FOLLOW';
 const UNFOLLOW: string = 'UNFOLLOW';
@@ -20,7 +22,7 @@ let initialState = {
 
 type InitialStateType = typeof initialState
 
-const usersReducer = (state = initialState, action: any): InitialStateType => {
+const usersReducer = (state = initialState, action: AllActionTypes): InitialStateType => {
     switch(action.type) {
         case FOLLOW:
             return {
@@ -75,7 +77,9 @@ const usersReducer = (state = initialState, action: any): InitialStateType => {
     }
 }
 
-export const getUsersTC = (pageSize: number, pageNumber: number) =>  async (dispatch: any) => {
+type ThunkType = ThunkAction<void, AppStateType, unknown, ActionType>
+
+export const getUsersTC = (pageSize: number, pageNumber: number): ThunkType =>  async (dispatch) => {
     dispatch(setLoading());
     dispatch(setCurrentPage(pageNumber));
     let response = await usersAPI.getUsers(pageSize, pageNumber);
@@ -84,7 +88,7 @@ export const getUsersTC = (pageSize: number, pageNumber: number) =>  async (disp
     dispatch(setLoading());
 }
 
-export const follow = (userId: number) => async (dispatch: any) => {
+export const follow = (userId: number): ThunkType => async (dispatch) => {
     dispatch(setFollowProgress(true, userId));
     let response = await usersAPI.followUser(userId);
     if (response.resultCode === 0) {
@@ -93,7 +97,7 @@ export const follow = (userId: number) => async (dispatch: any) => {
     }
 }
 
-export const unfollow = (userId: number) => async (dispatch: any) => {
+export const unfollow = (userId: number): ThunkType => async (dispatch) => {
     dispatch(setFollowProgress(true, userId));
     let response = await usersAPI.unfollowUser(userId);
     if (response.resultCode === 0) {
@@ -136,6 +140,9 @@ type setFollowProgressType = {
     isFetching: boolean
     userId: number
 }
+
+type AllActionTypes = followSuccessType & unfollowSuccessType & setUsersType & setCurrentPageType & setTotalCountType & setLoadingType & setFollowProgressType
+type ActionType = followSuccessType | unfollowSuccessType | setUsersType | setCurrentPageType | setTotalCountType | setLoadingType | setFollowProgressType
 
 export const followSuccess = (id: number): followSuccessType => ({ type: FOLLOW, id })
 export const unfollowSuccess = (id: number): unfollowSuccessType => ({ type: UNFOLLOW, id})
