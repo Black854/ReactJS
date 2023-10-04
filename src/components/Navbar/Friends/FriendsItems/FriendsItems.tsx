@@ -1,9 +1,14 @@
 import s from './FriendsItems.module.css';
 import React from "react";
 
-const FriendsItem = (props) => {
+type PropsType = {
+    url: string
+    name: string
+}
+
+const FriendsItem: React.FC<PropsType> = (props) => {
     return (
-        <div key={props.id} className={s.friendsItem}>
+        <div className={s.friendsItem}>
             <img className={s.avatar}
                  src={props.url}
                  alt=""/>

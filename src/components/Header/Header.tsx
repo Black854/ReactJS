@@ -3,7 +3,16 @@ import s from './Header.module.css'
 import React from "react";
 import userPhoto from '../../img/user.jpg';
 
-const Header = ({isAuth, logout, login, userPhotoSmall}) => {
+type PropsType = {
+    email: string | null
+    login: string | null
+    isAuth: boolean
+    userPhotoSmall: string | null
+    logout: () => void
+    getAuthDataTC: () => void
+}
+
+const Header: React.FC<PropsType> = ({isAuth, logout, login, userPhotoSmall}) => {
   let logoutFunc = () => {
     return logout();
   }

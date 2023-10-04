@@ -1,3 +1,4 @@
+import { reset } from "redux-form";
 import { profileAPI, usersAPI } from "../api/api";
 import { PhotosType, PostType, ProfileType } from "../types/types";
 
@@ -82,6 +83,11 @@ export const setProfile = (data: any, userId: number) => async (dispatch: any) =
             dispatch(setUserProfile(response));
         });
     }
+}
+
+
+export const resetForm = (formName: string) => (dispatch: any) => {
+    dispatch(reset(formName));
 }
 
 type createNewPostType = {

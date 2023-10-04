@@ -13,7 +13,7 @@ import { useEffect } from 'react';
 import { AppStateType } from './redux/store';
 let UsersContainer = lazy(() => import ('./components/Users/UsersContainer') as any);
 let ProfileContainer = lazy(() => import ('./components/Profile/ProfileContainer') as any);
-let Dialogs = lazy(() => import ('./components/Dialogs/Dialogs'));
+let Dialogs = lazy(() => import ('./components/Dialogs/Dialogs') as any);
 
 type MapStatePropsType = {
   initialized: boolean

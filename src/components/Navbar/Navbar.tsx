@@ -2,8 +2,13 @@ import {NavLink} from 'react-router-dom';
 import s from './Navbar.module.css'
 import React from "react";
 import Friends from "./Friends/Friends";
+import { FriensType } from '../../types/types';
 
-const Navbar = (props) => {
+type PropsType = {
+    friends: Array<FriensType>
+}
+
+const Navbar: React.FC<PropsType> = (props) => {
     return (
         <div className={s.nav}>
             <div>

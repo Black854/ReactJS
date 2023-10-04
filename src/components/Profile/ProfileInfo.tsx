@@ -97,19 +97,19 @@ let ProfileEditForm = ({handleSubmit}: any) => {
     return (
         <form onSubmit={handleSubmit} className={s.profileForm} >
             <button>Save</button>
-            <label>Полное имя</label>: {CreateField("fullName", Input, [required] as any, {placeholder: "Full name"} as any)}
-            <label>Обо мне</label>: {CreateField("aboutMe", Input, [required] as any, {placeholder: "About me"} as any )}
-            {CreateField("lookingForAJob", "input", [] as any, {type: 'checkbox', placeholder: "Full name"} as any, null, "В поиске работы" as any )}
-            <b>Мои навыки</b>: {CreateField("lookingForAJobDescription", Textarea,  [required] as any, {placeholder: "My professional skills"} as any)}
+            <label>Полное имя</label>: {CreateField("fullName", Input, [required], {placeholder: "Full name"}, null, null)}
+            <label>Обо мне</label>: {CreateField("aboutMe", Input, [required], {placeholder: "About me"}, null, null )}
+            {CreateField("lookingForAJob", "input", [], {type: 'checkbox', placeholder: "Full name"}, null, "В поиске работы" )}
+            <b>Мои навыки</b>: {CreateField("lookingForAJobDescription", Textarea,  [required], {placeholder: "My professional skills"}, null, null)}
             <h3>Контакты</h3>            
-            {CreateField("contacts.facebook", Input, [] as any, {placeholder: "Facebook"} as any)}
-            {CreateField("contacts.website", Input, [] as any, {placeholder: "WebSite"} as any)}
-            {CreateField("contacts.vk", Input, [] as any, {placeholder: "VK"} as any)}
-            {CreateField("contacts.twitter", Input, [] as any, {placeholder: "Twitter"} as any)}
-            {CreateField("contacts.instagram", Input, [] as any, {placeholder: "Instagram"} as any)}
-            {CreateField("contacts.youtube", Input, [] as any, {placeholder: "YouTube"} as any as any)}
-            {CreateField("contacts.github", Input, [] as any, {placeholder: "GitHub"} as any)}
-            {CreateField("contacts.mainLink", Input, [] as any, {placeholder: "MainLink"} as any)}
+            {CreateField("contacts.facebook", Input, [], {placeholder: "Facebook"}, null, null)}
+            {CreateField("contacts.website", Input, [], {placeholder: "WebSite"}, null, null)}
+            {CreateField("contacts.vk", Input, [], {placeholder: "VK"}, null, null)}
+            {CreateField("contacts.twitter", Input, [], {placeholder: "Twitter"}, null, null)}
+            {CreateField("contacts.instagram", Input, [], {placeholder: "Instagram"}, null, null)}
+            {CreateField("contacts.youtube", Input, [], {placeholder: "YouTube"}, null, null)}
+            {CreateField("contacts.github", Input, [], {placeholder: "GitHub"}, null, null)}
+            {CreateField("contacts.mainLink", Input, [], {placeholder: "MainLink"}, null, null)}
         </form>
     );
 }
