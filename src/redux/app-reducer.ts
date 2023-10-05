@@ -1,22 +1,21 @@
-import { getAuthDataTC } from "./auth-reducer";
+import { ThunkAction } from "redux-thunk"
+import { getAuthDataTC } from "./auth-reducer"
+import { AppStateType } from "./store"
 
-const INITIALIZE_APP: string = 'INITIALIZE_APP';
-
-type initialStateType = {
-    initialized: boolean
-    authorizedUserId: number | null
-}
+const INITIALIZE_APP = 'INITIALIZE_APP';
 
 type initializeAppActionType = {
     type: typeof INITIALIZE_APP
 }
 
-let initialState: initialStateType = {    
+let initialState = {    
     initialized: false,
-    authorizedUserId: null
+    authorizedUserId: null as number | null
 }
 
-const appReducer = (state = initialState, action: any): initialStateType => {
+type initialStateType = typeof initialState
+
+const appReducer = (state = initialState, action: initializeAppActionType): initialStateType => {
     switch (action.type) {
         case INITIALIZE_APP:
             return {
@@ -24,17 +23,19 @@ const appReducer = (state = initialState, action: any): initialStateType => {
                 initialized: true
             }
         default:
-            return state;
+            return state
     }
 }
 
-export const initializeAppTC = () => (dispatch: any) => {
-    let promise = dispatch(getAuthDataTC());
+export const initializeAppTC = ():ThunkType => (dispatch) => {
+    let promise = dispatch(getAuthDataTC())
     Promise.all([promise]).then(() => {
-        dispatch(initializeApp());
+        dispatch(initializeApp())
     })
 }
 
+type ThunkType = ThunkAction<void, AppStateType, unknown, initializeAppActionType>
+
 const initializeApp = (): initializeAppActionType => ({ type: INITIALIZE_APP })
 
-export default appReducer;  
+export default appReducer

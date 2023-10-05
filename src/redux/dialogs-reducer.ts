@@ -1,7 +1,7 @@
-import karina from '../img/karina.jpg';
-import ars from '../img/ars.jpg';
-import sizh from '../img/sizh.jpg';
-import sistr from '../img/sistr.jpg';
+import karina from '../img/karina.jpg'
+import ars from '../img/ars.jpg'
+import sizh from '../img/sizh.jpg'
+import sistr from '../img/sistr.jpg'
 
 const SEND_MESSAGE = 'SEND-MESSAGE'
 
@@ -35,7 +35,7 @@ let initialState = {
 type InitialStateType = typeof initialState
 
 
-const dialogsReducer = (state = initialState, action: any): InitialStateType => {
+const dialogsReducer = (state = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
         case SEND_MESSAGE:
             return {
@@ -44,11 +44,13 @@ const dialogsReducer = (state = initialState, action: any): InitialStateType => 
                     ...state.messages,
                     { id: 5, message: action.text, senderId: 1 }
                 ]
-            };
+            }
         default:
-            return state;
+            return state
     }
 }
+
+type ActionTypes = sendMessageType
 
 type sendMessageType = {
     type: typeof SEND_MESSAGE
@@ -57,4 +59,4 @@ type sendMessageType = {
 
 export const sendMessage = (text: string): sendMessageType => ({ type: SEND_MESSAGE, text })
 
-export default dialogsReducer;
+export default dialogsReducer

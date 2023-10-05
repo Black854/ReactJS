@@ -5,7 +5,6 @@ import { reduxForm } from 'redux-form';
 import { Textarea } from '../../common/FormsControls/FormControls';
 import { maxLength } from '../../../utils/validators/validators';
 import { CreateField } from '../../common/FormsControls/form-helpers';
-import { resetForm } from '../../../redux/profile-reducer';
 
 type NewMessagePropsType = {
     handleSubmit: any
