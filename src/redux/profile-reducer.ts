@@ -1,8 +1,9 @@
 import { reset } from 'redux-form'
-import { profileAPI, usersAPI } from '../api/api'
+import { ResultCodesEnum, profileAPI, usersAPI } from '../api/api'
 import { PhotosType, PostType, ProfileType } from '../types/types'
 import { ThunkAction } from 'redux-thunk'
 import { AppStateType } from './store'
+import { setUserPhoto, setUserPhotoType } from './auth-reducer'
 
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
@@ -51,10 +52,9 @@ const profileReducer = (state = initialState, action: ActionTypes): InitialState
     }
 }
 
-export const getProfileTC = (userId: number): ThunkType => (dispatch) => {
-    usersAPI.getProfile(userId).then(response => {
-        dispatch(setUserProfile(response))
-    })
+export const getProfileTC = (userId: number): ThunkType => async (dispatch) => {
+    let response = await usersAPI.getProfile(userId)
+    dispatch(setUserProfile(response))
 }
 
 export const getStatusTC = (userId: number): ThunkType => async (dispatch) => {
@@ -64,21 +64,22 @@ export const getStatusTC = (userId: number): ThunkType => async (dispatch) => {
 
 export const updateStatusTC = (status: string): ThunkType => async (dispatch) => {
     let response = await profileAPI.updateStatus(status)
-    if (response.resultCode === 0) {
+    if (response.resultCode === ResultCodesEnum.Success) {
         dispatch(setStatusAC(status))
     }
 }
 
-export const uploadPhotoTC = (photo: string): ThunkType => async (dispatch) => {
+export const uploadPhotoTC = (photo: any): ThunkType => async (dispatch) => {
     let response = await profileAPI.uploadPhoto(photo)
-    if (response.resultCode === 0) {
+    if (response.resultCode === ResultCodesEnum.Success) {
         dispatch(updatePhoto(response.data.photos))
+        dispatch(setUserPhoto(response.data.photos.small))
     }
 }
 
 export const setProfile = (data: ProfileType, userId: number): ThunkType => async (dispatch) => {
     let response = await profileAPI.setProfile(data)
-    if (response.resultCode === 0) {
+    if (response.resultCode === ResultCodesEnum.Success) {
         usersAPI.getProfile(userId).then(response => {
             dispatch(setUserProfile(response))
         });
@@ -86,7 +87,6 @@ export const setProfile = (data: ProfileType, userId: number): ThunkType => asyn
 }
 
 export const resetForm = (formName: string) => (dispatch: any) => {
-    debugger
     dispatch(reset(formName))
 }
 
@@ -110,7 +110,7 @@ type UpdatePhotoType = {
     photos: PhotosType
 }
 
-type ActionTypes = CreateNewPostType | SetUserProfileType | SetStatusACType | UpdatePhotoType
+type ActionTypes = CreateNewPostType | SetUserProfileType | SetStatusACType | UpdatePhotoType | setUserPhotoType
 type ThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes>
  
 export const createNewPost = (text: string): CreateNewPostType => ({ type: ADD_POST, text })
