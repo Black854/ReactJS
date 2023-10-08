@@ -1,5 +1,5 @@
 import { ThunkAction } from 'redux-thunk'
-import { authAPI, usersAPI } from '../api/api'
+import { ResultCodesEnum, authAPI, usersAPI } from '../api/api'
 import {stopSubmit} from 'redux-form'
 import { AppStateType } from './store'
 
@@ -39,7 +39,7 @@ const authReducer = (state = initialState, action: ActionTypes): InitialStateTyp
 
 export const getAuthDataTC = (): ThunkType => async (dispatch) => {
     const response = await authAPI.me()
-    if (response.resultCode === 0) {
+    if (response.resultCode === ResultCodesEnum.Success) {
         let {id, email, login} = response.data
         dispatch(setUserAuthData(id, email, login))
         let response2 = await usersAPI.getProfile(response.data.id)
@@ -48,11 +48,11 @@ export const getAuthDataTC = (): ThunkType => async (dispatch) => {
     return response
 }
 
-export const login = (formData: DataType): ThunkType => async (dispatch) => {
+export const login = (formData: {email: string, password: string, rememberMe: boolean}): ThunkType => async (dispatch) => {
     const response = await authAPI.login(formData)
-    if (response.resultCode === 0) {            
+    if (response.resultCode === ResultCodesEnum.Success) {            
         const response2 = await authAPI.me()
-        if (response2.resultCode === 0) {
+        if (response2.resultCode === ResultCodesEnum.Success) {
             let {id, email, login} = response2.data
             dispatch(setUserAuthData(id, email, login))
             const response3 = await usersAPI.getProfile(response2.data.id)
@@ -66,7 +66,7 @@ export const login = (formData: DataType): ThunkType => async (dispatch) => {
 
 export const logout = (): ThunkType => async (dispatch) => {
     const response = await authAPI.logout()
-    if (response.resultCode === 0) {
+    if (response.resultCode === ResultCodesEnum.Success) {
         dispatch(deleteUserAuthData())
     }
 }
@@ -86,9 +86,9 @@ type deleteUserAuthDataType = {
     type: typeof DELETE_USER_AUTH_DATA
 }
 
-type setUserPhotoType = {
+export type setUserPhotoType = {
     type: typeof SET_USER_PHOTO
-    photo: string
+    photo: string | null
 }
 
 type ActionTypes = setUserAuthDataType | deleteUserAuthDataType | setUserPhotoType
@@ -96,6 +96,6 @@ type ThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes>
 
 const setUserAuthData = (id: number, email: string, login: string): setUserAuthDataType => ({ type: SET_USER_AUTH_DATA, data: {id, email, login} })
 const deleteUserAuthData = (): deleteUserAuthDataType => ({ type: DELETE_USER_AUTH_DATA })
-const setUserPhoto = (photo: string): setUserPhotoType => ({ type: SET_USER_PHOTO, photo })
+export const setUserPhoto = (photo: string | null): setUserPhotoType => ({ type: SET_USER_PHOTO, photo })
 
 export default authReducer

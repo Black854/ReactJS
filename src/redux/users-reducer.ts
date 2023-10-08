@@ -1,5 +1,5 @@
 import { ThunkAction } from "redux-thunk"
-import { usersAPI } from "../api/api"
+import { ResultCodesEnum, usersAPI } from "../api/api"
 import { UserType } from "../types/types"
 import { AppStateType } from "./store"
 
@@ -91,7 +91,7 @@ export const getUsersTC = (pageSize: number, pageNumber: number): ThunkType =>  
 export const follow = (userId: number): ThunkType => async (dispatch) => {
     dispatch(setFollowProgress(true, userId))
     let response = await usersAPI.followUser(userId)
-    if (response.resultCode === 0) {
+    if (response.resultCode === ResultCodesEnum.Success) {
         dispatch(followSuccess(userId))
         dispatch(setFollowProgress(false, userId))
     }
@@ -100,7 +100,7 @@ export const follow = (userId: number): ThunkType => async (dispatch) => {
 export const unfollow = (userId: number): ThunkType => async (dispatch) => {
     dispatch(setFollowProgress(true, userId))
     let response = await usersAPI.unfollowUser(userId)
-    if (response.resultCode === 0) {
+    if (response.resultCode === ResultCodesEnum.Success) {
         dispatch(unfollowSuccess(userId))
         dispatch(setFollowProgress(false, userId))
     }
