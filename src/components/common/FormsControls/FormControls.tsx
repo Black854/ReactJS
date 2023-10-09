@@ -1,53 +1,52 @@
 import s from './FormControls.module.css';
 import React from 'react'
 
-type MetaType = {
-    touched: boolean
-    error: string
-}
-
-type PropsType = {
-    input: any
-    meta: MetaType
-}
-
-export const Textarea: React.FC<PropsType> = ({input, meta: {touched, error}, ...props}) => {
-    const hasError = touched && error
-    return (
-        <div className={s.formControl + " " + (hasError && s.error)} >
-            <div>
-                <textarea {...input} {...props} />
-            </div>
-            {hasError && <span>{error}</span>}
-        </div>
-    )
-}
-
-export const Input: React.FC<PropsType> = ({input, meta: {touched, error}, ...props}) => {
-    const hasError = touched && error
-    return (
-        <div className={s.formControl + " " + (hasError && s.error)} >
-            <div>
-                <input {...input} {...props} />
-            </div>
-            {hasError && <span>{error}</span>}
-        </div>
-    )
-}
-
-type Input2PropsType = {
+type InputPropsType = {
     register: any
     errors: any
     name: string
-    maxLength?: string
-    required?: string
+    validate?: {
+        required?: boolean
+        minLength?: number
+        maxLength?: number
+        pattern?: any
+    }
+    placeholder?: string
+    type?: string
+    checkboxText?: string
 }
 
-export const Input2: React.FC<Input2PropsType> = ({register, errors, name, maxLength, required}) => {
+export const Input: React.FC<InputPropsType> = ({register, errors, name, validate, placeholder, type='text', checkboxText}) => {
     return (
-        <div className={s.formControl + " " + (errors.contacts?.facebook && s.error)}>
-            <input {...register(name, {maxLength && maxLength: maxLength})} placeholder="Facebook" />
-            {errors.contacts?.facebook && errors.contacts.facebook.type === 'maxLength' && <span>Максимальная длина поля не более 40 символов</span>}
+        <div className={s.formControl + " " + (errors && s.error)}>
+            <input {...register(name, {...validate})} placeholder={placeholder} type={type} />
+            {checkboxText}
+            {errors && errors.type === 'required' && <span>Поле обязательно для заполнения</span>}
+            {errors && errors.type === 'maxLength' && <span>Максимальная длина поля не более {validate?.maxLength} символов</span>}
+            {errors && errors.type === 'pattern' && <span>Введенные значения должны соответствовать URL-адресу</span>}
+        </div>
+    )
+}
+
+type TextareaPropsType = {
+    register: any
+    errors: any
+    name: string
+    validate?: {
+        required?: boolean
+        minLength?: number
+        maxLength?: number
+    }
+    placeholder?: string
+    className?: string
+}
+
+export const Textarea: React.FC<TextareaPropsType> = ({register, errors, name, validate, placeholder, className}) => {
+    return (
+        <div className={s.formControl + " " + (errors && s.error)}>
+            <textarea className={className} {...register(name, {...validate})} placeholder={placeholder} />
+            {errors && errors.type === 'required' && <span>Поле обязательно для заполнения</span>}
+            {errors && errors.type === 'maxLength' && <span>Максимальная длина поля не более {validate?.maxLength} символов</span>}
         </div>
     )
 }

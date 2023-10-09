@@ -6,7 +6,7 @@ import { ContactsType, ProfileType } from '../../types/types'
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
 import s2 from './../common/FormsControls/FormControls.module.css'
 import headerImage from './../../img/header.jpg'
-import { Input2 } from '../common/FormsControls/FormControls'
+import { Input, Textarea } from '../common/FormsControls/FormControls'
 
 type PropsType = {
     status: string
@@ -17,10 +17,10 @@ type PropsType = {
     isMyProfilePage: boolean
 }
 
-const ProfileInfo: React.FC<PropsType> = (props) => {
+const ProfileInfo: React.FC<PropsType> = ({status, updateStatusTC, profile, uploadPhotoTC, setProfile, isMyProfilePage}) => {
     let [changeMode, setChangeMode] = useState(false)
     let [contactsChangeMode, setContactsChangeMode] = useState(false)
-    let [status, setStatus] = useState(props.status)
+    let [localStatus, setStatus] = useState(status)
 
     interface MyForm {
         lookingForAJob: boolean
@@ -30,154 +30,90 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
         aboutMe: string
     }
     const {register, handleSubmit, reset, formState: {errors}} = useForm<MyForm>({
-        defaultValues: props.profile
+        defaultValues: profile
     })
-
     const submit: SubmitHandler<MyForm> = data => {
-        props.setProfile(data, props.profile.userId)
+        setProfile(data, profile.userId)
         setContactsChangeMode(false)
     }
-
     const error: SubmitErrorHandler<MyForm> = data => {
     //    console.log(data)
     }
-
     useEffect (() => {
-        setStatus(props.status)
-        }, [props.status]) 
-
+        setStatus(status)
+        }, [status]) 
     useEffect (() => {
-        reset(props.profile);
-    }, [props.profile, reset]) 
-
+        reset(profile);
+    }, [profile, reset]) 
     const activateChangeMode = () => {
         setChangeMode(true)
     }
     const deactivateChangeMode = () => {
         setChangeMode(false)
-        props.updateStatusTC(status)
+        updateStatusTC(localStatus)
     }
     const onChangeStatusText = (e: ChangeEvent<HTMLInputElement>) => {
         setStatus(e.currentTarget.value)
     }
-    
     const onSelectPhoto = (e: any) => {
-        props.uploadPhotoTC(e.currentTarget.files[0])
+        uploadPhotoTC(e.currentTarget.files[0])
     }
-
-    if (!props.profile) {
+    if (!profile) {
         return (
             <Preloader />
         )
     }
-
     return (
         <div>
             <img className={s.mainImage} src={headerImage} alt='' />
             <div className={s.profileBlock}>
                 <div className={s.mainPhotoContainer}>
-                    <img className={s.avatar} src={props.profile.photos.large ? props.profile.photos.large : userPhoto} alt="" />
-                    {props.isMyProfilePage && <><input id="uploadPhoto" type="file" className={s.buttonUploadPhoto} onChange={onSelectPhoto} />
+                    <img className={s.avatar} src={profile.photos.large ? profile.photos.large : userPhoto} alt="" />
+                    {isMyProfilePage && <><input id="uploadPhoto" type="file" className={s.buttonUploadPhoto} onChange={onSelectPhoto} />
                     <label htmlFor="uploadPhoto" className={s.buttonLabel}></label></>}
                 </div>
                 <div>
-                    <h2 className={s.userName}>{props.profile.fullName}</h2>                    
-                    {!changeMode && ( props.isMyProfilePage ? <p onDoubleClick={activateChangeMode}> Статус: {props.status || '------'}</p> : <p>{props.status || '------'}</p> )} 
-                    {changeMode && <input autoFocus onBlur={deactivateChangeMode} type="text" value={status} onChange={onChangeStatusText} />}
+                    <h2 className={s.userName}>{profile.fullName}</h2>                    
+                    {!changeMode && ( isMyProfilePage ? <p onDoubleClick={activateChangeMode}> Статус: {status || '------'}</p> : <p>{status || '------'}</p> )} 
+                    {changeMode && <input autoFocus onBlur={deactivateChangeMode} type="text" value={localStatus} onChange={onChangeStatusText} />}
                     {!contactsChangeMode && <>
-                        <p className={s.profileItems}>Обо мне: {props.profile.aboutMe }</p>
-                        <p className={s.profileItems}>В поиске работы: {props.profile.lookingForAJob ? "Да" : "Нет" }</p>
-                        <p className={s.profileItems}>Мои профессиональные навыки: {props.profile.lookingForAJobDescription }</p>
-                        {props.isMyProfilePage && <button onClick={() => setContactsChangeMode(true)}>Редактировать профиль</button> }  
+                        <p className={s.profileItems}>Обо мне: {profile.aboutMe }</p>
+                        <p className={s.profileItems}>В поиске работы: {profile.lookingForAJob ? "Да" : "Нет" }</p>
+                        <p className={s.profileItems}>Мои профессиональные навыки: {profile.lookingForAJobDescription }</p>
+                        {isMyProfilePage && <button onClick={() => setContactsChangeMode(true)}>Редактировать профиль</button> }  
                         <h3>Контакты</h3>
-                        {props.profile.contacts.facebook && <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.facebook }>Facebook</a>}
-                        {props.profile.contacts.website && <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.website }>WebSite</a>}
-                        {props.profile.contacts.vk && <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.vk }>VK</a> }
-                        {props.profile.contacts.twitter && <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.twitter }>Twitter</a>}
-                        {props.profile.contacts.instagram && <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.instagram }>Instagram</a> }
-                        {props.profile.contacts.youtube && <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.youtube }>YouTube</a> }
-                        {props.profile.contacts.github && <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.github }>GitHub</a> }
-                        {props.profile.contacts.mainLink && <a target='_blank' className={s.contactsLink} href={'//' + props.profile.contacts.mainLink }>MainLink</a>}
+                        {profile.contacts.facebook && <a target='_blank' className={s.contactsLink} href={'//' + profile.contacts.facebook }>Facebook</a>}
+                        {profile.contacts.website && <a target='_blank' className={s.contactsLink} href={'//' + profile.contacts.website }>WebSite</a>}
+                        {profile.contacts.vk && <a target='_blank' className={s.contactsLink} href={'//' + profile.contacts.vk }>VK</a> }
+                        {profile.contacts.twitter && <a target='_blank' className={s.contactsLink} href={'//' + profile.contacts.twitter }>Twitter</a>}
+                        {profile.contacts.instagram && <a target='_blank' className={s.contactsLink} href={'//' + profile.contacts.instagram }>Instagram</a> }
+                        {profile.contacts.youtube && <a target='_blank' className={s.contactsLink} href={'//' + profile.contacts.youtube }>YouTube</a> }
+                        {profile.contacts.github && <a target='_blank' className={s.contactsLink} href={'//' + profile.contacts.github }>GitHub</a> }
+                        {profile.contacts.mainLink && <a target='_blank' className={s.contactsLink} href={'//' + profile.contacts.mainLink }>MainLink</a>}
                         </>
                     }
-
-                    {contactsChangeMode && props.profile && <>   
+                    {contactsChangeMode && <>   
                         <form onSubmit={handleSubmit(submit, error)}>
                             <button>Save</button>
                             <label>Полное имя</label>:
-                            <div className={s2.formControl + " " + (errors.fullName && s2.error)}>
-                                <input {...register('fullName', {value: props.profile.fullName, required: true, maxLength: 40 })} placeholder="Full name" />
-                                {errors.fullName && errors.fullName.type === 'required' && <span>Поле обязательно для заполнения</span>}
-                                {errors.fullName && errors.fullName.type === 'maxLength' && <span>Максимальная длина поля не более 40 символов</span>}
-                            </div>
-
+                            <Input register={register} errors={errors.fullName} name='fullName' validate={{required: true, maxLength: 40}} placeholder='Full name' />
                             <label>Обо мне</label>:
-                            <div className={s2.formControl + " " + (errors.aboutMe && s2.error)}>
-                                <input {...register('aboutMe', {required: true, maxLength: 40 })} placeholder="aboutMe" />
-                                {errors.aboutMe && errors.aboutMe.type === 'required' && <span>Поле обязательно для заполнения</span>}
-                                {errors.aboutMe && errors.aboutMe.type === 'maxLength' && <span>Максимальная длина поля не более 40 символов</span>}
-                            </div>
-
-                            <div className={s2.formControl}>
-                                <input type='checkbox' {...register('lookingForAJob', {required: true })} />
-                                В поиске работы
-                            </div>
-
+                            <Input register={register} errors={errors.aboutMe} name='aboutMe' validate={{required: true, maxLength: 40}} placeholder='About me' />
+                            <Input register={register} errors={errors.lookingForAJob} name='lookingForAJob' validate={{required: true}} type='checkbox' checkboxText='В поиске работы' />
                             <label>Мои навыки</label>:
-                            <div className={s2.formControl + " " + (errors.lookingForAJobDescription && s2.error)}>
-                                <textarea {...register('lookingForAJobDescription', {required: true, maxLength: 40 })} placeholder="My professional skills" />
-                                {errors.lookingForAJobDescription && errors.lookingForAJobDescription.type === 'required' && <span>Поле обязательно для заполнения</span>}
-                                {errors.lookingForAJobDescription && errors.lookingForAJobDescription.type === 'maxLength' && <span>Максимальная длина поля не более 40 символов</span>}
-                            </div>
-
+                            <Textarea register={register} errors={errors.lookingForAJobDescription} name='lookingForAJobDescription' validate={{required: true, maxLength: 200}} />
                             <h3>Контакты</h3>
-
-                            {/* <div className={s2.formControl + " " + (errors.contacts?.facebook && s2.error)}>
-                                <input {...register('contacts.facebook', {maxLength: 40 })} placeholder="Facebook" />
-                                {errors.contacts?.facebook && errors.contacts.facebook.type === 'maxLength' && <span>Максимальная длина поля не более 40 символов</span>}
-                            </div> */}
-
-                            <Input2 register={register} errors={errors} name='contacts.facebook' maxLength='40' required='false' />
-
-                            <div className={s2.formControl + " " + (errors.contacts?.website && s2.error)}>
-                                <input {...register('contacts.website', {maxLength: 40 })} placeholder="Web Site" />
-                                {errors.contacts?.website && errors.contacts.website.type === 'maxLength' && <span>Максимальная длина поля не более 40 символов</span>}
-                            </div>
-
-                            <div className={s2.formControl + " " + (errors.contacts?.vk && s2.error)}>
-                                <input {...register('contacts.vk', {maxLength: 40 })} placeholder="VK" />
-                                {errors.contacts?.vk && errors.contacts.vk.type === 'maxLength' && <span>Максимальная длина поля не более 40 символов</span>}
-                            </div>
-
-                            <div className={s2.formControl + " " + (errors.contacts?.twitter && s2.error)}>
-                                <input {...register('contacts.twitter', {maxLength: 40 })} placeholder="Twitter" />
-                                {errors.contacts?.twitter && errors.contacts.twitter.type === 'maxLength' && <span>Максимальная длина поля не более 40 символов</span>}
-                            </div>
-
-                            <div className={s2.formControl + " " + (errors.contacts?.instagram && s2.error)}>
-                                <input {...register('contacts.instagram', {maxLength: 40 })} placeholder="Instagram" />
-                                {errors.contacts?.instagram && errors.contacts.instagram.type === 'maxLength' && <span>Максимальная длина поля не более 40 символов</span>}
-                            </div>
-
-                            <div className={s2.formControl + " " + (errors.contacts?.youtube && s2.error)}>
-                                <input {...register('contacts.youtube', {maxLength: 40 })} placeholder="YouTube" />
-                                {errors.contacts?.youtube && errors.contacts.youtube.type === 'maxLength' && <span>Максимальная длина поля не более 40 символов</span>}
-                            </div>
-
-                            <div className={s2.formControl + " " + (errors.contacts?.github && s2.error)}>
-                                <input {...register('contacts.github', {maxLength: 40 })} placeholder="GitHub" />
-                                {errors.contacts?.github && errors.contacts.github.type === 'maxLength' && <span>Максимальная длина поля не более 40 символов</span>}
-                            </div>
-
-                            <div className={s2.formControl + " " + (errors.contacts?.mainLink && s2.error)}>
-                                <input {...register('contacts.mainLink', {maxLength: 40 })} placeholder="MainLink" />
-                                {errors.contacts?.mainLink && errors.contacts.mainLink.type === 'maxLength' && <span>Максимальная длина поля не более 40 символов</span>}
-                            </div>
+                            <Input register={register} errors={errors.contacts?.facebook} name='contacts.facebook' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='Facebook' />
+                            <Input register={register} errors={errors.contacts?.website} name='contacts.website' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='Web-site' />
+                            <Input register={register} errors={errors.contacts?.vk} name='contacts.vk' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='VK' />
+                            <Input register={register} errors={errors.contacts?.twitter} name='contacts.twitter' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='Twitter' />
+                            <Input register={register} errors={errors.contacts?.instagram} name='contacts.instagram' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='Instagram' />
+                            <Input register={register} errors={errors.contacts?.youtube} name='contacts.youtube' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='YouTube' />
+                            <Input register={register} errors={errors.contacts?.github} name='contacts.github' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='GitHub' />
+                            <Input register={register} errors={errors.contacts?.mainLink} name='contacts.mainLink' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='MainLink' />
                         </form>
                     </> }
                 </div>
-
-
             </div>
         </div>
     );

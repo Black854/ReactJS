@@ -5,6 +5,7 @@ import s2 from './../../common/FormsControls/FormControls.module.css'
 import Post from './Post/Post'
 import React from 'react'
 import { SubmitErrorHandler, SubmitHandler } from 'react-hook-form/dist/types'
+import { Textarea } from '../../common/FormsControls/FormControls'
 
 type PropsType = {
     createNewPost: (text: string) => void
@@ -35,11 +36,7 @@ const MyPosts: React.FC<PropsType> = ({createNewPost, posts}) => {
     return (
         <div className={s.myPostsBlock}>
             <form onSubmit={handleSubmit(submit, error)}>
-                <div className={s2.formControl + " " + (errors.text && s2.error)}>
-                    <textarea className={ s.textarea } placeholder='Введите текст...' {...register('text', { required: true, maxLength: 150 }) } />
-                    {errors.text && errors.text.type === 'required' && <span>Поле обязательно для заполнения</span>}
-                    {errors.text && errors.text.type === 'maxLength' && <span>Максимальная длина поля не более 150 символов</span>}
-                </div>
+                <Textarea register={register} errors={errors.text} name='text' validate={{required: true, maxLength: 150}} className={ s.textarea } placeholder='Введите текст...' />
                 <button className={s.addPostButton}>Add Post</button>
             </form>
             { postsElements }
