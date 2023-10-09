@@ -3,10 +3,11 @@ import { login } from "../../redux/auth-reducer";
 import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { AppStateType } from "../../redux/store";
-import { LoginReduxForm } from "./LoginForm";
+import LoginForm from "./LoginForm";
 
 type MapStatePropstype = {
     isAuth: boolean
+    error: string | null
 }
 
 type MapDispatchPropsType = {
@@ -20,10 +21,6 @@ type OwnPropsType = {
 type PropsType = MapStatePropstype & MapDispatchPropsType & OwnPropsType
 
 const Login: React.FC<PropsType> = (props) => {
-    const onSubmit = (formData: any) => {
-        props.login(formData);
-    }
-
     if (props.isAuth === true) {
         return <Navigate to='/profile' />
     }
@@ -31,14 +28,15 @@ const Login: React.FC<PropsType> = (props) => {
     return (
         <div>
             <h1>Login</h1>
-            <LoginReduxForm onSubmit={onSubmit} />
+            <LoginForm login={props.login} error={props.error} />
         </div>
     )
 }
 
 const mapStateToProps = (state: AppStateType) => {
     return {
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        error: state.auth.error
     }
 }
 

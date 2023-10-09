@@ -1,18 +1,19 @@
 import { ThunkAction } from 'redux-thunk'
 import { ResultCodesEnum, authAPI, usersAPI } from '../api/api'
-import {stopSubmit} from 'redux-form'
 import { AppStateType } from './store'
 
 const DELETE_USER_AUTH_DATA = 'DELETE_USER_AUTH_DATA'
 const SET_USER_AUTH_DATA = 'SET_USER_AUTH_DATA'
 const SET_USER_PHOTO = 'SET_USER_PHOTO'
+const SET_ERROR = 'SET_ERROR'
 
 let initialState = {
     id: null as number| null,
     email: null as string | null,
     login: null as string | null,
     isAuth: false,
-    userPhotoSmall: null as string | null
+    userPhotoSmall: null as string | null,
+    error: null as string | null
 }
 
 type InitialStateType = typeof initialState
@@ -31,6 +32,11 @@ const authReducer = (state = initialState, action: ActionTypes): InitialStateTyp
             return {
                 ...state,
                 userPhotoSmall: action.photo
+            }
+        case SET_ERROR:
+            return {
+                ...state,
+                error: action.error
             }
         default:
             return state
@@ -57,10 +63,11 @@ export const login = (formData: {email: string, password: string, rememberMe: bo
             dispatch(setUserAuthData(id, email, login))
             const response3 = await usersAPI.getProfile(response2.data.id)
             dispatch(setUserPhoto(response3.photos.small))
+            dispatch(setError(null))
         }
     } else {
         let message = response.messages.length > 0 ? response.messages[0] : "some error"
-        dispatch(stopSubmit("login", {_error: message}))
+        dispatch(setError(message))
     }
 }
 
@@ -86,16 +93,22 @@ type deleteUserAuthDataType = {
     type: typeof DELETE_USER_AUTH_DATA
 }
 
+type setErrorType = {
+    type: typeof SET_ERROR
+    error: string | null
+}
+
 export type setUserPhotoType = {
     type: typeof SET_USER_PHOTO
     photo: string | null
 }
 
-type ActionTypes = setUserAuthDataType | deleteUserAuthDataType | setUserPhotoType
+type ActionTypes = setUserAuthDataType | deleteUserAuthDataType | setUserPhotoType | setErrorType
 type ThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes>
 
 const setUserAuthData = (id: number, email: string, login: string): setUserAuthDataType => ({ type: SET_USER_AUTH_DATA, data: {id, email, login} })
 const deleteUserAuthData = (): deleteUserAuthDataType => ({ type: DELETE_USER_AUTH_DATA })
 export const setUserPhoto = (photo: string | null): setUserPhotoType => ({ type: SET_USER_PHOTO, photo })
+export const setError = (error: string | null): setErrorType => ({ type: SET_ERROR, error })
 
 export default authReducer

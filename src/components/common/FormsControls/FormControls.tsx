@@ -14,12 +14,13 @@ type InputPropsType = {
     placeholder?: string
     type?: string
     checkboxText?: string
+    className?: string
 }
 
-export const Input: React.FC<InputPropsType> = ({register, errors, name, validate, placeholder, type='text', checkboxText}) => {
+export const Input: React.FC<InputPropsType> = ({register, errors, name, validate, placeholder, type='text', checkboxText, className}) => {
     return (
         <div className={s.formControl + " " + (errors && s.error)}>
-            <input {...register(name, {...validate})} placeholder={placeholder} type={type} />
+            <input {...register(name, {...validate})} placeholder={placeholder} type={type} className={className} />
             {checkboxText}
             {errors && errors.type === 'required' && <span>Поле обязательно для заполнения</span>}
             {errors && errors.type === 'maxLength' && <span>Максимальная длина поля не более {validate?.maxLength} символов</span>}
