@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/reactjs/static/css/main.8d172785.css",
+    "main.js": "/reactjs/static/js/main.891e22a5.js",
+    "static/css/55.daa0d2e8.chunk.css": "/reactjs/static/css/55.daa0d2e8.chunk.css",
+    "static/js/55.43f1a667.chunk.js": "/reactjs/static/js/55.43f1a667.chunk.js",
+    "static/css/750.6a1f8a92.chunk.css": "/reactjs/static/css/750.6a1f8a92.chunk.css",
+    "static/js/750.44636adb.chunk.js": "/reactjs/static/js/750.44636adb.chunk.js",
+    "static/css/786.552341a3.chunk.css": "/reactjs/static/css/786.552341a3.chunk.css",
+    "static/js/786.98ff3638.chunk.js": "/reactjs/static/js/786.98ff3638.chunk.js",
+    "static/js/134.1879a7af.chunk.js": "/reactjs/static/js/134.1879a7af.chunk.js",
+    "static/media/user.jpg": "/reactjs/static/media/user.815421609c4ebd8dcc19.jpg",
+    "static/media/camera.png": "/reactjs/static/media/camera.3c801cbba713e0fb3363.png",
+    "index.html": "/reactjs/index.html",
+    "static/media/preloader.svg": "/reactjs/static/media/preloader.a72351b5cd205cf77c446bb9fb8f0d33.svg",
+    "main.8d172785.css.map": "/reactjs/static/css/main.8d172785.css.map",
+    "main.891e22a5.js.map": "/reactjs/static/js/main.891e22a5.js.map",
+    "55.daa0d2e8.chunk.css.map": "/reactjs/static/css/55.daa0d2e8.chunk.css.map",
+    "55.43f1a667.chunk.js.map": "/reactjs/static/js/55.43f1a667.chunk.js.map",
+    "750.6a1f8a92.chunk.css.map": "/reactjs/static/css/750.6a1f8a92.chunk.css.map",
+    "750.44636adb.chunk.js.map": "/reactjs/static/js/750.44636adb.chunk.js.map",
+    "786.552341a3.chunk.css.map": "/reactjs/static/css/786.552341a3.chunk.css.map",
+    "786.98ff3638.chunk.js.map": "/reactjs/static/js/786.98ff3638.chunk.js.map",
+    "134.1879a7af.chunk.js.map": "/reactjs/static/js/134.1879a7af.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8d172785.css",
+    "static/js/main.891e22a5.js"
+  ]
+}
