@@ -1,11 +1,11 @@
 import React from "react";
 import Profile from './Profile'
-import { connect } from "react-redux";
-import { getProfileTC, getStatusTC, updateStatusTC, uploadPhotoTC, setProfile } from "../../redux/profile-reducer";
-import { withRouter } from "../../hoc/withRouter";
-import {compose} from 'redux';
-import { AppStateType } from "../../redux/store";
-import { PostType, ProfileType } from "../../types/types";
+import { connect } from "react-redux"
+import { getProfileTC, getStatusTC, updateStatusTC, uploadPhotoTC, setProfile } from "../../redux/profile-reducer"
+import { withRouter } from "../../hoc/withRouter"
+import {compose} from 'redux'
+import { AppStateType } from "../../redux/store"
+import { PostType, ProfileType } from "../../types/types"
 
 type MapStatePropsType = {
     profile: ProfileType
@@ -31,21 +31,21 @@ type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
 
 class ProfileContainer extends React.PureComponent <PropsType> {
     refreshProfile() {
-        let userId = this.props.match.params.userId;
+        let userId = this.props.match.params.userId
         if (!userId) {
-            userId = this.props.id;
+            userId = this.props.id
         }
-        this.props.getProfileTC(userId);
-        this.props.getStatusTC(userId);
+        this.props.getProfileTC(userId)
+        this.props.getStatusTC(userId)
     }
 
     componentDidMount () {
-        this.refreshProfile();
+        this.refreshProfile()
     }
 
     componentDidUpdate (prevProps: PropsType) {
         if (this.props.match.params.userId !== prevProps.match.params.userId ) {
-            this.refreshProfile();
+            this.refreshProfile()
         }
     }
 
@@ -60,7 +60,7 @@ class ProfileContainer extends React.PureComponent <PropsType> {
 
 let mapStateToPropRedirect = (state: AppStateType) => {
     return {
-        isAuth: state.auth.isAuth,
+        isAuth: state.auth.isAuth
     }
 }
 
@@ -84,4 +84,4 @@ export default compose(
     connect<MapStatePropsType2, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, {getProfileTC, getStatusTC, updateStatusTC, uploadPhotoTC, setProfile}),
     withRouter,
     connect(mapStateToPropRedirect)
-)(ProfileContainer);
+)(ProfileContainer)

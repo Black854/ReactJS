@@ -39,4 +39,4 @@ const Messages: React.FC<PropsType> = ({sendMessage, messages}) => {
     );
 }
 
-export default Messages;
+export default Messages

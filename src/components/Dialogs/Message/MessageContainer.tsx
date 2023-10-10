@@ -1,8 +1,7 @@
-import Messages from "./Message";
-import { sendMessage } from '../../../redux/dialogs-reducer';
-import { connect } from 'react-redux';
-import { AppStateType } from "../../../redux/store";
-import { resetForm } from '../../../redux/profile-reducer';
+import Messages from "./Message"
+import { connect } from 'react-redux'
+import { AppStateType } from "../../../redux/store"
+import { dialogsActions } from "../../../redux/dialogs-reducer"
 
 
 let mapStateToProps = (state: AppStateType) => {
@@ -11,8 +10,6 @@ let mapStateToProps = (state: AppStateType) => {
     }
 }
 
+const MessagesContainer = connect(mapStateToProps, {sendMessage: dialogsActions.sendMessage}) (Messages)
 
-
-const MessagesContainer = connect(mapStateToProps, {sendMessage, resetForm}) (Messages);
-
-export default MessagesContainer;
+export default MessagesContainer

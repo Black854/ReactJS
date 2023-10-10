@@ -1,5 +1,5 @@
-import s from './FriendsItems.module.css';
-import React from "react";
+import s from './FriendsItems.module.css'
+import React from "react"
 
 type PropsType = {
     url: string
@@ -17,4 +17,4 @@ const FriendsItem: React.FC<PropsType> = (props) => {
     );
 }
 
-export default FriendsItem;
+export default FriendsItem

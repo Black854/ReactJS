@@ -1,5 +1,5 @@
-import preloader from "../../../img/preloader.svg";
-import s from './Preloader.module.css';
+import preloader from "../../../img/preloader.svg"
+import s from './Preloader.module.css'
 import React from 'react'
 
 type PropsType = {
@@ -12,4 +12,4 @@ let Preloader: React .FC<PropsType> = (props) => {
         </div>)
 }
 
-export default Preloader;
+export default Preloader

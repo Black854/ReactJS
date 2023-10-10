@@ -2,8 +2,8 @@ import karina from '../img/karina.jpg'
 import ars from '../img/ars.jpg'
 import sizh from '../img/sizh.jpg'
 import sistr from '../img/sistr.jpg'
-
-const SEND_MESSAGE = 'SEND-MESSAGE'
+import { AppStateType, InferActionsTypes } from './store'
+import { ThunkAction } from 'redux-thunk'
 
 type DialogType = {
     id: number
@@ -37,7 +37,7 @@ type InitialStateType = typeof initialState
 
 const dialogsReducer = (state = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
-        case SEND_MESSAGE:
+        case 'sn/dialogs/SEND_MESSAGE':
             return {
                 ...state,
                 messages: [
@@ -50,13 +50,11 @@ const dialogsReducer = (state = initialState, action: ActionTypes): InitialState
     }
 }
 
-type ActionTypes = sendMessageType
+type ActionTypes = InferActionsTypes<typeof dialogsActions>
+type ThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes>
 
-type sendMessageType = {
-    type: typeof SEND_MESSAGE
-    text: string
+export const dialogsActions = {
+    sendMessage: (text: string) => ({ type: 'sn/dialogs/SEND_MESSAGE', text } as const)
 }
-
-export const sendMessage = (text: string): sendMessageType => ({ type: SEND_MESSAGE, text })
 
 export default dialogsReducer

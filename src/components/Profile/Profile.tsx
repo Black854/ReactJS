@@ -1,7 +1,7 @@
-import React, { useEffect, memo} from "react";
-import MyPostsContainer from './MyPosts/MyPostsContainer';
-import { PostType, ProfileType } from '../../types/types';
-import ProfileInfo from "./ProfileInfo";
+import React, { useEffect, memo} from "react"
+import MyPostsContainer from './MyPosts/MyPostsContainer'
+import { PostType, ProfileType } from '../../types/types'
+import ProfileInfo from "./ProfileInfo"
 
 type MapStatePropsType = {
     isAuth: boolean
@@ -29,9 +29,9 @@ type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
 const Profile: React.FC<PropsType> = (props) => {
     useEffect(() => {
         if (!props.isAuth && !props.match.params.userId) {
-            props.match.navigate("/login");
+            props.match.navigate("/login")
         }
-    }, [props.isAuth, props.match.params.userId]);
+    }, [props.isAuth, props.match.params.userId])
     return (
         <div>
             <ProfileInfo profile={props.profile} status={props.status} updateStatusTC={props.updateStatusTC} uploadPhotoTC={props.uploadPhotoTC} setProfile={props.setProfile} isMyProfilePage={props.isMyProfilePage} />
@@ -40,4 +40,4 @@ const Profile: React.FC<PropsType> = (props) => {
     );
 }
 
-export default memo(Profile);
+export default memo(Profile)

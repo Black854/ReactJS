@@ -1,11 +1,6 @@
 import { ThunkAction } from 'redux-thunk'
 import { ResultCodesEnum, authAPI, usersAPI } from '../api/api'
-import { AppStateType } from './store'
-
-const DELETE_USER_AUTH_DATA = 'DELETE_USER_AUTH_DATA'
-const SET_USER_AUTH_DATA = 'SET_USER_AUTH_DATA'
-const SET_USER_PHOTO = 'SET_USER_PHOTO'
-const SET_ERROR = 'SET_ERROR'
+import { AppStateType, InferActionsTypes } from './store'
 
 let initialState = {
     id: null as number| null,
@@ -20,20 +15,20 @@ type InitialStateType = typeof initialState
 
 const authReducer = (state = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
-        case SET_USER_AUTH_DATA:
+        case 'sn/auth/SET_USER_AUTH_DATA':
             return {
                 ...state,
                 ...action.data,
                 isAuth: true
             }
-        case DELETE_USER_AUTH_DATA:
+        case 'sn/auth/DELETE_USER_AUTH_DATA':
             return initialState;
-        case SET_USER_PHOTO:
+        case 'sn/auth/SET_USER_PHOTO':
             return {
                 ...state,
                 userPhotoSmall: action.photo
             }
-        case SET_ERROR:
+        case 'sn/auth/SET_ERROR':
             return {
                 ...state,
                 error: action.error
@@ -47,9 +42,9 @@ export const getAuthDataTC = (): ThunkType => async (dispatch) => {
     const response = await authAPI.me()
     if (response.resultCode === ResultCodesEnum.Success) {
         let {id, email, login} = response.data
-        dispatch(setUserAuthData(id, email, login))
+        dispatch(authActions.setUserAuthData(id, email, login))
         let response2 = await usersAPI.getProfile(response.data.id)
-        dispatch(setUserPhoto(response2.photos.small))
+        dispatch(authActions.setUserPhoto(response2.photos.small))
     }
     return response
 }
@@ -60,55 +55,32 @@ export const login = (formData: {email: string, password: string, rememberMe: bo
         const response2 = await authAPI.me()
         if (response2.resultCode === ResultCodesEnum.Success) {
             let {id, email, login} = response2.data
-            dispatch(setUserAuthData(id, email, login))
+            dispatch(authActions.setUserAuthData(id, email, login))
             const response3 = await usersAPI.getProfile(response2.data.id)
-            dispatch(setUserPhoto(response3.photos.small))
-            dispatch(setError(null))
+            dispatch(authActions.setUserPhoto(response3.photos.small))
+            dispatch(authActions.setError(null))
         }
     } else {
         let message = response.messages.length > 0 ? response.messages[0] : "some error"
-        dispatch(setError(message))
+        dispatch(authActions.setError(message))
     }
 }
 
 export const logout = (): ThunkType => async (dispatch) => {
     const response = await authAPI.logout()
     if (response.resultCode === ResultCodesEnum.Success) {
-        dispatch(deleteUserAuthData())
+        dispatch(authActions.deleteUserAuthData())
     }
 }
 
-type DataType = {
-    id: number
-    email: string
-    login: string
-}
-
-type setUserAuthDataType = {
-    type: typeof SET_USER_AUTH_DATA,
-    data: DataType
-}
-
-type deleteUserAuthDataType = {
-    type: typeof DELETE_USER_AUTH_DATA
-}
-
-type setErrorType = {
-    type: typeof SET_ERROR
-    error: string | null
-}
-
-export type setUserPhotoType = {
-    type: typeof SET_USER_PHOTO
-    photo: string | null
-}
-
-type ActionTypes = setUserAuthDataType | deleteUserAuthDataType | setUserPhotoType | setErrorType
+type ActionTypes = InferActionsTypes<typeof authActions>
 type ThunkType = ThunkAction<void, AppStateType, unknown, ActionTypes>
 
-const setUserAuthData = (id: number, email: string, login: string): setUserAuthDataType => ({ type: SET_USER_AUTH_DATA, data: {id, email, login} })
-const deleteUserAuthData = (): deleteUserAuthDataType => ({ type: DELETE_USER_AUTH_DATA })
-export const setUserPhoto = (photo: string | null): setUserPhotoType => ({ type: SET_USER_PHOTO, photo })
-export const setError = (error: string | null): setErrorType => ({ type: SET_ERROR, error })
+export const authActions = {
+    setUserAuthData: (id: number, email: string, login: string) => ({ type: 'sn/auth/SET_USER_AUTH_DATA', data: {id, email, login} } as const),
+    deleteUserAuthData: () => ({ type: 'sn/auth/DELETE_USER_AUTH_DATA' } as const),
+    setUserPhoto: (photo: string | null) => ({ type: 'sn/auth/SET_USER_PHOTO', photo } as const),
+    setError: (error: string | null) => ({ type: 'sn/auth/SET_ERROR', error } as const)
+}
 
 export default authReducer

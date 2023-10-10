@@ -1,5 +1,5 @@
 import s from './Post.module.css'
-import React from "react";
+import React from "react"
 
 type PropsType = {
     message: string
@@ -14,7 +14,7 @@ const Post: React.FC<PropsType> = ({message, likesCount}) => {
             <div>
                 like {likesCount}
             </div>
-        </div>);
+        </div>)
 }
 
-export default Post;
+export default Post

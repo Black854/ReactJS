@@ -1,7 +1,7 @@
-import React from "react";
-import s from './User.module.css';
-import userPhoto from '../../../img/user.jpg';
-import {NavLink} from 'react-router-dom';
+import React from 'react'
+import s from './User.module.css'
+import userPhoto from '../../../img/user.jpg'
+import {NavLink} from 'react-router-dom'
 
 type PropsType = {
     id: number
@@ -15,17 +15,16 @@ type PropsType = {
 }
 
 const User: React.FC<PropsType> = ({id, follow, unfollow, followed, followInProgress, avatar, fullName, status}) => {
-    let button;
-
+    let button
     let followCallback = () => {
-        follow(id);
+        follow(id)
     }
 
     let unfollowCallback = () => {
-        unfollow(id);
+        unfollow(id)
     }
     followed  ? button = <button disabled={followInProgress.some(userId => userId === id)} onClick={unfollowCallback} className={s.unfollow}>Unfollow</button> 
-                    : button = <button disabled={followInProgress.some(userId => userId === id)} onClick={followCallback} className={s.follow}>Follow</button>;
+                    : button = <button disabled={followInProgress.some(userId => userId === id)} onClick={followCallback} className={s.follow}>Follow</button>
     return (
         <div className={s.frame}>
             <div className={s.followFrame}>

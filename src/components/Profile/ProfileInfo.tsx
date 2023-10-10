@@ -4,7 +4,6 @@ import s from './Profile.module.css'
 import React, { useState, useEffect, ChangeEvent } from "react"
 import { ContactsType, ProfileType } from '../../types/types'
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
-import s2 from './../common/FormsControls/FormControls.module.css'
 import headerImage from './../../img/header.jpg'
 import { Input, Textarea } from '../common/FormsControls/FormControls'
 
@@ -119,4 +118,4 @@ const ProfileInfo: React.FC<PropsType> = ({status, updateStatusTC, profile, uplo
     );
 }
 
-export default ProfileInfo;
+export default ProfileInfo

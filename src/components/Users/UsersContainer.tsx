@@ -1,11 +1,11 @@
-import { connect } from "react-redux";
+import { connect } from "react-redux"
 import { follow, unfollow, getUsersTC } from "../../redux/users-reducer";
-import { compose } from "redux";
-import { getFollowInProgress, getUsersList, getIsAuth, getIsLoading, getPageNumber, getPageSize, getTotalCount } from "../../redux/users-selectors";
-import { AppStateType } from "../../redux/store";
-import React from "react";
-import Users from "./Users";
-import { UserType } from "../../types/types";
+import { compose } from "redux"
+import { getFollowInProgress, getUsersList, getIsAuth, getIsLoading, getPageNumber, getPageSize, getTotalCount } from "../../redux/users-selectors"
+import { AppStateType } from "../../redux/store"
+import React from "react"
+import Users from "./Users"
+import { UserType } from "../../types/types"
 
 type MapStatePropsType = {
     usersList: Array<UserType>
@@ -32,12 +32,12 @@ type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
 class UsersAPIComponent extends React.Component<PropsType> {
     componentDidMount () {
         if (this.props.usersList.length === 0) {
-            this.props.getUsersTC(this.props.pageSize, this.props.pageNumber);
+            this.props.getUsersTC(this.props.pageSize, this.props.pageNumber)
         }
     }
 
     updateCurrentPage = (pageNumber: number) => {
-        this.props.getUsersTC(this.props.pageSize, pageNumber);
+        this.props.getUsersTC(this.props.pageSize, pageNumber)
     }
 
     render () {

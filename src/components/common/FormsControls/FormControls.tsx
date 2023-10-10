@@ -1,15 +1,16 @@
-import s from './FormControls.module.css';
+import { FieldError, UseFormRegister } from 'react-hook-form'
+import s from './FormControls.module.css'
 import React from 'react'
 
 type InputPropsType = {
-    register: any
-    errors: any
+    register: UseFormRegister<any>
+    errors: FieldError | undefined
     name: string
     validate?: {
         required?: boolean
         minLength?: number
         maxLength?: number
-        pattern?: any
+        pattern?: RegExp
     }
     placeholder?: string
     type?: string
@@ -30,8 +31,8 @@ export const Input: React.FC<InputPropsType> = ({register, errors, name, validat
 }
 
 type TextareaPropsType = {
-    register: any
-    errors: any
+    register: UseFormRegister<any>
+    errors: FieldError | undefined
     name: string
     validate?: {
         required?: boolean

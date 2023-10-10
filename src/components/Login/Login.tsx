@@ -1,9 +1,9 @@
-import React from "react";
-import { login } from "../../redux/auth-reducer";
-import { connect } from 'react-redux';
-import { Navigate } from 'react-router-dom';
-import { AppStateType } from "../../redux/store";
-import LoginForm from "./LoginForm";
+import React from "react"
+import { login } from "../../redux/auth-reducer"
+import { connect } from 'react-redux'
+import { Navigate } from 'react-router-dom'
+import { AppStateType } from "../../redux/store"
+import LoginForm from "./LoginForm"
 
 type MapStatePropstype = {
     isAuth: boolean
@@ -40,4 +40,4 @@ const mapStateToProps = (state: AppStateType) => {
     }
 }
 
-export default connect<MapStatePropstype, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, {login})(Login);
+export default connect<MapStatePropstype, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, {login})(Login)

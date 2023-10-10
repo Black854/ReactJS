@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { PostType } from '../../../types/types'
 import s from './MyPosts.module.css'
-import s2 from './../../common/FormsControls/FormControls.module.css'
 import Post from './Post/Post'
 import React from 'react'
 import { SubmitErrorHandler, SubmitHandler } from 'react-hook-form/dist/types'
@@ -44,4 +43,4 @@ const MyPosts: React.FC<PropsType> = ({createNewPost, posts}) => {
     )
 }
 
-export default MyPosts;
+export default MyPosts

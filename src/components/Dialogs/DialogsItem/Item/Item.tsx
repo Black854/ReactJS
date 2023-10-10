@@ -1,6 +1,6 @@
-import s from './Item.module.css';
-import {NavLink} from "react-router-dom";
-import React from "react";
+import s from './Item.module.css'
+import {NavLink} from "react-router-dom"
+import React from "react"
 
 type PropsType = {
     id: string
@@ -9,7 +9,7 @@ type PropsType = {
 }
 
 const Item: React.FC<PropsType> = ({id, name, url}) => {
-    id = String(id);
+    id = String(id)
     return (
         <div className={s.item}>
             <NavLink className={({isActive}) => isActive ? s.active : s.link} to={id}>
@@ -20,4 +20,4 @@ const Item: React.FC<PropsType> = ({id, name, url}) => {
     );
 }
 
-export default Item;
+export default Item

@@ -1,19 +1,19 @@
 import './App.css';
 import HeaderContainer from './components/Header/HeaderContainer';
 import { Route, Routes} from 'react-router-dom';
-import React, { lazy } from "react";
+import React, { ComponentType, lazy } from "react";
 import Navbar from './components/Navbar/Navbar';
 import Login from './components/Login/Login';
 import Preloader from './components/common/Preloader/Preloader';
-import { connect } from 'react-redux';
-import { initializeAppTC } from './redux/app-reducer';
-import { compose } from 'redux';
-import { withSuspense } from './hoc/withSuspense';
-import { useEffect } from 'react';
-import { AppStateType } from './redux/store';
-let UsersContainer = lazy(() => import ('./components/Users/UsersContainer') as any);
-let ProfileContainer = lazy(() => import ('./components/Profile/ProfileContainer') as any);
-let Dialogs = lazy(() => import ('./components/Dialogs/Dialogs') as any);
+import { connect } from 'react-redux'
+import { initializeAppTC } from './redux/app-reducer'
+import { compose } from 'redux'
+import { withSuspense } from './hoc/withSuspense'
+import { useEffect } from 'react'
+import { AppStateType } from './redux/store'
+let UsersContainer = lazy(() => import ('./components/Users/UsersContainer') as Promise<{ default: ComponentType<any> }>)
+let ProfileContainer = lazy(() => import ('./components/Profile/ProfileContainer') as Promise<{ default: ComponentType<any> }>)
+let Dialogs = lazy(() => import ('./components/Dialogs/Dialogs') as Promise<{ default: ComponentType<any> }>)
 
 type MapStatePropsType = {
   initialized: boolean

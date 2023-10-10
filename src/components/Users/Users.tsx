@@ -1,9 +1,9 @@
-import React from "react";
-import Paginator from "../common/Paginator/Paginator";
-import Preloader from "../common/Preloader/Preloader";
-import User from "./User/User";
-import s from "./Users.module.css";
-import { UserType } from "../../types/types";
+import React from "react"
+import Paginator from "../common/Paginator/Paginator"
+import Preloader from "../common/Preloader/Preloader"
+import User from "./User/User"
+import s from "./Users.module.css"
+import { UserType } from "../../types/types"
 
 type PropsType = {
     usersList: Array<UserType>

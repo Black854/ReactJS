@@ -1,10 +1,7 @@
-import { reduxForm } from "redux-form";
-import { CreateField } from "../common/FormsControls/form-helpers";
-import { required } from "../../utils/validators/validators";
-import { Input } from "../common/FormsControls/FormControls";
-import s from "./Login.module.css";
-import React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Input } from "../common/FormsControls/FormControls"
+import s from "./Login.module.css"
+import React from "react"
+import { SubmitHandler, useForm } from "react-hook-form"
 
 
 type MapStatePropsType = {
@@ -31,7 +28,7 @@ const LoginForm: React.FC<PropsType> = ({login, error}) => {
         login(data)
     }
 
-    const {register, handleSubmit, reset, formState: {errors}} = useForm<Login>()
+    const {register, handleSubmit, formState: {errors}} = useForm<Login>()
     return (
         <form onSubmit={handleSubmit(submit)} className={s.loginForm}>
             <Input name="email" register={register} placeholder="Email" type="email" errors={errors.email} className={s.inputText} />
@@ -47,4 +44,4 @@ const LoginForm: React.FC<PropsType> = ({login, error}) => {
     );
 }
 
-export default LoginForm;
+export default LoginForm
