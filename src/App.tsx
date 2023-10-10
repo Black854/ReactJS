@@ -11,6 +11,7 @@ import { compose } from 'redux'
 import { withSuspense } from './hoc/withSuspense'
 import { useEffect } from 'react'
 import { AppStateType } from './redux/store'
+import { Button } from 'antd';
 let UsersContainer = lazy(() => import ('./components/Users/UsersContainer') as Promise<{ default: ComponentType<any> }>)
 let ProfileContainer = lazy(() => import ('./components/Profile/ProfileContainer') as Promise<{ default: ComponentType<any> }>)
 let Dialogs = lazy(() => import ('./components/Dialogs/Dialogs') as Promise<{ default: ComponentType<any> }>)
