@@ -1,6 +1,7 @@
 import { ThunkAction } from 'redux-thunk'
 import { ResultCodesEnum, authAPI, usersAPI } from '../api/api'
 import { AppStateType, InferActionsTypes } from './store'
+import { Dispatch } from 'redux'
 
 let initialState = {
     id: null as number| null,

@@ -1,7 +1,8 @@
-import React, { useEffect, memo} from "react"
+import React, { useEffect, memo } from "react"
 import MyPostsContainer from './MyPosts/MyPostsContainer'
 import { PostType, ProfileType } from '../../types/types'
 import ProfileInfo from "./ProfileInfo"
+import { Col, Row } from "antd"
 
 type MapStatePropsType = {
     isAuth: boolean
@@ -33,10 +34,18 @@ const Profile: React.FC<PropsType> = (props) => {
         }
     }, [props.isAuth, props.match.params.userId])
     return (
-        <div>
-            <ProfileInfo profile={props.profile} status={props.status} updateStatusTC={props.updateStatusTC} uploadPhotoTC={props.uploadPhotoTC} setProfile={props.setProfile} isMyProfilePage={props.isMyProfilePage} />
-            <MyPostsContainer />
-        </div>
+        <>
+            <Row>
+                <Col span={24}>
+                    <ProfileInfo profile={props.profile} status={props.status} updateStatusTC={props.updateStatusTC} uploadPhotoTC={props.uploadPhotoTC} setProfile={props.setProfile} isMyProfilePage={props.isMyProfilePage} />
+                </Col>
+            </Row>
+            <Row>
+                <Col span={24}>
+                    <MyPostsContainer />
+                </Col>
+            </Row>
+        </>
     );
 }
 

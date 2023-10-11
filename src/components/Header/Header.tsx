@@ -1,31 +1,62 @@
-import { NavLink } from 'react-router-dom'
-import s from './Header.module.css'
+import { Link } from 'react-router-dom'
 import React from "react"
 import userPhoto from '../../img/user.jpg'
-import logo from './../../img/logo.png'
+import { useDispatch, useSelector } from 'react-redux'
+import { getIsAuth, getLogin, getUserPhotoSmall } from '../../redux/auth-selectors'
+import { logout } from '../../redux/auth-reducer'
+import { Avatar, Button, Layout, Typography , MenuProps, Space, Row, Col } from 'antd'
+const { Text } = Typography;
 
-type PropsType = {
-    email: string | null
-    login: string | null
-    isAuth: boolean
-    userPhotoSmall: string | null
-    logout: () => void
-    getAuthDataTC: () => void
-}
+const Header: React.FC = () => {
+  const isAuth = useSelector(getIsAuth)
+  const login = useSelector(getLogin)
+  const userPhotoSmall = useSelector(getUserPhotoSmall)
 
-const Header: React.FC<PropsType> = ({isAuth, logout, login, userPhotoSmall}) => {
-  let logoutFunc = () => {
-    return logout()
+  const dispatch = useDispatch()
+
+  const logoutFunc = () => {
+    //@ts-ignore
+    dispatch(logout())
   }
+  
+  const { Header } = Layout;
+  const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
+    key,
+    label: `nav ${key}`,
+  }));
 
   return (
-    <header className={s.header}>
-      <img className={s.logo} alt='' src={logo} />
-      <div className={s.authBlock}>
-        {isAuth ? <div><a><img className={s.userPhotoSmall} src={userPhotoSmall ? userPhotoSmall : userPhoto} alt="" />{login} (<span className={s.logout} onClick={logoutFunc}>выход</span>)</a></div> :
-        <NavLink to={'/login'}>Login</NavLink> }
-      </div>
-    </header>)
+    <>
+    <Header>
+      <Row>
+        <Col span={21}>
+          {/* <div className="demo-logo" /> */}
+          <Button type="primary">
+            <Link to='/users'>
+              Developers
+            </Link>
+          </Button>
+        </Col>
+        {isAuth ?
+          <>
+            <Col span={2} style={{textAlign: 'right', paddingRight: '10px'}}>
+              <Avatar src={userPhotoSmall ? userPhotoSmall : userPhoto} />
+              <Text style={{color: 'white', paddingLeft: '10px'}} >{login}</Text>
+            </Col>
+            <Col span={1} style={{textAlign: 'right'}}>
+              <Button type="primary" onClick={logoutFunc}>Выход</Button>
+            </Col>
+          </> :
+          <Col span={3} style={{textAlign: 'right'}}>
+            <Button type="primary">
+              <Link to='/login'>Login</Link>
+            </Button>
+          </Col>
+        }
+      </Row>
+    </Header>
+    </>
+  )
 } 
 
 export default Header

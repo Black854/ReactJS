@@ -1,5 +1,4 @@
 import './App.css';
-import HeaderContainer from './components/Header/HeaderContainer';
 import { Route, Routes} from 'react-router-dom';
 import React, { ComponentType, lazy } from "react";
 import Navbar from './components/Navbar/Navbar';
@@ -11,6 +10,11 @@ import { compose } from 'redux'
 import { withSuspense } from './hoc/withSuspense'
 import { useEffect } from 'react'
 import { AppStateType } from './redux/store'
+import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import { Layout, theme } from 'antd';
+import Header from './components/Header/Header';
+
 let UsersContainer = lazy(() => import ('./components/Users/UsersContainer') as Promise<{ default: ComponentType<any> }>)
 let ProfileContainer = lazy(() => import ('./components/Profile/ProfileContainer') as Promise<{ default: ComponentType<any> }>)
 let Dialogs = lazy(() => import ('./components/Dialogs/Dialogs') as Promise<{ default: ComponentType<any> }>)
@@ -30,6 +34,12 @@ type OwnPropsType = {
 type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
 
 export const App: React.FC<PropsType> = (props) => {
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
+  
+  const { Content, Footer, Sider } = Layout;
+
   useEffect(() => {
     props.initializeAppTC()
   }, []);
@@ -37,7 +47,24 @@ export const App: React.FC<PropsType> = (props) => {
   if (props.initialized === false) {
     return <Preloader />
   }
-  return  <div className='app-wrapper'>
+  return  <Layout>
+            <Header />
+            <Content style={{ padding: '0 50px' }}>
+              <Layout style={{ padding: '24px 0', background: colorBgContainer }}>
+                <Navbar />
+                <Content style={{ padding: '0 24px', minHeight: 280 }}>
+                  <Routes>
+                    <Route path='profile/:userId?' element={<ProfileContainer store={props.store} />} />
+                    <Route path='dialogs/*' element={<Dialogs store={props.store} />} />
+                    <Route path='users/*' element={<UsersContainer store={props.store} />} />
+                    <Route path='login' element={<Login store={props.store} />} />
+                  </Routes>
+                </Content>
+              </Layout>
+            </Content>
+            <Footer style={{ textAlign: 'center' }}>React Way of Samurai ©2023 Created by Kirill Ch.</Footer>
+          </Layout>
+{/* <div className='app-wrapper'>
             <HeaderContainer />
             <Navbar friends={props.store.getState().sidebar.friends} />
             <div className='app-wrapper-content'>
@@ -48,7 +75,7 @@ export const App: React.FC<PropsType> = (props) => {
                 <Route path='login' element={<Login store={props.store} />} />
               </Routes>
             </div>
-          </div>
+          </div> */}
 }
 
 const mapStateToProps = (state: AppStateType) => {
