@@ -10,11 +10,8 @@ import { compose } from 'redux'
 import { withSuspense } from './hoc/withSuspense'
 import { useEffect } from 'react'
 import { AppStateType } from './redux/store'
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
 import { Layout, theme } from 'antd';
 import Header from './components/Header/Header';
-
 let UsersContainer = lazy(() => import ('./components/Users/UsersContainer') as Promise<{ default: ComponentType<any> }>)
 let ProfileContainer = lazy(() => import ('./components/Profile/ProfileContainer') as Promise<{ default: ComponentType<any> }>)
 let Dialogs = lazy(() => import ('./components/Dialogs/Dialogs') as Promise<{ default: ComponentType<any> }>)
@@ -64,18 +61,6 @@ export const App: React.FC<PropsType> = (props) => {
             </Content>
             <Footer style={{ textAlign: 'center' }}>React Way of Samurai ©2023 Created by Kirill Ch.</Footer>
           </Layout>
-{/* <div className='app-wrapper'>
-            <HeaderContainer />
-            <Navbar friends={props.store.getState().sidebar.friends} />
-            <div className='app-wrapper-content'>
-              <Routes>
-                <Route path='profile/:userId?' element={<ProfileContainer store={props.store} />} />
-                <Route path='dialogs/*' element={<Dialogs store={props.store} />} />
-                <Route path='users/*' element={<UsersContainer store={props.store} />} />
-                <Route path='login' element={<Login store={props.store} />} />
-              </Routes>
-            </div>
-          </div> */}
 }
 
 const mapStateToProps = (state: AppStateType) => {
