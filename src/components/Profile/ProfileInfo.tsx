@@ -5,11 +5,15 @@ import React, { useState, useEffect, ChangeEvent } from "react"
 import { ContactsType, ProfileType } from '../../types/types'
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
 import headerImage from './../../img/header.jpg'
-import { Input, Textarea } from '../common/FormsControls/FormControls'
-import { Button, Col, Image, Modal, Row, Space, Upload } from 'antd'
-import { UploadOutlined, PlusOutlined } from '@ant-design/icons'
+import { Textarea } from '../common/FormsControls/FormControls'
+import { Button, Col, Descriptions, DescriptionsProps, Image, Input, Modal, Row, Space, Upload } from 'antd'
+import { UploadOutlined, EditOutlined, FacebookOutlined, TwitterOutlined } from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
 import { getAuthDataTC } from '../../redux/auth-reducer'
+import { Typography } from 'antd';
+import Paragraph from 'antd/es/typography/Paragraph'
+import Link from 'antd/es/typography/Link'
+const { Title, Text } = Typography;
 
 type PropsType = {
     status: string
@@ -21,9 +25,7 @@ type PropsType = {
 }
 
 const ProfileInfo: React.FC<PropsType> = ({status, updateStatusTC, profile, uploadPhotoTC, setProfile, isMyProfilePage}) => {
-    let [changeMode, setChangeMode] = useState(false)
     let [contactsChangeMode, setContactsChangeMode] = useState(false)
-    let [localStatus, setStatus] = useState(status)
 
     interface MyForm {
         lookingForAJob: boolean
@@ -32,36 +34,30 @@ const ProfileInfo: React.FC<PropsType> = ({status, updateStatusTC, profile, uplo
         contacts: ContactsType
         aboutMe: string
     }
+
     const {register, handleSubmit, reset, formState: {errors}} = useForm<MyForm>({
         defaultValues: profile
     })
+
     const submit: SubmitHandler<MyForm> = data => {
         setProfile(data, profile.userId)
         setContactsChangeMode(false)
     }
+
     const error: SubmitErrorHandler<MyForm> = data => {
     //    console.log(data)
     }
-    useEffect (() => {
-        setStatus(status)
-        }, [status]) 
+
     useEffect (() => {
         reset(profile);
-    }, [profile, reset]) 
-    const activateChangeMode = () => {
-        setChangeMode(true)
-    }
-    const deactivateChangeMode = () => {
-        setChangeMode(false)
-        updateStatusTC(localStatus)
-    }
-    const onChangeStatusText = (e: ChangeEvent<HTMLInputElement>) => {
-        setStatus(e.currentTarget.value)
-    }
+    }, [profile, reset])
+
     const onSelectPhoto = (e: any) => {
         uploadPhotoTC(e.currentTarget.files[0])
     }
-    
+
+    let fileInputRef: any = null;
+
     if (!profile) {
         return (
             <Preloader />
@@ -70,41 +66,39 @@ const ProfileInfo: React.FC<PropsType> = ({status, updateStatusTC, profile, uplo
 
     return (
         <Row>
-            <img className={s.mainImage} src={headerImage} alt='' />
+            {/* <img className={s.mainImage} src={headerImage} alt='' /> */}
             <Col span={22} push={1}>
                 <Row>
                     <Col span={8}>
                         <Image src={profile.photos.large ? profile.photos.large : userPhoto} />
-                        {isMyProfilePage && 
-                            <>
-                                <input id="uploadPhoto" type="file" style={{display: 'none'}} onChange={onSelectPhoto} />
-                                <label htmlFor="uploadPhoto" style={{position: 'absolute', left: '52%', top: '4%'}} >
-                                    <Button type="primary" shape="circle" icon={<UploadOutlined rev={undefined} />} size={'large'}/>
-                                </label>
-                                {/* <Upload action="https://social-network.samuraijs.com/api/1.0/profile/photo" withCredentials={true} headers={{"API-KEY": "4f3d39e5-214f-420c-9ab3-f8c322bdb13c"}}>
-                                    <Button type="primary" shape="circle" icon={<UploadOutlined rev={undefined} />} size={'large'}/>
-                                </Upload> */}
-                            </>
-                        }
+                        {isMyProfilePage && <>
+                                <input id="uploadPhoto" type="file" style={{display: 'none'}} onChange={onSelectPhoto} ref={(input) => (fileInputRef = input)} />
+                                <Button style={{position: 'absolute', left: '52%', top: '4%'}} type="primary" shape="circle" icon={<UploadOutlined rev={undefined} />} size={'large'} onClick={() => fileInputRef.click()} />
+                        </> }
                     </Col>
                     <Col span={16}>
-                        <h2 className={s.userName}>{profile.fullName}</h2>                    
-                        {!changeMode && ( isMyProfilePage ? <p onDoubleClick={activateChangeMode}> Статус: {status || '------'}</p> : <p>{status || '------'}</p> )} 
-                        {changeMode && <input autoFocus onBlur={deactivateChangeMode} type="text" value={localStatus} onChange={onChangeStatusText} />}
+                        <Title level={2}>{profile.fullName}</Title>
+                        <Paragraph editable={{ onChange: (text) => {updateStatusTC(text)}}}  >
+                            {status}
+                        </Paragraph>
                         {!contactsChangeMode && <>
-                            <p className={s.profileItems}>Обо мне: {profile.aboutMe }</p>
-                            <p className={s.profileItems}>В поиске работы: {profile.lookingForAJob ? "Да" : "Нет" }</p>
-                            <p className={s.profileItems}>Мои профессиональные навыки: {profile.lookingForAJobDescription }</p>
-                            {isMyProfilePage && <button onClick={() => setContactsChangeMode(true)}>Редактировать профиль</button> }  
-                            <h3>Контакты</h3>
-                            {profile.contacts.facebook && <a target='_blank' className={s.contactsLink} href={'//' + profile.contacts.facebook }>Facebook</a>}
-                            {profile.contacts.website && <a target='_blank' className={s.contactsLink} href={'//' + profile.contacts.website }>WebSite</a>}
-                            {profile.contacts.vk && <a target='_blank' className={s.contactsLink} href={'//' + profile.contacts.vk }>VK</a> }
-                            {profile.contacts.twitter && <a target='_blank' className={s.contactsLink} href={'//' + profile.contacts.twitter }>Twitter</a>}
-                            {profile.contacts.instagram && <a target='_blank' className={s.contactsLink} href={'//' + profile.contacts.instagram }>Instagram</a> }
-                            {profile.contacts.youtube && <a target='_blank' className={s.contactsLink} href={'//' + profile.contacts.youtube }>YouTube</a> }
-                            {profile.contacts.github && <a target='_blank' className={s.contactsLink} href={'//' + profile.contacts.github }>GitHub</a> }
-                            {profile.contacts.mainLink && <a target='_blank' className={s.contactsLink} href={'//' + profile.contacts.mainLink }>MainLink</a>}
+                            <Space direction="vertical">
+                                <Text type="secondary">Обо мне: {profile.aboutMe}</Text>
+                                <Text type="secondary">В поиске работы: {profile.lookingForAJob ? "Да" : "Нет" }</Text>
+                                <Text type="secondary" >Мои профессиональные навыки: {profile.lookingForAJobDescription }</Text>
+                            </Space>
+                            {isMyProfilePage && <Button type="primary" icon={<EditOutlined rev={undefined} />} onClick={() => setContactsChangeMode(true)}>Редактировать профиль</Button> }  
+                            <Title level={4}>Контакты</Title>
+                            <Space direction="vertical">
+                                {profile.contacts.facebook && <Link target='_blank' href={'//' + profile.contacts.facebook }>Facebook</Link>}
+                                {profile.contacts.website && <Link target='_blank' href={'//' + profile.contacts.website }>WebSite</Link>}
+                                {profile.contacts.vk && <Link target='_blank' href={'//' + profile.contacts.vk }>VK</Link> }
+                                {profile.contacts.twitter && <Link target='_blank' href={'//' + profile.contacts.twitter }>Twitter</Link>}
+                                {profile.contacts.instagram && <Link target='_blank' href={'//' + profile.contacts.instagram }>Instagram</Link> }
+                                {profile.contacts.youtube && <Link target='_blank' href={'//' + profile.contacts.youtube }>YouTube</Link> }
+                                {profile.contacts.github && <Link target='_blank' href={'//' + profile.contacts.github }>GitHub</Link> }
+                                {profile.contacts.mainLink && <Link target='_blank' href={'//' + profile.contacts.mainLink }>MainLink</Link>}
+                            </Space>
                             </>
                         }
 
