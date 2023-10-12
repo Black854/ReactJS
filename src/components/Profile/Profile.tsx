@@ -1,8 +1,8 @@
 import React, { useEffect, memo } from "react"
-import MyPostsContainer from './MyPosts/MyPostsContainer'
 import { PostType, ProfileType } from '../../types/types'
 import ProfileInfo from "./ProfileInfo"
 import { Col, Row } from "antd"
+import MyPosts from "./MyPosts/MyPosts"
 
 type MapStatePropsType = {
     isAuth: boolean
@@ -42,7 +42,7 @@ const Profile: React.FC<PropsType> = (props) => {
             </Row>
             <Row>
                 <Col span={24}>
-                    <MyPostsContainer />
+                    <MyPosts />
                 </Col>
             </Row>
         </>

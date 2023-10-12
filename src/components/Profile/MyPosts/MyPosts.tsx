@@ -1,43 +1,40 @@
 import { useForm } from 'react-hook-form'
 import { PostType } from '../../../types/types'
-import s from './MyPosts.module.css'
 import Post from './Post/Post'
 import React from 'react'
 import { SubmitErrorHandler, SubmitHandler } from 'react-hook-form/dist/types'
-import { Textarea } from '../../common/FormsControls/FormControls'
+import { CustomController } from '../../common/FormsControls/FormControls'
+import { Button, Form } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import { profileActions } from '../../../redux/profile-reducer'
+import { getPosts } from '../../../redux/profile-selectors'
 
-type PropsType = {
-    createNewPost: (text: string) => void
-    posts: Array<PostType>
-}
-
-const MyPosts: React.FC<PropsType> = ({createNewPost, posts}) => {
-    interface MyForm {
+const MyPosts: React.FC = () => {
+    let posts = useSelector(getPosts)
+    let dispatch = useDispatch()
+    
+    type NewPostFormType = {
         text: string
     }
 
-    const {register, handleSubmit, reset, formState: {errors}} = useForm<MyForm>({
-        defaultValues: {
-            text: ''
-        }
-    })
+    const { handleSubmit, reset, resetField, control, formState: { errors } } = useForm<NewPostFormType>()
 
-    const submit: SubmitHandler<MyForm> = data => {
-        createNewPost(data.text)
+    const submit: SubmitHandler<NewPostFormType> = data => {
+        dispatch(profileActions.createNewPost(data.text))
         reset()
     }
 
-    const error: SubmitErrorHandler<MyForm> = data => {
+    const error: SubmitErrorHandler<NewPostFormType> = data => {
         console.log(data)
     }
 
     let postsElements = posts.map(post => <Post key={post.id} message={post.postText} likesCount={post.likesCount} />) 
     return (
-        <div className={s.myPostsBlock}>
-            <form onSubmit={handleSubmit(submit, error)}>
-                <Textarea register={register} errors={errors.text} name='text' validate={{required: true, maxLength: 150}} className={ s.textarea } placeholder='Введите текст...' />
-                <button className={s.addPostButton}>Add Post</button>
-            </form>
+        <div>
+            <Form onFinish={handleSubmit(submit, error)}>
+                <CustomController control={control} name='text' type='textarea' maxLength={100} required={true} />
+                <Form.Item style={{textAlign: 'center'}}><Button type='primary' htmlType="submit">Добавить пост</Button></Form.Item>
+            </Form>
             { postsElements }
         </div>
     )
