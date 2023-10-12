@@ -3,16 +3,16 @@ import userPhoto from '../../img/user.jpg'
 import s from './Profile.module.css'
 import React, { useState, useEffect, ChangeEvent } from "react"
 import { ContactsType, ProfileType } from '../../types/types'
-import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitErrorHandler, SubmitHandler, useForm, Controller } from 'react-hook-form'
 import headerImage from './../../img/header.jpg'
-import { Textarea } from '../common/FormsControls/FormControls'
-import { Button, Col, Descriptions, DescriptionsProps, Image, Input, Modal, Row, Space, Upload } from 'antd'
+import { CustomInput, Textarea } from '../common/FormsControls/FormControls'
+import { Button, Col, Descriptions, DescriptionsProps, Image, Input, Modal, Row, Space, Upload, Typography, Form, Checkbox } from 'antd'
 import { UploadOutlined, EditOutlined, FacebookOutlined, TwitterOutlined } from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
 import { getAuthDataTC } from '../../redux/auth-reducer'
-import { Typography } from 'antd';
 import Paragraph from 'antd/es/typography/Paragraph'
 import Link from 'antd/es/typography/Link'
+import TextArea from 'antd/es/input/TextArea'
 const { Title, Text } = Typography;
 
 type PropsType = {
@@ -35,9 +35,9 @@ const ProfileInfo: React.FC<PropsType> = ({status, updateStatusTC, profile, uplo
         aboutMe: string
     }
 
-    const {register, handleSubmit, reset, formState: {errors}} = useForm<MyForm>({
+    const { handleSubmit, reset, control, formState: { errors } } = useForm<MyForm>({
         defaultValues: profile
-    })
+        })
 
     const submit: SubmitHandler<MyForm> = data => {
         setProfile(data, profile.userId)
@@ -45,7 +45,7 @@ const ProfileInfo: React.FC<PropsType> = ({status, updateStatusTC, profile, uplo
     }
 
     const error: SubmitErrorHandler<MyForm> = data => {
-    //    console.log(data)
+        console.log(data)
     }
 
     useEffect (() => {
@@ -73,14 +73,13 @@ const ProfileInfo: React.FC<PropsType> = ({status, updateStatusTC, profile, uplo
                         <Image src={profile.photos.large ? profile.photos.large : userPhoto} />
                         {isMyProfilePage && <>
                                 <input id="uploadPhoto" type="file" style={{display: 'none'}} onChange={onSelectPhoto} ref={(input) => (fileInputRef = input)} />
-                                <Button style={{position: 'absolute', left: '52%', top: '4%'}} type="primary" shape="circle" icon={<UploadOutlined rev={undefined} />} size={'large'} onClick={() => fileInputRef.click()} />
+                                <Button style={{position: 'absolute', left: '55%', top: '4%'}} type="primary" shape="circle" icon={<UploadOutlined rev={undefined} />} size={'middle'} onClick={() => fileInputRef.click()} />
                         </> }
                     </Col>
                     <Col span={16}>
                         <Title level={2}>{profile.fullName}</Title>
-                        <Paragraph editable={{ onChange: (text) => {updateStatusTC(text)}}}  >
-                            {status}
-                        </Paragraph>
+                        { isMyProfilePage ?  <Paragraph editable={{ onChange: (text) => {updateStatusTC(text)}}} >{status || '-----'}</Paragraph> : <Paragraph>{status || '-----'}</Paragraph> }
+                        
                         {!contactsChangeMode && <>
                             <Space direction="vertical">
                                 <Text type="secondary">Обо мне: {profile.aboutMe}</Text>
@@ -103,28 +102,205 @@ const ProfileInfo: React.FC<PropsType> = ({status, updateStatusTC, profile, uplo
                         }
 
 
+                        {contactsChangeMode && <>
+                            {console.log(errors)}
+                            <Form onFinish={handleSubmit(submit, error)}>
+                                <Form.Item>
+                                    <Button type="primary" htmlType="submit">
+                                        Отправить
+                                    </Button>
+                                </Form.Item>
 
-                        {/* {contactsChangeMode && <>   
-                            <form onSubmit={handleSubmit(submit, error)}>
-                                <button>Save</button>
-                                <label>Полное имя</label>:
-                                <Input register={register} errors={errors.fullName} name='fullName' validate={{required: true, maxLength: 40}} placeholder='Full name' />
-                                <label>Обо мне</label>:
-                                <Input register={register} errors={errors.aboutMe} name='aboutMe' validate={{required: true, maxLength: 40}} placeholder='About me' />
-                                <Input register={register} errors={errors.lookingForAJob} name='lookingForAJob' validate={{required: true}} type='checkbox' checkboxText='В поиске работы' />
-                                <label>Мои навыки</label>:
-                                <Textarea register={register} errors={errors.lookingForAJobDescription} name='lookingForAJobDescription' validate={{required: true, maxLength: 200}} />
-                                <h3>Контакты</h3>
-                                <Input register={register} errors={errors.contacts?.facebook} name='contacts.facebook' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='Facebook' />
-                                <Input register={register} errors={errors.contacts?.website} name='contacts.website' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='Web-site' />
-                                <Input register={register} errors={errors.contacts?.vk} name='contacts.vk' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='VK' />
-                                <Input register={register} errors={errors.contacts?.twitter} name='contacts.twitter' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='Twitter' />
-                                <Input register={register} errors={errors.contacts?.instagram} name='contacts.instagram' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='Instagram' />
-                                <Input register={register} errors={errors.contacts?.youtube} name='contacts.youtube' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='YouTube' />
-                                <Input register={register} errors={errors.contacts?.github} name='contacts.github' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='GitHub' />
-                                <Input register={register} errors={errors.contacts?.mainLink} name='contacts.mainLink' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='MainLink' />
-                            </form>
-                        </> } */}
+                                <Controller
+                                    name="fullName"
+                                    control={control}
+                                    rules={{ 
+                                        required: 'Поле обязательно для заполнения',
+                                        maxLength: {
+                                            value: 20,
+                                            message: 'Поле не может содержать более 20 символом',
+                                        },
+                                    }}
+                                    render={({ field, fieldState }) => (
+                                    <Form.Item
+                                        label="Полное имя"
+                                        validateStatus={fieldState.invalid ? 'error' : ''}
+                                        help={fieldState.invalid ? fieldState.error?.message : null}
+                                    >
+                                        <Input {...field} />
+                                    </Form.Item>
+                                    )}
+                                />
+
+                                <Controller
+                                    name="aboutMe"
+                                    control={control}
+                                    rules={{ 
+                                        required: 'Поле обязательно для заполнения',
+                                        maxLength: {
+                                            value: 40,
+                                            message: 'Поле не может содержать более 40 символом',
+                                        },
+                                    }}
+                                    render={({ field, fieldState }) => (
+                                    <Form.Item
+                                        label="Обо мне"
+                                        validateStatus={fieldState.invalid ? 'error' : ''}
+                                        help={fieldState.invalid ? fieldState.error?.message : null}
+                                    >
+                                        <Input {...field} />
+                                    </Form.Item>
+                                    )}
+                                />
+
+                                <Controller
+                                    name="lookingForAJob"
+                                    control={control}
+                                    render={({ field, fieldState }) => (
+                                        <Form.Item label="Is Checked">
+                                            <Checkbox checked={field.value} {...field} />
+                                        </Form.Item>
+                                    )}
+                                />
+
+                                <Controller
+                                    name="lookingForAJobDescription"
+                                    control={control}
+                                    rules={{ 
+                                        required: 'Поле обязательно для заполнения',
+                                        maxLength: {
+                                            value: 100,
+                                            message: 'Поле не может содержать более 100 символом',
+                                        },
+                                    }}
+                                    render={({ field, fieldState }) => (
+                                    <Form.Item
+                                        label="Мои навыки"
+                                        validateStatus={fieldState.invalid ? 'error' : ''}
+                                        help={fieldState.invalid ? fieldState.error?.message : null}
+                                    >
+                                        <TextArea rows={4} {...field} />
+                                    </Form.Item>
+                                    )}
+                                />
+                                <Title level={4}>Контакты</Title>
+
+                                <Controller
+                                    name="contacts.facebook"
+                                    control={control}
+                                    rules={{ 
+                                        maxLength: {
+                                            value: 100,
+                                            message: 'Поле не может содержать более 100 символом',
+                                        },
+                                        pattern: {
+                                            value: /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i,
+                                            message: 'Введенное значение не соответствует URL-адресу',
+                                        }
+                                    }}
+                                    render={({ field, fieldState }) => (
+                                    <Form.Item
+                                        label="Facebook"
+                                        validateStatus={fieldState.invalid ? 'error' : ''}
+                                        help={fieldState.invalid ? fieldState.error?.message : null}
+                                    >
+                                        <Input {...field} />
+                                    </Form.Item>
+                                    )}
+                                />
+
+                                {/* <Form.Item label="Facebook">
+                                    <Controller
+                                    name="contacts.facebook"  // Имя поля в форме
+                                    control={control}
+                                    defaultValue="" // Значение по умолчанию
+                                    render={({ field }) => (
+                                        <Input {...field} />
+                                    )}
+                                    />
+                                </Form.Item>
+                                <Form.Item label="Web-site">
+                                    <Controller
+                                    name="contacts.website"  // Имя поля в форме
+                                    control={control}
+                                    defaultValue="" // Значение по умолчанию
+                                    render={({ field }) => (
+                                        <Input {...field} />
+                                    )}
+                                    />
+                                </Form.Item>
+                                <Form.Item label="VK">
+                                    <Controller
+                                    name="contacts.vk"  // Имя поля в форме
+                                    control={control}
+                                    defaultValue="" // Значение по умолчанию
+                                    render={({ field }) => (
+                                        <Input {...field} />
+                                    )}
+                                    />
+                                </Form.Item>
+                                <Form.Item label="Twitter">
+                                    <Controller
+                                    name="contacts.twitter"  // Имя поля в форме
+                                    control={control}
+                                    defaultValue="" // Значение по умолчанию
+                                    render={({ field }) => (
+                                        <Input {...field} />
+                                    )}
+                                    />
+                                </Form.Item>
+                                <Form.Item label="Instagram">
+                                    <Controller
+                                    name="contacts.instagram"  // Имя поля в форме
+                                    control={control}
+                                    defaultValue="" // Значение по умолчанию
+                                    render={({ field }) => (
+                                        <Input {...field} />
+                                    )}
+                                    />
+                                </Form.Item>
+                                <Form.Item label="YouTube">
+                                    <Controller
+                                    name="contacts.youtube"  // Имя поля в форме
+                                    control={control}
+                                    defaultValue="" // Значение по умолчанию
+                                    render={({ field }) => (
+                                        <Input {...field} />
+                                    )}
+                                    />
+                                </Form.Item>
+                                <Form.Item label="GitHub">
+                                    <Controller
+                                    name="contacts.github"  // Имя поля в форме
+                                    control={control}
+                                    defaultValue="" // Значение по умолчанию
+                                    render={({ field }) => (
+                                        <Input {...field} />
+                                    )}
+                                    />
+                                </Form.Item>
+                                <Form.Item label="MainLink">
+                                    <Controller
+                                    name="contacts.mainLink"  // Имя поля в форме
+                                    control={control}
+                                    defaultValue="" // Значение по умолчанию
+                                    render={({ field }) => (
+                                        <Input {...field} />
+                                    )}
+                                    />
+                                </Form.Item> */}
+                                
+
+                                {/* <CustomInput register={register} errors={errors.contacts?.facebook} name='contacts.facebook' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='Facebook' />
+                                <CustomInput register={register} errors={errors.contacts?.website} name='contacts.website' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='Web-site' />
+                                <CustomInput register={register} errors={errors.contacts?.vk} name='contacts.vk' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='VK' />
+                                <CustomInput register={register} errors={errors.contacts?.twitter} name='contacts.twitter' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='Twitter' />
+                                <CustomInput register={register} errors={errors.contacts?.instagram} name='contacts.instagram' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='Instagram' />
+                                <CustomInput register={register} errors={errors.contacts?.youtube} name='contacts.youtube' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='YouTube' />
+                                <CustomInput register={register} errors={errors.contacts?.github} name='contacts.github' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='GitHub' />
+                                <CustomInput register={register} errors={errors.contacts?.mainLink} name='contacts.mainLink' validate={{maxLength: 40, pattern: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g }} placeholder='MainLink' /> */}
+                            </Form>
+                        </> }
                     </Col>
                 </Row>
             </Col>

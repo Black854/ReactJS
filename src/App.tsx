@@ -55,6 +55,7 @@ export const App: React.FC<PropsType> = (props) => {
                     <Route path='dialogs/*' element={<Dialogs store={props.store} />} />
                     <Route path='users/*' element={<UsersContainer store={props.store} />} />
                     <Route path='login' element={<Login store={props.store} />} />
+                    {/* <Route path='friends' element={<UsersContainer store={props.store} />} /> */}
                   </Routes>
                 </Content>
               </Layout>

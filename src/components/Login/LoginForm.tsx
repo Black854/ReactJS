@@ -1,4 +1,4 @@
-import { Input } from "../common/FormsControls/FormControls"
+import { CustomInput } from "../common/FormsControls/FormControls"
 import s from "./Login.module.css"
 import React from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
@@ -31,9 +31,9 @@ const LoginForm: React.FC<PropsType> = ({login, error}) => {
     const {register, handleSubmit, formState: {errors}} = useForm<Login>()
     return (
         <form onSubmit={handleSubmit(submit)} className={s.loginForm}>
-            <Input name="email" register={register} placeholder="Email" type="email" errors={errors.email} className={s.inputText} />
-            <Input name="password" register={register} placeholder="Password" type="password" errors={errors.password} className={s.inputText} />
-            <Input name="rememberMe" register={register} type="checkbox" errors={errors.rememberMe} checkboxText="Запомнить меня" />
+            <CustomInput name="email" register={register} placeholder="Email" type="email" errors={errors.email} className={s.inputText} />
+            <CustomInput name="password" register={register} placeholder="Password" type="password" errors={errors.password} className={s.inputText} />
+            <CustomInput name="rememberMe" register={register} type="checkbox" errors={errors.rememberMe} checkboxText="Запомнить меня" />
             <div>
                 <p className={s.error} >
                     {error}
