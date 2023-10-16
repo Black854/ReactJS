@@ -5,9 +5,11 @@ import { ContactsType, ProfileType } from '../../types/types'
 import { SubmitErrorHandler, SubmitHandler, useForm, Controller } from 'react-hook-form'
 import { CustomController } from '../common/FormsControls/FormControls'
 import { Button, Col, Image, Row, Space, Typography, Form } from 'antd'
-import { UploadOutlined, EditOutlined } from '@ant-design/icons'
+import { UploadOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons'
 import Paragraph from 'antd/es/typography/Paragraph'
 import Link from 'antd/es/typography/Link'
+import { useSelector } from 'react-redux'
+import { getProfile, getStatus } from '../../redux/profile-selectors'
 const { Title, Text } = Typography;
 
 type PropsType = {
@@ -19,8 +21,11 @@ type PropsType = {
     isMyProfilePage: boolean
 }
 
-const ProfileInfo: React.FC<PropsType> = ({status, updateStatusTC, profile, uploadPhotoTC, setProfile, isMyProfilePage}) => {
+const ProfileInfo: React.FC<PropsType> = ({updateStatusTC, uploadPhotoTC, setProfile, isMyProfilePage, profile}) => {
     let [contactsChangeMode, setContactsChangeMode] = useState(false)
+    let status = useSelector(getStatus)
+    // let profile = useSelector(getProfile)
+    
 
     interface MyForm {
         lookingForAJob: boolean
@@ -96,7 +101,7 @@ const ProfileInfo: React.FC<PropsType> = ({status, updateStatusTC, profile, uplo
                         {contactsChangeMode && <>
                             {console.log(errors)}
                             <Form onFinish={handleSubmit(submit, error)}>
-                                <Form.Item><Button type="primary" htmlType="submit">Отправить</Button></Form.Item>
+                                <Form.Item><Button type="primary" htmlType="submit" icon={<SaveOutlined rev={undefined} />}>Сохранить изменения</Button></Form.Item>
                                 <CustomController control={control} name='fullName' type='text' label='Полное имя' required={true} maxLength={20} />
                                 <CustomController control={control} name='aboutMe' type='text' label='Обо мне' required={true} maxLength={40} />
                                 <CustomController control={control} name='lookingForAJob' type='checkbox' label='В поиске работы' />

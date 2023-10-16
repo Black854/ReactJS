@@ -25,7 +25,7 @@ const MyPosts: React.FC = () => {
     }
 
     const error: SubmitErrorHandler<NewPostFormType> = data => {
-        console.log(data)
+        // console.log(data)
     }
 
     let postsElements = posts.map(post => <Post key={post.id} message={post.postText} likesCount={post.likesCount} />) 

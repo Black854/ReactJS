@@ -56,6 +56,9 @@ const usersReducer = (state = initialState, action: ActionTypes): InitialStateTy
         case 'sn/users/IS_LOADING': {
             return { ...state, isLoading: !state.isLoading }
         }
+        case 'sn/users/SET_PAGE_SIZE': {
+            return { ...state, pageSize: action.count }
+        }
         case 'sn/users/TOGGLE_FOLLOW_PROGRESS': {
             return {
                 ...state,
@@ -100,11 +103,12 @@ export const unfollow = (userId: number): ThunkType => async (dispatch) => {
 
 type ActionTypes = InferActionsTypes<typeof usersActions>
 
-const usersActions = {
+export const usersActions = {
     followSuccess: (id: number) => ({ type: 'sn/users/FOLLOW', id } as const),
     unfollowSuccess: (id: number) => ({ type: 'sn/users/UNFOLLOW', id} as const),
     setUsers: (users: Array<UserType>) => ({ type: 'sn/users/SET_USERS', users} as const),
     setCurrentPage: (page: number) => ({ type: 'sn/users/SET_CURRENT_PAGE', page} as const),
+    setPageSize: (count: number) => ({ type: 'sn/users/SET_PAGE_SIZE', count} as const),
     setTotalCount: (count: number) => ({ type: 'sn/users/SET_TOTAL_COUNT', count} as const),
     setLoading: () => ({ type: 'sn/users/IS_LOADING'} as const),
     setFollowProgress: (isFetching: boolean, userId: number) => ({ type: 'sn/users/TOGGLE_FOLLOW_PROGRESS', isFetching, userId} as const)

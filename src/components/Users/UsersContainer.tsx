@@ -36,6 +36,12 @@ class UsersAPIComponent extends React.Component<PropsType> {
         }
     }
 
+    componentDidUpdate(prevProps: Readonly<PropsType>, prevState: Readonly<{}>, snapshot?: any): void {
+        if (prevProps.pageSize !== this.props.pageSize) {
+            this.props.getUsersTC(this.props.pageSize, this.props.pageNumber)
+        }
+    }
+
     updateCurrentPage = (pageNumber: number) => {
         this.props.getUsersTC(this.props.pageSize, pageNumber)
     }
