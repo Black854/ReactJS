@@ -51,6 +51,7 @@ export const getAuthDataTC = (): ThunkType => async (dispatch) => {
 }
 
 export const login = (formData: {email: string, password: string, rememberMe: boolean}): ThunkType => async (dispatch) => {
+    console.log('пришло в санку' + formData)
     const response = await authAPI.login(formData)
     if (response.resultCode === ResultCodesEnum.Success) {            
         const response2 = await authAPI.me()

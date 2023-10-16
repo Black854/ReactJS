@@ -1,8 +1,8 @@
 import Preloader from '../common/Preloader/Preloader'
 import userPhoto from '../../img/user.jpg'
-import React, { useState, useEffect, ChangeEvent } from "react"
+import React, { useState, useEffect } from "react"
 import { ContactsType, ProfileType } from '../../types/types'
-import { SubmitErrorHandler, SubmitHandler, useForm, Controller } from 'react-hook-form'
+import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
 import { CustomController } from '../common/FormsControls/FormControls'
 import { Button, Col, Image, Row, Space, Typography, Form } from 'antd'
 import { UploadOutlined, EditOutlined } from '@ant-design/icons'
@@ -40,7 +40,7 @@ const ProfileInfo: React.FC<PropsType> = ({status, updateStatusTC, profile, uplo
     }
 
     const error: SubmitErrorHandler<MyForm> = data => {
-        console.log(data)
+        // console.log(data)
     }
 
     useEffect (() => {
@@ -94,7 +94,6 @@ const ProfileInfo: React.FC<PropsType> = ({status, updateStatusTC, profile, uplo
                             </>
                         }
                         {contactsChangeMode && <>
-                            {console.log(errors)}
                             <Form onFinish={handleSubmit(submit, error)}>
                                 <Form.Item><Button type="primary" htmlType="submit">Отправить</Button></Form.Item>
                                 <CustomController control={control} name='fullName' type='text' label='Полное имя' required={true} maxLength={20} />

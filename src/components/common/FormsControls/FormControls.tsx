@@ -99,6 +99,8 @@ export const CustomController: React.FC<CustomControllerProps> = ({control, type
             render={({ field, fieldState }) => (
                 type==='checkbox' ? (<Form.Item label={label}><Checkbox checked={field.value} {...field} /></Form.Item>) : 
                 type==='text' ? (<Form.Item label={label} validateStatus={fieldState.invalid ? 'error' : ''} help={fieldState.invalid ? fieldState.error?.message : null}> <Input {...field} /></Form.Item>) :
+                type==='email' ? (<Form.Item label={label} validateStatus={fieldState.invalid ? 'error' : ''} help={fieldState.invalid ? fieldState.error?.message : null}> <Input {...field} type='email' /></Form.Item>) :
+                type==='password' ? (<Form.Item label={label} validateStatus={fieldState.invalid ? 'error' : ''} help={fieldState.invalid ? fieldState.error?.message : null}> <Input {...field} type='password' /></Form.Item>) :
                 (<Form.Item label={label} validateStatus={fieldState.invalid ? 'error' : ''} help={fieldState.invalid ? fieldState.error?.message : null} ><TextArea rows={4} {...field} onBlur={onBlur} /></Form.Item>)
             )}
         />

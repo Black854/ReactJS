@@ -28,7 +28,7 @@ const Login: React.FC<PropsType> = (props) => {
     return (
         <div>
             <h1>Login</h1>
-            <LoginForm login={props.login} error={props.error} />
+            <LoginForm />
         </div>
     )
 }
