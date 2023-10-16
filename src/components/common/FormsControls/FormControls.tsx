@@ -54,9 +54,10 @@ type CustomControllerProps = {
     minLength?: number
     pattern?: string
     onBlur?: any
+    styleProps?: {}
 }
 
-export const CustomController: React.FC<CustomControllerProps> = ({control, type, name, label, required, maxLength, minLength, pattern, onBlur}) => {
+export const CustomController: React.FC<CustomControllerProps> = ({control, type, name, label, required, maxLength, minLength, pattern, onBlur, styleProps}) => {
     let rules = {}
     if (required) {
         rules = {
@@ -101,7 +102,7 @@ export const CustomController: React.FC<CustomControllerProps> = ({control, type
                 type==='text' ? (<Form.Item label={label} validateStatus={fieldState.invalid ? 'error' : ''} help={fieldState.invalid ? fieldState.error?.message : null}> <Input {...field} /></Form.Item>) :
                 type==='email' ? (<Form.Item label={label} validateStatus={fieldState.invalid ? 'error' : ''} help={fieldState.invalid ? fieldState.error?.message : null}> <Input {...field} type='email' /></Form.Item>) :
                 type==='password' ? (<Form.Item label={label} validateStatus={fieldState.invalid ? 'error' : ''} help={fieldState.invalid ? fieldState.error?.message : null}> <Input {...field} type='password' /></Form.Item>) :
-                (<Form.Item label={label} validateStatus={fieldState.invalid ? 'error' : ''} help={fieldState.invalid ? fieldState.error?.message : null} ><TextArea rows={4} {...field} onBlur={onBlur} /></Form.Item>)
+                (<Form.Item label={label} validateStatus={fieldState.invalid ? 'error' : ''} help={fieldState.invalid ? fieldState.error?.message : null} ><TextArea rows={4} {...field} onBlur={onBlur} style={styleProps} /></Form.Item>)
             )}
         />
     )

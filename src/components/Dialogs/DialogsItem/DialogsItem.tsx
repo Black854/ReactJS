@@ -1,6 +1,7 @@
 import s from './DialogsItem.module.css'
 import React from "react"
 import Item from "./Item/Item"
+import { Space } from 'antd'
 
 type DialogsType = {
     id: string
@@ -15,9 +16,9 @@ type PropsType = {
 const DialogsItem:React.FC<PropsType> = ({dialogs}) => {
     let dialogsElements = dialogs.map(dialog => <Item id={dialog.id} key={dialog.id} name={dialog.name} url={dialog.url} />)
     return (
-        <div className={s.dialogsItems}>
+        <Space direction='vertical'>
             {dialogsElements}
-        </div>
+        </Space>
     );
 }
 

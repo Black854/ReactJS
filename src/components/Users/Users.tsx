@@ -24,18 +24,17 @@ type PropsType = {
 let Users: React.FC<PropsType> = ({followInProgress, follow, unfollow, totalCount, pageSize, pageNumber, updateCurrentPage, isLoading}) => {
     console.log('Получили state:' + pageSize)
     
+    useEffect (() => {
+        getUsersTC(pageSize, pageNumber);
+    }, [pageSize, pageNumber])
 
-    // useEffect (() => {
-    //     getUsersTC(pageSize, pageNumber);
-    // }, [pageSize, pageNumber])
+    let users = useSelector(getUsersList)
 
-    let usersList = useSelector(getUsersList)
-
-    let userList2 = usersList.map(u => <User followInProgress={followInProgress} follow={follow} unfollow={unfollow} key={u.id} id={u.id} followed={u.followed} fullName={u.name} status={u.status} avatar={u.photos.small} /> );    
+    let userList = users.map(u => <User followInProgress={followInProgress} follow={follow} unfollow={unfollow} key={u.id} id={u.id} followed={u.followed} fullName={u.name} status={u.status} avatar={u.photos.small} /> );    
     return (
         <div className={s.mainDiv}>
             <Paginator totalCount={totalCount} pageSize={pageSize} pageNumber={pageNumber} updateCurrentPage={updateCurrentPage}  />
-            {isLoading ? <Preloader /> :  userList2 }
+            {isLoading ? <Preloader /> :  userList }
         </div>
     );
 }

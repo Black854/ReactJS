@@ -32,7 +32,7 @@ const MyPosts: React.FC = () => {
     return (
         <div>
             <Form onFinish={handleSubmit(submit, error)}>
-                <CustomController control={control} name='text' type='textarea' maxLength={100} required={true} />
+                <CustomController control={control} name='text' type='textarea' maxLength={100} required={true} styleProps={{margin: '30px 0 0 0'}} />
                 <Form.Item style={{textAlign: 'center'}}><Button type='primary' htmlType="submit">Добавить пост</Button></Form.Item>
             </Form>
             { postsElements }
