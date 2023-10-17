@@ -22,11 +22,11 @@ let initialState = {
         { id: 1, name: 'Карина', url: karina },
         { id: 2, name: 'Сижик', url: sizh },
         { id: 3, name: 'Арсик', url: ars },
-        { id: 4, name: 'Систр', url: sistr },
+        { id: 12, name: 'Систр', url: sistr },
     ] as Array<DialogType>,
     messages: [
         { id: 1, message: 'Hi', senderId: 1 },
-        { id: 2, message: 'Helloo', senderId: 2 },
+        { id: 2, message: 'HellooHellooHellooHellooHellooHellooHellooHellooHellooHellooHellooHelloo', senderId: 25138 },
         { id: 3, message: 'How are you?', senderId: 1 },
         { id: 4, message: 'Helloo', senderId: 1 }
     ] as Array<MessageType>

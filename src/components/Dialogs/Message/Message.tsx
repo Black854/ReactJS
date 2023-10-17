@@ -2,7 +2,8 @@ import s from './Message.module.css'
 import React from 'react'
 import Item from './Item/Item'
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
-import { Textarea } from '../../common/FormsControls/FormControls'
+import { CustomController } from '../../common/FormsControls/FormControls'
+import { Button, Col, Form, Row } from 'antd'
 
 type PropsType = {
     sendMessage: (text: string) => void
@@ -27,14 +28,18 @@ const Messages: React.FC<PropsType> = ({sendMessage, messages}) => {
     const error: SubmitErrorHandler<MyForm> = values => {
         console.log(values)
     }
-    const {register, handleSubmit, reset, formState: {errors}} = useForm<MyForm>()
+    const {control, handleSubmit, reset, formState: {errors}} = useForm<MyForm>()
     return (
         <div className={s.messages}>
             {messagesElements}
-            <form onSubmit={handleSubmit(submit, error)}>
-                <Textarea className={s.newMessageText} validate={{required: true, maxLength: 20}} errors={errors.text} name='text' register={register} />
-                <button className={s.sendButton}>Send</button>
-            </form>
+            <Form onFinish={handleSubmit(submit, error)}>
+                <CustomController control={control} name='text' type='textarea' maxLength={100} required={true} styleProps={{marginTop: '20px'}} />
+                <Row>
+                    <Col span={4} push={10} style={{textAlign: 'center'}}>
+                        <Button htmlType='submit'>Отправить</Button>
+                    </Col>
+                </Row>
+            </Form>
         </div>
     );
 }

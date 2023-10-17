@@ -1,5 +1,10 @@
-import s from './Item.module.css'
+import { Avatar, Card, Col, Row, Typography } from 'antd'
 import React from "react"
+import { getId, getUserPhotoSmall } from '../../../../redux/auth-selectors'
+import { useSelector } from 'react-redux'
+import { UserOutlined } from '@ant-design/icons';
+ 
+const {Text} = Typography
 
 type Propstype = {
     senderId: number
@@ -7,7 +12,25 @@ type Propstype = {
 }
 
 const Item: React.FC<Propstype> = ({senderId, message}) => {
-    return <div className={senderId === 1 ? s.myItem : s.otherItem}>{message}</div>
+    let myId = useSelector(getId)
+    let myAvatar = useSelector(getUserPhotoSmall)
+    if (myId === senderId) {
+        return  <Row><Col style={{textAlign: 'right'}} span={24}><Card style={{ maxWidth: '55%', backgroundColor: 'gold', display: 'inline-block' }}>
+        <Avatar src={myAvatar} size={50} />
+        <Text style={{marginLeft: '10px', backgroundColor: 'red'}}>
+            {message}
+        </Text>
+    </Card></Col></Row>
+    } else {
+        console.log(myId)
+        console.log(senderId)
+        return          <Row><Card style={{margin: '10px 0', maxWidth: '55%', display: 'inline-block' }} size='small'>
+        <Avatar size={50} icon={<UserOutlined rev={undefined} />}  />
+        <Text style={{marginLeft: '10px'}}>
+            {message}
+        </Text>
+    </Card></Row>
+    }
 }
 
 export default Item

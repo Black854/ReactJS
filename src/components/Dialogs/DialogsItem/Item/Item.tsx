@@ -1,6 +1,7 @@
-import s from './Item.module.css'
-import {NavLink} from "react-router-dom"
+import {Link, useLocation} from "react-router-dom"
 import React from "react"
+import { Avatar, Card, Typography } from 'antd'
+const {Text} = Typography
 
 type PropsType = {
     id: string
@@ -9,11 +10,18 @@ type PropsType = {
 }
 
 const Item: React.FC<PropsType> = ({id, name, url}) => {
+    const location = useLocation()
+    let color = 'black'
+    let Background = 'white'
     id = String(id)
-    return  <NavLink className={({isActive}) => isActive ? s.active : s.link} to={id}>
-                <img className={s.userImage} src={url} alt=""/>
-                <span className={s.name}>{name}</span>
-            </NavLink>
+    const result = location.pathname.replace(/^\/dialogs\//, '');
+    (result === id) && (color = 'white') && (Background='#1677ff')
+    return  <Link to={id}>
+                <Card size="small" style={{backgroundColor: Background}}>
+                    <Avatar src={url} size={'large'}/>
+                    <Text style={{color: color, marginLeft: '10px', fontSize: '12pt'}}>{name}</Text>
+                </Card>
+            </Link>
 }
 
 export default Item
